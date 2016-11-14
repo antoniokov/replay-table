@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { parse } from 'babyparse'
 import TableContainer from './App/TableContainer';
-import './App.css';
 
 class App extends Component {
   constructor(props) {
@@ -18,14 +17,22 @@ class App extends Component {
   }
 
   deltaToData(delta) {
-      const [itemName, ...roundsNames] = delta[0];
+      var [itemName, ...roundsNames] = delta[0];
+      if(roundsNames.every(roundName => !isNaN(parseInt(roundName, 10)))) {
+          roundsNames = roundsNames.map(roundName => parseInt(roundName, 10));
+      }
       const [items, ...deltas] = this.transpose(delta.slice(1));
-      const results = deltas.map(resultRow => resultRow.map((result, i) => {
+      const currentStandings = items.map(item => 0);
+      const results = deltas.map(resultRow => resultRow.map((delta, itemNumber) => {
+          const change = parseInt(delta, 10);
+          currentStandings[itemNumber] += change;
           return {
-              item: items[i],
-              change: parseInt(result, 10)
+              item: items[itemNumber],
+              change: change,
+              total: currentStandings[itemNumber]
           };
       }));
+
       return [itemName, roundsNames, results];
   }
 
@@ -39,6 +46,7 @@ class App extends Component {
                       status: 'error',
                       errorMessage: json.errors[0].message
                   });
+                  return;
               }
 
               const [itemName, roundsNames, results] = this.deltaToData(json.data);
@@ -50,6 +58,7 @@ class App extends Component {
               });
           })
           .catch(error => {
+              console.log(error);
               this.setState({
                   status: 'error',
                   errorMessage: error
