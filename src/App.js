@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { parse } from 'babyparse'
+import parseDeltaTable from './Transformers/DeltaTable';
 import TableContainer from './App/TableContainer';
 
 class App extends Component {
@@ -11,45 +12,21 @@ class App extends Component {
       };
   }
 
-  transpose(matrix) {
-      return Object.keys(matrix[0])
-          .map(colNumber => matrix.map(rowNumber => rowNumber[colNumber]));
-  }
-
-  deltaToData(delta) {
-      var [itemName, ...roundsNames] = delta[0];
-      if(roundsNames.every(roundName => !isNaN(parseInt(roundName, 10)))) {
-          roundsNames = roundsNames.map(roundName => parseInt(roundName, 10));
-      }
-      const [items, ...deltas] = this.transpose(delta.slice(1));
-      const currentStandings = items.map(item => 0);
-      const results = deltas.map(resultRow => resultRow.map((delta, itemNumber) => {
-          const change = parseInt(delta, 10);
-          currentStandings[itemNumber] += change;
-          return {
-              item: items[itemNumber],
-              change: change,
-              total: currentStandings[itemNumber]
-          };
-      }));
-
-      return [itemName, roundsNames, results];
-  }
-
   componentDidMount() {
       return fetch('/results.csv')
           .then(response => response.text())
           .then(csv => parse(csv))
           .then(json => {
               if(json.errors.length !== 0) {
+                  const errorMessage = json.errors.map(error => error.message).join('\n');
                   this.setState({
                       status: 'error',
-                      errorMessage: json.errors[0].message
+                      errorMessage: errorMessage
                   });
                   return;
               }
 
-              const [itemName, roundsNames, results] = this.deltaToData(json.data);
+              const [itemName, roundsNames, results] = parseDeltaTable(json.data);
               this.setState({
                   status: 'success',
                   itemName: itemName,
@@ -58,7 +35,6 @@ class App extends Component {
               });
           })
           .catch(error => {
-              console.log(error);
               this.setState({
                   status: 'error',
                   errorMessage: error
@@ -72,12 +48,13 @@ class App extends Component {
               return <p>Loading...</p>;
           case 'error':
               return <p>Failed to load the table: {this.state.errorMessage}</p>;
-          default:
+          case 'success':
               return (
                   <TableContainer
                       itemName={this.state.itemName}
                       roundsNames={this.state.roundsNames}
                       results={this.state.results}
+                      showChange={true}
                   />
               );
       }
