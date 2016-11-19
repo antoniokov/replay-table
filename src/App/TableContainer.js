@@ -11,29 +11,52 @@ class TableContainer extends Component {
         };
     }
 
-    goToRound (e) {
+    handleSliderChange (e) {
+        this.goToRound(e.target.value);
+    }
+
+    goToRound (roundNumber, callback) {
         this.setState({
             previousRound: this.state.currentRound,
-            currentRound: e.target.value
-        });
+            currentRound: roundNumber
+        }, callback);
+    }
+
+    handlePlayButton () {
+        this.setState({ playButtonPressed: true}, this.play(true))
+    }
+
+    play (reset) {
+        if (reset) {
+            this.goToRound(0, this.play);
+            return;
+        }
+
+        if (this.state.currentRound <= this.props.roundsNames.length - 2) {
+            setTimeout(() => this.goToRound(this.state.currentRound + 1, this.play), 300);
+        }
     }
 
     render() {
         return (
             <div>
                 <h3>Standings after {this.state.roundsNames[this.state.currentRound]} games</h3>
+                <button onClick={this.handlePlayButton.bind(this)}>Play</button>
                 <input
                  type="range"
                  name="rounds"
                  value={this.state.currentRound}
                  min={0}
                  max={this.state.roundsNames.length - 1}
-                 onChange={this.goToRound.bind(this)}/>
+                 onChange={this.handleSliderChange.bind(this)}/>
                 <table>
                     <thead>
                         <tr>
                             <th>{this.state.itemName}</th>
                             <th>Points</th>
+                            {this.props.showChange
+                                ? <th>Change</th>
+                                : null}
                         </tr>
                     </thead>
                     <tbody>
@@ -43,6 +66,9 @@ class TableContainer extends Component {
                                     <tr key={result.item}>
                                         <th>{result.item}</th>
                                         <th>{result.total}</th>
+                                        {this.props.showChange
+                                            ? <th>{result.change > 0 ? `+${result.change}` : result.change}</th>
+                                            : null}
                                     </tr>
                                 );
                         })}
