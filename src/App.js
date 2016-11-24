@@ -48,7 +48,7 @@ class App extends Component {
               return <p>Loading...</p>;
           case 'error':
               return <p>Failed to load the table: {this.state.errorMessage}</p>;
-          case 'success':
+          default:
               return (
                   <TableContainer
                       itemName={this.state.itemName}

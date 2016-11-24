@@ -12,7 +12,7 @@ class TableContainer extends Component {
     }
 
     handleSliderChange (e) {
-        this.goToRound(e.target.value);
+        this.goToRound(Number.parseInt(e.target.value, 10));
     }
 
     goToRound (roundNumber, callback) {
@@ -23,7 +23,8 @@ class TableContainer extends Component {
     }
 
     handlePlayButton () {
-        this.setState({ playButtonPressed: true}, this.play(true))
+        const reset = this.state.currentRound === this.props.roundsNames.length - 1;
+        this.setState({ playButtonPressed: true}, this.play(reset))
     }
 
     play (reset) {
