@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 
+
 class TableContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            itemName: props.itemName,
-            roundsNames: props.roundsNames,
-            results: props.results,
-            currentRound: props.roundsNames.length - 1
+            currentRound: props.roundsNames.length - 1,
+            isPlaying: false
         };
     }
 
@@ -23,37 +22,44 @@ class TableContainer extends Component {
     }
 
     handlePlayButton () {
-        const reset = this.state.currentRound === this.props.roundsNames.length - 1;
-        this.setState({ playButtonPressed: true}, this.play(reset))
+        if (this.state.isPlaying) {
+            this.setState({ isPlaying: false });
+        } else {
+            const reset = this.state.currentRound === this.props.roundsNames.length - 1;
+            this.setState({ isPlaying: true }, () => reset ? this.goToRound(0, this.play) : this.play());
+        }
     }
 
-    play (reset) {
-        if (reset) {
-            this.goToRound(0, this.play);
+    play () {
+        if(!this.state.isPlaying) {
+            this.goToRound(this.state.currentRound - 1);
             return;
         }
 
-        if (this.state.currentRound <= this.props.roundsNames.length - 2) {
-            setTimeout(() => this.goToRound(this.state.currentRound + 1, this.play), 300);
+        if (this.state.currentRound === this.props.roundsNames.length - 1) {
+            this.setState({ isPlaying: false });
+            return;
         }
+
+        setTimeout(() => this.goToRound(this.state.currentRound + 1, this.play), 300);
     }
 
     render() {
         return (
             <div>
-                <h3>Standings after {this.state.roundsNames[this.state.currentRound]} games</h3>
-                <button onClick={this.handlePlayButton.bind(this)}>Play</button>
+                <h3>Standings after {this.props.roundsNames[this.state.currentRound]} games</h3>
+                <button onClick={this.handlePlayButton.bind(this)}>{this.state.isPlaying ? 'Pause' : 'Play'}</button>
                 <input
                  type="range"
                  name="rounds"
                  value={this.state.currentRound}
                  min={0}
-                 max={this.state.roundsNames.length - 1}
+                 max={this.props.roundsNames.length - 1}
                  onChange={this.handleSliderChange.bind(this)}/>
                 <table>
                     <thead>
                         <tr>
-                            <th>{this.state.itemName}</th>
+                            <th>{this.props.itemName}</th>
                             <th>Points</th>
                             {this.props.showChange
                                 ? <th>Change</th>
@@ -61,7 +67,7 @@ class TableContainer extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.results[this.state.currentRound].sort((a,b) => b.total - a.total)
+                        {this.props.results[this.state.currentRound]
                             .map(result => {
                                 return (
                                     <tr key={result.item}>

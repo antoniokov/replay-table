@@ -1,10 +1,9 @@
-function transpose(matrix) {
-    return Object.keys(matrix[0])
-        .map(colNumber => matrix.map(rowNumber => rowNumber[colNumber]));
-}
+import transpose from '../Auxiliary/transpose'
+import stableSort from '../Auxiliary/stableSort'
+
 
 function parseDeltaTable(delta) {
-    var [itemName, ...roundsNames] = delta[0];
+    let [itemName, ...roundsNames] = delta[0];
     if(roundsNames.every(roundName => !isNaN(parseInt(roundName, 10)))) {
         roundsNames = roundsNames.map(roundName => parseInt(roundName, 10));
     }
@@ -20,7 +19,9 @@ function parseDeltaTable(delta) {
         };
     }));
 
-    return [itemName, roundsNames, results];
+    const resultsSorted = results.map(row => stableSort(row, (a,b) => b.total - a.total));
+
+    return [itemName, roundsNames, resultsSorted];
 }
 
 export default parseDeltaTable;
