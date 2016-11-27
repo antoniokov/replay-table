@@ -54,7 +54,7 @@ class App extends Component {
                       itemName={this.state.itemName}
                       roundsNames={this.state.roundsNames}
                       results={this.state.results}
-                      showChange={true}
+                      showChange={false}
                   />
               );
       }

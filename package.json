@@ -9,6 +9,7 @@
     "babyparse": "^0.4.6",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-flip-move": "^2.7.1",
     "whatwg-fetch": "^1.0.0"
   },
   "scripts": {

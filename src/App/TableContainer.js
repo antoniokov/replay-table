@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import FlipMove from 'react-flip-move';
+import './TableContainer.css';
 
 
 class TableContainer extends Component {
@@ -6,7 +8,8 @@ class TableContainer extends Component {
         super(props);
         this.state = {
             currentRound: props.roundsNames.length - 1,
-            isPlaying: false
+            isPlaying: false,
+            focusedItems: new Set()
         };
     }
 
@@ -31,24 +34,85 @@ class TableContainer extends Component {
     }
 
     play () {
-        if(!this.state.isPlaying) {
-            this.goToRound(this.state.currentRound - 1);
-            return;
-        }
-
         if (this.state.currentRound === this.props.roundsNames.length - 1) {
             this.setState({ isPlaying: false });
             return;
         }
 
-        setTimeout(() => this.goToRound(this.state.currentRound + 1, this.play), 300);
+
+        setTimeout(() => this.state.isPlaying ? this.goToRound(this.state.currentRound + 1, this.play) : null, 1000);
+    }
+
+    highlightRow (item) {
+        const newFocusedItems = this.state.focusedItems;
+        if (newFocusedItems.has(item)) {
+            newFocusedItems.delete(item)
+        } else {
+            newFocusedItems.add(item);
+        }
+        this.setState({ focusedItems: newFocusedItems });
+    }
+
+    getResultClass (change) {
+        if (this.state.currentRound === 0){
+            return '';
+        }
+
+        switch (change) {
+            case 3:
+                return 'victory';
+            case 1:
+                return 'draw';
+            case 0:
+                return 'defeat';
+            default:
+                return '';
+        }
+    }
+
+    getFocusClass (item) {
+        return this.state.focusedItems.has(item) ? 'focus' : '';
+    }
+
+    renderItems () {
+        return this.props.results[this.state.currentRound]
+            .map(result => <li className={`${this.getResultClass(result.change)}
+                                           ${this.getFocusClass(result.item)}`}
+                               onClick={() => this.highlightRow(result.item)}
+                               key={result.item}>{result.item}</li>/*{
+                return (
+                    <tr key={result.item}
+                        className={`${this.getResultClass(result.change)} ${this.getFocusClass(result.item)}`}
+                        onClick={() => this.highlightRow(result.item)}>
+
+                        {<th className="position">{result.position}</th>}
+                        <th className="item">{result.item}</th>
+                        <th className="total">{result.total}</th>
+                        {this.props.showChange
+                            ? <th className="change">{result.change > 0 ? `+${result.change}` : result.change}</th>
+                            : null}
+                    </tr>
+                );
+            }*/);
     }
 
     render() {
         return (
             <div>
                 <h3>Standings after {this.props.roundsNames[this.state.currentRound]} games</h3>
-                <button onClick={this.handlePlayButton.bind(this)}>{this.state.isPlaying ? 'Pause' : 'Play'}</button>
+                <div
+                    className={this.state.isPlaying ? 'pause' : 'play'}
+                    onClick={this.handlePlayButton.bind(this)}/>
+                <div
+                    className={`previous ${this.state.currentRound === 0 ? 'disabled' : ''}`}
+                    onClick={() => this.state.currentRound > 0 ? this.goToRound(this.state.currentRound - 1) : null}>
+                    &lt;
+                </div>
+                <div
+                    className={`next ${this.state.currentRound === this.props.roundsNames.length - 1 ? 'disabled' : ''}`}
+                    onClick={() => this.state.currentRound < this.props.roundsNames.length - 1 ? this.goToRound(this.state.currentRound + 1) : null}>
+                    &gt;
+                </div>
                 <input
                  type="range"
                  name="rounds"
@@ -56,31 +120,9 @@ class TableContainer extends Component {
                  min={0}
                  max={this.props.roundsNames.length - 1}
                  onChange={this.handleSliderChange.bind(this)}/>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>{this.props.itemName}</th>
-                            <th>Points</th>
-                            {this.props.showChange
-                                ? <th>Change</th>
-                                : null}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.props.results[this.state.currentRound]
-                            .map(result => {
-                                return (
-                                    <tr key={result.item}>
-                                        <th>{result.item}</th>
-                                        <th>{result.total}</th>
-                                        {this.props.showChange
-                                            ? <th>{result.change > 0 ? `+${result.change}` : result.change}</th>
-                                            : null}
-                                    </tr>
-                                );
-                        })}
-                    </tbody>
-                </table>
+                <FlipMove duration="500" delay="500">
+                    {this.renderItems()}
+                </FlipMove>
             </div>
         );
     }

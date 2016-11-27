@@ -1,0 +1,69 @@
+.item, .position {
+    text-align: left;
+}
+
+.total, .change {
+    text-align: right;
+}
+
+.focus {
+    margin-left: 20px;
+}
+
+
+.play {
+    width: 0;
+    height: 0;
+    border-top: 8px solid transparent;
+    border-left: 12px solid #000;
+    border-bottom: 8px solid transparent;
+}
+.pause {
+    width: 4px;
+    height: 16px;
+    border-right: 4px solid #000;
+    border-left: 4px solid #000;
+}
+
+.disabled {
+    color: gray;
+}
+
+li {
+    list-style-type: none;
+    list-style-position:inside;
+    border-bottom: 1px dashed lightgrey;
+}
+
+@keyframes victory {
+    0% {background-color: transparent;}
+    50% {background-color: lightgreen;}
+    100% {background-color: transparent;}
+}
+
+.victory {
+    animation-name: victory;
+    animation-duration: 1s;
+}
+
+@keyframes draw {
+    0% {background-color: transparent;}
+    50% {background-color: lightgoldenrodyellow;}
+    100% {background-color: transparent;}
+}
+
+.draw {
+    animation-name: draw;
+    animation-duration: 1s;
+}
+
+@keyframes defeat {
+    0% {background-color: transparent;}
+    50% {background-color: lightpink;}
+    100% {background-color: transparent;}
+}
+
+.defeat {
+    animation-name: defeat;
+    animation-duration: 1s;
+}
