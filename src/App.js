@@ -13,7 +13,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-      return fetch('/results.csv')
+      return fetch('/replayTable/results.csv')
           .then(response => response.text())
           .then(csv => parse(csv))
           .then(json => {
