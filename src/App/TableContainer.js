@@ -76,10 +76,7 @@ class TableContainer extends Component {
 
     renderItems () {
         return this.props.results[this.state.currentRound]
-            .map(result => <li className={`${this.getResultClass(result.change)}
-                                           ${this.getFocusClass(result.item)}`}
-                               onClick={() => this.highlightRow(result.item)}
-                               key={result.item}>{result.item}</li>/*{
+            .map(result => {
                 return (
                     <tr key={result.item}
                         className={`${this.getResultClass(result.change)} ${this.getFocusClass(result.item)}`}
@@ -93,7 +90,7 @@ class TableContainer extends Component {
                             : null}
                     </tr>
                 );
-            }*/);
+            });
     }
 
     render() {
@@ -120,9 +117,21 @@ class TableContainer extends Component {
                  min={0}
                  max={this.props.roundsNames.length - 1}
                  onChange={this.handleSliderChange.bind(this)}/>
-                <FlipMove duration="500" delay="500">
-                    {this.renderItems()}
-                </FlipMove>
+                <table>
+                    <thead>
+                    <tr>
+                        <th className="position">#</th>
+                        <th className="item">{this.props.itemName}</th>
+                        <th className="total">Pts</th>
+                        {this.props.showChange
+                            ? <th className="change">&Delta;</th>
+                            : null}
+                    </tr>
+                    </thead>
+                    <FlipMove duration="500" delay="500">
+                        {this.renderItems()}
+                    </FlipMove>
+                </table>
             </div>
         );
     }
