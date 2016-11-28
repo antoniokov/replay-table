@@ -43,7 +43,7 @@ li {
 
 .victory {
     animation-name: victory;
-    animation-duration: 1s;
+    animation-duration: 1.5s;
 }
 
 @keyframes draw {
@@ -54,7 +54,7 @@ li {
 
 .draw {
     animation-name: draw;
-    animation-duration: 1s;
+    animation-duration: 1.5s;
 }
 
 @keyframes defeat {
@@ -65,5 +65,5 @@ li {
 
 .defeat {
     animation-name: defeat;
-    animation-duration: 1s;
+    animation-duration: 1.5s;
 }
