@@ -4,4 +4,4 @@ export const resultGroup = {
     0: 'defeat'
 };
 
-export const animationDuration = 1500;
+export const animationDuration = 1800;

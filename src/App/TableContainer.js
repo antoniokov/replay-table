@@ -22,11 +22,13 @@ class TableContainer extends Component {
     }
 
     goToRound (roundNumber) {
-        return new Promise(resolve => this.setState({
-            previousRound: this.state.currentRound,
-            currentRound: roundNumber,
-            isMoving: true
-        }, resolve));
+        this.setState({ isMoving: false }, () => {
+            return new Promise(resolve => this.setState({
+                previousRound: this.state.currentRound,
+                currentRound: roundNumber,
+                isMoving: true
+            }, resolve));
+        });
     }
 
     handlePlayButton () {
@@ -65,6 +67,7 @@ class TableContainer extends Component {
         }
         this.setState({ focusedItems: newFocusedItems });
     }
+
 
     render() {
         return (
@@ -107,17 +110,21 @@ class TableContainer extends Component {
                     </tr>
                     </thead>
                     <FlipMove
+                        delay={animationDuration/2 - 100}
                         duration={animationDuration/2}
-                        typeName='tbody' >
+                        typeName='tbody'
+                        onFinishAll={() => this.setState({ isMoving: false })}>
 
                         {this.props.results[this.state.currentRound]
                             .map(result => {
+                                const styleObject = { 'zIndex': result.position };
+                                if (this.state.isMoving && this.state.currentRound > 0) {
+                                    styleObject.animation = `${resultGroup[result.change]} ${animationDuration}ms`;
+                                }
                                 return (
                                     <tr key={result.item}
-                                        className={`${this.state.isMoving && this.state.currentRound > 0
-                                            ? resultGroup[result.change] || ''
-                                            : ''}
-                                                    ${this.state.focusedItems.has(result.item) ? 'focus' : ''}`}
+                                        style={styleObject}
+                                        className={`${this.state.focusedItems.has(result.item) ? 'focus' : ''}`}
                                         onClick={() => this.highlightRow(result.item)}>
 
                                         <td className="position">{result.position}</td>

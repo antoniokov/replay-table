@@ -41,29 +41,14 @@ li {
     100% {background-color: transparent;}
 }
 
-.victory {
-    animation-name: victory;
-    animation-duration: 1.5s;
-}
-
 @keyframes draw {
     0% {background-color: transparent;}
     50% {background-color: lightgoldenrodyellow;}
     100% {background-color: transparent;}
 }
 
-.draw {
-    animation-name: draw;
-    animation-duration: 1.5s;
-}
-
 @keyframes defeat {
     0% {background-color: transparent;}
     50% {background-color: lightpink;}
     100% {background-color: transparent;}
-}
-
-.defeat {
-    animation-name: defeat;
-    animation-duration: 1.5s;
 }
