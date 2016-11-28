@@ -69,7 +69,6 @@ class TableContainer extends Component {
     }
 
     render() {
-        console.log(this.state);
         return (
             <div>
                 <h3>Standings after {this.props.roundsNames[this.state.currentRound]} games</h3>
