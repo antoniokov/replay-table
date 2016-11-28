@@ -36,7 +36,7 @@ class TableContainer extends Component {
             this.setState({ isPlaying: true }, () => {
                 if (this.state.currentRound === this.props.roundsNames.length - 1) {
                     Promise.resolve(this.goToRound(0))
-                        .then(this.play.bind(this))
+                        .then(() => setTimeout(this.play.bind(this), animationDuration))
                 } else {
                     this.play.bind(this)()
                 }
@@ -51,10 +51,8 @@ class TableContainer extends Component {
         }
 
         if (this.state.isPlaying) {
-            setTimeout(() => {
                 Promise.resolve(this.goToRound(this.state.currentRound + 1))
-                    .then(this.play.bind(this));
-            }, animationDuration);
+                    .then(() => setTimeout(this.play.bind(this), animationDuration));
         }
     }
 
