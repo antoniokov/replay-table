@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { parse } from 'babyparse'
-import parseDeltaTable from './Transformers/DeltaTable';
-import TableContainer from './App/TableContainer';
+import { ties, positionName, itemName, totalName, roundsNames } from './config/default';
+import parseDeltaTable from './transformers/DeltaTable';
+import TableContainer from './app/TableContainer';
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +27,7 @@ class App extends Component {
                   return;
               }
 
-              const [itemName, roundsNames, results] = parseDeltaTable(json.data);
+              const [itemName, roundsNames, results] = parseDeltaTable(json.data, ties);
               this.setState({
                   status: 'success',
                   itemName: itemName,
@@ -51,8 +52,10 @@ class App extends Component {
           default:
               return (
                   <TableContainer
-                      itemName={this.state.itemName}
-                      roundsNames={this.state.roundsNames}
+                      positionName={positionName}
+                      itemName={itemName || this.state.itemName}
+                      totalName={totalName}
+                      roundsNames={roundsNames || this.state.roundsNames}
                       results={this.state.results}
                       showChange={false}
                   />
