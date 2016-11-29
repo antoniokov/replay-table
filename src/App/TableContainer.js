@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import FlipMove from 'react-flip-move';
-import { resultName, animationDuration, focusedItems, startFrom } from '../config/default';
 import './TableContainer.css';
 
 
@@ -8,9 +7,9 @@ class TableContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentRound: startFrom || props.roundsNames.length - 1,
+            currentRound: this.props.startFrom,
             isPlaying: false,
-            focusedItems: focusedItems ? new Set([...focusedItems]) : new Set()
+            focusedItems: this.props.focusedItems ? new Set([...this.props.focusedItems]) : new Set()
         };
     }
 
@@ -38,7 +37,7 @@ class TableContainer extends Component {
             this.setState({ isPlaying: true }, () => {
                 if (this.state.currentRound === this.props.roundsNames.length - 1) {
                     Promise.resolve(this.goToRound(0))
-                        .then(() => setTimeout(this.play.bind(this), animationDuration))
+                        .then(() => setTimeout(this.play.bind(this), this.props.animationDuration))
                 } else {
                     this.play.bind(this)()
                 }
@@ -54,7 +53,7 @@ class TableContainer extends Component {
 
         if (this.state.isPlaying) {
                 Promise.resolve(this.goToRound(this.state.currentRound + 1))
-                    .then(() => setTimeout(this.play.bind(this), animationDuration));
+                    .then(() => setTimeout(this.play.bind(this), this.props.animationDuration));
         }
     }
 
@@ -111,8 +110,8 @@ class TableContainer extends Component {
                     </tr>
                     </thead>
                     <FlipMove
-                        delay={animationDuration/2 - 100}
-                        duration={animationDuration/2}
+                        delay={this.props.animationDuration/2 - 100}
+                        duration={this.props.animationDuration/2}
                         typeName='tbody'
                         onFinishAll={() => this.setState({ isMoving: false })}>
 
@@ -120,7 +119,7 @@ class TableContainer extends Component {
                             .map(result => {
                                 const styleObject = { 'zIndex': result.position };
                                 if (this.state.isMoving && this.state.currentRound > 0) {
-                                    styleObject.animation = `${resultName[result.change]} ${animationDuration}ms`;
+                                    styleObject.animation = `${this.props.resultName[result.change]} ${this.props.animationDuration}ms`;
                                 }
 
                                 const isFocused = this.state.focusedItems.size === 0 || this.state.focusedItems.has(result.item);

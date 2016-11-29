@@ -1,38 +1,69 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { parse } from 'babyparse'
-import { ties, positionName, itemName, totalName, roundsNames } from './config/default';
-import parseDeltaTable from './transformers/DeltaTable';
+import config from './config';
+import transform from './transformers/transform';
 import TableContainer from './app/TableContainer';
 
 class App extends Component {
   constructor(props) {
       super(props);
       this.state = {
-          status: 'loading'
+          status: 'loading',
+          config: config['default']
       };
   }
 
-  componentDidMount() {
-      return fetch('/replayTable/results.csv')
+  parseCSV (path) {
+      return fetch(path)
           .then(response => response.text())
           .then(csv => parse(csv))
           .then(json => {
               if(json.errors.length !== 0) {
-                  const errorMessage = json.errors.map(error => error.message).join('\n');
+                  return {
+                      status: 'error',
+                      errorMessage: json.errors.map(error => error.message).join('\n')
+                  };
+              }
+
+              return {
+                  status: 'success',
+                  json: json.data
+              };
+          })
+          .catch(error => {
+              return {
+                  status: 'error',
+                  errorMessage: error
+              };
+          });
+  }
+
+  componentDidMount() {
+      Promise.resolve(this.parseCSV('/replayTable/results.csv'))
+          .then(result => {
+              if (result.status === 'error') {
                   this.setState({
                       status: 'error',
-                      errorMessage: errorMessage
+                      errorMessage: result.errorMessage
                   });
                   return;
               }
 
-              const [itemName, roundsNames, results] = parseDeltaTable(json.data, ties);
+              const transformedResult = transform('changesTable', result.json, { ties: this.state.config['tiesResolution'] });
+              if (transformedResult.status === 'error') {
+                  this.setState({
+                      status: 'error',
+                      errorMessage: result.errorMessage
+                  });
+                  return;
+              }
+
               this.setState({
                   status: 'success',
-                  itemName: itemName,
-                  roundsNames: roundsNames,
-                  results: results
+                  itemName: transformedResult.itemName || this.state.config.itemName,
+                  roundsNames: transformedResult.roundsNames || this.state.config.roundsNames,
+                  results: transformedResult.results
               });
           })
           .catch(error => {
@@ -52,12 +83,15 @@ class App extends Component {
           default:
               return (
                   <TableContainer
-                      positionName={positionName}
-                      itemName={itemName || this.state.itemName}
-                      totalName={totalName}
-                      roundsNames={roundsNames || this.state.roundsNames}
+                      positionName={this.state.config.positionName}
+                      itemName={this.state.itemName}
+                      totalName={this.state.config.totalName}
+                      roundsNames={this.state.roundsNames}
                       results={this.state.results}
+                      resultName={this.state.config.resultName}
                       showChange={false}
+                      startFrom={this.state.roundsNames.length - 1}
+                      animationDuration={this.state.config.animationDuration}
                   />
               );
       }

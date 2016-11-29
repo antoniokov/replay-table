@@ -2,9 +2,9 @@ import transpose from '../auxiliary/transpose'
 import stableSort from '../auxiliary/stableSort'
 
 
-function addPositions (results, ties) {
+function addPositions (results, tiesResolution = 'no ties') {
     results.forEach(round => round.forEach((result, i) => {
-        if(ties === 'no ties') {
+        if(tiesResolution === 'no ties') {
             result.position = i + 1;
             return;
         }
@@ -16,7 +16,7 @@ function addPositions (results, ties) {
 
         result.position = itemsHigher + 1;
 
-        if (ties === 'range') {
+        if (tiesResolution === 'range') {
             const itemsEqual = round.reduce((acc, res) => res.item !== result.item && res.total === result.total
                     ? acc + 1
                     : acc
@@ -30,15 +30,15 @@ function addPositions (results, ties) {
     }));
 }
 
-function parseDeltaTable(delta, ties = 'no ties') {
-    let [itemName, ...roundsNames] = delta[0];
+function transformChangesTable(jsonTable, params) {
+    let [itemName, ...roundsNames] = jsonTable[0];
     if(roundsNames.every(roundName => Number.isInteger(roundName))) {
         roundsNames = roundsNames.map(roundName => Number.parseInt(roundName, 10));
     }
-    const [items, ...deltas] = transpose(delta.slice(1));
+    const [items, ...changes] = transpose(jsonTable.slice(1));
     const currentStandings = items.map(item => 0);
-    const results = deltas.map(resultRow => resultRow.map((delta, itemNumber) => {
-        const change = Number.parseInt(delta, 10);
+    const results = changes.map(resultRow => resultRow.map((changeString, itemNumber) => {
+        const change = Number.parseInt(changeString, 10);
         currentStandings[itemNumber] += change;
         return {
             item: items[itemNumber],
@@ -48,9 +48,14 @@ function parseDeltaTable(delta, ties = 'no ties') {
     }))
         .map(round => stableSort(round, (a,b) => b.total - a.total));
 
-    addPositions(results, ties);
+    addPositions(results, params.tiesResolution);
 
-    return [itemName, roundsNames, results];
+    return {
+        status: 'success',
+        itemName: itemName,
+        roundsNames: roundsNames,
+        results: results
+    };
 }
 
-export default parseDeltaTable;
+export default transformChangesTable;
