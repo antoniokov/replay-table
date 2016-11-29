@@ -1,10 +1,10 @@
-import transpose from '../Auxiliary/transpose'
-import stableSort from '../Auxiliary/stableSort'
+import transpose from '../auxiliary/transpose'
+import stableSort from '../auxiliary/stableSort'
 
 
-function addPositions (results, ties = false) {
+function addPositions (results, ties) {
     results.forEach(round => round.forEach((result, i) => {
-        if(!ties) {
+        if(ties === 'no ties') {
             result.position = i + 1;
             return;
         }
@@ -30,7 +30,7 @@ function addPositions (results, ties = false) {
     }));
 }
 
-function parseDeltaTable(delta, ties = false) {
+function parseDeltaTable(delta, ties = 'no ties') {
     let [itemName, ...roundsNames] = delta[0];
     if(roundsNames.every(roundName => Number.isInteger(roundName))) {
         roundsNames = roundsNames.map(roundName => Number.parseInt(roundName, 10));

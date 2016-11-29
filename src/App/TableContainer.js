@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FlipMove from 'react-flip-move';
-import { resultName, animationDuration } from '../config';
+import { resultName, animationDuration, focusedItems, startFrom } from '../config/default';
 import './TableContainer.css';
 
 
@@ -8,9 +8,9 @@ class TableContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentRound: props.roundsNames.length - 1,
+            currentRound: startFrom || props.roundsNames.length - 1,
             isPlaying: false,
-            focusedItems: new Set()
+            focusedItems: focusedItems ? new Set([...focusedItems]) : new Set()
         };
     }
 
@@ -102,9 +102,9 @@ class TableContainer extends Component {
                 <table>
                     <thead>
                     <tr>
-                        <th className="position">#</th>
+                        <th className="position">{this.props.positionName}</th>
                         <th className="item">{this.props.itemName}</th>
-                        <th className="total">Pts</th>
+                        <th className="total">{this.props.totalName}</th>
                         {this.props.showChange
                             ? <th className="change">&Delta;</th>
                             : null}
