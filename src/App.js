@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
       super(props);
       this.state = { status: 'loading' };
-      const configObject = props.preset ? Object.assign(config['default'], config[props.preset]) : config['default'];
+      const configObject = config.hasOwnProperty(props.preset) ? Object.assign(config['default'], config[props.preset]) : config['default'];
       Object.assign(this.state, configObject);
   }
 
