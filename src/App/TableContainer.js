@@ -7,7 +7,7 @@ class TableContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentRound: this.props.startFrom,
+            currentRound: this.props.startFromRound,
             isPlaying: false,
             focusedItems: this.props.focusedItems ? new Set([...this.props.focusedItems]) : new Set()
         };

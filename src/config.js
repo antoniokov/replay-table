@@ -30,7 +30,7 @@ export default {
         //number of round to start from
         //default = undefined (show the last round)
         //Number
-        startFrom: undefined,
+        startFromRound: undefined,
 
         //'Position', 'Rank',...
         //default = '#'

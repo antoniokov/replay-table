@@ -8,10 +8,9 @@ import TableContainer from './app/TableContainer';
 class App extends Component {
   constructor(props) {
       super(props);
-      this.state = {
-          status: 'loading',
-          config: config['default']
-      };
+      this.state = { status: 'loading' };
+      const configObject = props.preset ? Object.assign(config['default'], config[props.preset]) : config['default'];
+      Object.assign(this.state, configObject);
   }
 
   parseCSV (path) {
@@ -28,7 +27,7 @@ class App extends Component {
 
               return {
                   status: 'success',
-                  json: json.data
+                  data: json.data
               };
           })
           .catch(error => {
@@ -40,7 +39,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-      Promise.resolve(this.parseCSV('/replayTable/results.csv'))
+      Promise.resolve(this.parseCSV(this.props.csv))
           .then(result => {
               if (result.status === 'error') {
                   this.setState({
@@ -50,7 +49,6 @@ class App extends Component {
                   return;
               }
 
-              const transformedResult = transform('changesTable', result.json, { ties: this.state.config['tiesResolution'] });
               if (transformedResult.status === 'error') {
                   this.setState({
                       status: 'error',
@@ -59,10 +57,20 @@ class App extends Component {
                   return;
               }
 
+              if (!this.state['itemName']) {
+                  this.setState({ itemName: transformedResult['itemName']})
+              }
+
+              if (!this.state['roundsNames']) {
+                  this.setState({ roundsNames: transformedResult['roundsNames']})
+              }
+
+              if (!this.state['startFromRound']) {
+                  this.setState({ startFromRound: this.state.roundsNames.length - 1})
+              }
+
               this.setState({
                   status: 'success',
-                  itemName: transformedResult.itemName || this.state.config.itemName,
-                  roundsNames: transformedResult.roundsNames || this.state.config.roundsNames,
                   results: transformedResult.results
               });
           })
@@ -83,15 +91,14 @@ class App extends Component {
           default:
               return (
                   <TableContainer
-                      positionName={this.state.config.positionName}
-                      itemName={this.state.itemName}
-                      totalName={this.state.config.totalName}
-                      roundsNames={this.state.roundsNames}
-                      results={this.state.results}
-                      resultName={this.state.config.resultName}
-                      showChange={false}
-                      startFrom={this.state.roundsNames.length - 1}
-                      animationDuration={this.state.config.animationDuration}
+                      positionName={this.state['positionName']}
+                      itemName={this.state['itemName']}
+                      totalName={this.state['totalName']}
+                      roundsNames={this.state['roundsNames']}
+                      results={this.state['results']}
+                      resultName={this.state['resultName']}
+                      startFromRound={this.state['startFromRound']}
+                      animationDuration={this.state['animationDuration']}
                   />
               );
       }
