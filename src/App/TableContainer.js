@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import FlipMove from 'react-flip-move';
-import { resultGroup, animationDuration } from '../config';
+import { resultName, animationDuration } from '../config';
 import './TableContainer.css';
 
 
@@ -119,12 +119,15 @@ class TableContainer extends Component {
                             .map(result => {
                                 const styleObject = { 'zIndex': result.position };
                                 if (this.state.isMoving && this.state.currentRound > 0) {
-                                    styleObject.animation = `${resultGroup[result.change]} ${animationDuration}ms`;
+                                    styleObject.animation = `${resultName[result.change]} ${animationDuration}ms`;
                                 }
+
+                                const isFocused = this.state.focusedItems.size === 0 || this.state.focusedItems.has(result.item);
+
                                 return (
                                     <tr key={result.item}
                                         style={styleObject}
-                                        className={`${this.state.focusedItems.has(result.item) ? 'focus' : ''}`}
+                                        className={`row ${isFocused ? 'focus' : ''}`}
                                         onClick={() => this.highlightRow(result.item)}>
 
                                         <td className="position">{result.position}</td>

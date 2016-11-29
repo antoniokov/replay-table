@@ -1,4 +1,4 @@
-export const resultGroup = {
+export const resultName = {
     3: 'victory',
     1: 'draw',
     0: 'defeat'

@@ -1,3 +1,7 @@
+.row {
+    color: gray;
+}
+
 .item, .position {
     text-align: left;
 }
@@ -7,7 +11,7 @@
 }
 
 .focus {
-    margin-left: 20px;
+    color: black;
 }
 
 
