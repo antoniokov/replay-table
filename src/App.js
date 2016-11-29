@@ -49,6 +49,7 @@ class App extends Component {
                   return;
               }
 
+              const transformedResult = transform('changesTable', result.data, { tiesResolution: this.state['tiesResolution'] });
               if (transformedResult.status === 'error') {
                   this.setState({
                       status: 'error',
