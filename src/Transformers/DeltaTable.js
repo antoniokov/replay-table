@@ -30,7 +30,7 @@ function addPositions (results, ties = false) {
     }));
 }
 
-function parseDeltaTable(delta) {
+function parseDeltaTable(delta, ties = false) {
     let [itemName, ...roundsNames] = delta[0];
     if(roundsNames.every(roundName => Number.isInteger(roundName))) {
         roundsNames = roundsNames.map(roundName => Number.parseInt(roundName, 10));
@@ -48,7 +48,7 @@ function parseDeltaTable(delta) {
     }))
         .map(round => stableSort(round, (a,b) => b.total - a.total));
 
-    addPositions(results);
+    addPositions(results, ties);
 
     return [itemName, roundsNames, results];
 }

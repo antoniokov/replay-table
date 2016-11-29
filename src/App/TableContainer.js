@@ -93,6 +93,7 @@ class TableContainer extends Component {
                 <input
                      type="range"
                      name="rounds"
+                     autoFocus={true}
                      value={this.state.currentRound}
                      min={0}
                      max={this.props.roundsNames.length - 1}
