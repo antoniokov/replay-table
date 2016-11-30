@@ -1,16 +1,136 @@
-.row {
-    color: gray;
+
+.replay-table-wrap{}
+.replay-table-wrap .replay-table-sub-head{
+    font-size: 1.6rem;
+    font-family: 'Roboto';
+    font-weight: normal;
+    margin-bottom: 2rem;
 }
 
-.item, .position {
+.replay-table-controls{
+    margin-bottom: 3rem;
+}
+.replay-table-wrap .pause{
+    width: 1.2rem;
+    height: 1.6rem;
+    border-right: 0.4rem solid rgba(0,0,0,0.5);
+    border-left: 0.4rem solid rgba(0,0,0,0.5);
+}
+.replay-table-wrap .play{
+    width: 0;
+    height: 0;
+    border-top: 0.8rem solid transparent;
+    border-left: 1.2rem solid rgba(0,0,0,0.5);
+    border-bottom: 0.8rem solid transparent;
+}
+.replay-table-wrap .previous,
+.replay-table-wrap .next{
+    position: relative;
+    width: 0.6rem;
+    height: 1rem;
+    background: rgba(0,0,0,0.5);
+    font-size: 0;
+    border-top: 0.3rem solid #fff;
+    border-bottom: 0.3rem solid #fff;
+    box-sizing: content-box;
+}
+
+.replay-table-wrap .previous{
+    border-left: 1.2rem solid #fff;
+}
+.replay-table-wrap .next{
+    border-right: 1.2rem solid #fff;
+}
+.replay-table-wrap .previous:before,
+.replay-table-wrap .next:before{
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 0.8rem solid transparent;
+    border-bottom: 0.8rem solid transparent;
+    top: -0.3rem;
+}
+.replay-table-wrap .previous:before{
+    border-right: 1rem solid rgba(0,0,0,0.5);
+    left: -1rem;
+
+}
+.replay-table-wrap .next:before{
+    border-left: 1rem solid rgba(0,0,0,0.5);
+    right: -1rem;
+
+}
+
+
+.replay-table-wrap .pause,
+.replay-table-wrap .play,
+.replay-table-wrap .previous,
+.replay-table-wrap .next{
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 1rem;
+    cursor: pointer;
+}
+.replay-table-wrap .pause:hover{
+    border-right: 0.4rem solid rgba(0,0,0,1);
+    border-left: 0.4rem solid rgba(0,0,0,1);
+}
+.replay-table-wrap .play:hover{
+    border-left: 1.2rem solid rgba(0,0,0,1);
+}
+.replay-table-wrap .previous:hover:before{
+    border-right: 1rem solid rgba(0,0,0,1);
+}
+.replay-table-wrap .next:hover:before{
+    border-left: 1rem solid rgba(0,0,0,1);
+}
+.replay-table-wrap .previous:hover,
+.replay-table-wrap .next:hover{
+    background: rgba(0,0,0,1);
+}
+.replay-table-wrap .range-line{
+    width: calc(100% - 9rem);
+    cursor: pointer;
+}
+
+.replay-table{
+    width: 100%;
+}
+.replay-table td{
+    padding: 0.6rem 0;
+    border-bottom: 1px dotted rgba(0,0,0,0.05);
+}
+.replay-table th{
+    font-weight: bold;
+    font-size: 1.6rem;
+    padding: 1rem 0;
+    border-bottom: 1px double rgba(0,0,0,0.05);
+}
+.replay-table tr th:last-child,
+.replay-table tr td:last-child{
+    width: 5rem;
+    text-align: center;
+}
+
+.replay-table{}
+
+.replay-table .row {
+    color: gray;
+    cursor: pointer;
+}
+.replay-table tr:hover td{
+    background: rgba(0,0,0,0.02);
+}
+.replay-table .item{
     text-align: left;
 }
-
-.total, .change {
-    text-align: right;
+.replay-table .position {
+    text-align: left;
+    width: 3rem;
 }
 
-.focus {
+.replay-table .row.focus {
     color: black;
 }
 
@@ -18,19 +138,6 @@ input[type="range"]:focus {
     outline: none!important;
 }
 
-.play {
-    width: 0;
-    height: 0;
-    border-top: 8px solid transparent;
-    border-left: 12px solid #000;
-    border-bottom: 8px solid transparent;
-}
-.pause {
-    width: 4px;
-    height: 16px;
-    border-right: 4px solid #000;
-    border-left: 4px solid #000;
-}
 
 .disabled {
     color: gray;
@@ -44,18 +151,18 @@ li {
 
 @keyframes victory {
     0% {background-color: transparent;}
-    50% {background-color: lightgreen;}
+    50% {background-color: rgba(170,255,102,0.5);}
     100% {background-color: transparent;}
 }
 
 @keyframes draw {
     0% {background-color: transparent;}
-    50% {background-color: lightgoldenrodyellow;}
+    50% {background-color: rgba(255,202,88,0.5);}
     100% {background-color: transparent;}
 }
 
 @keyframes defeat {
     0% {background-color: transparent;}
-    50% {background-color: lightpink;}
+    50% {background-color: rgba(255,158,158,0.5);}
     100% {background-color: transparent;}
 }
