@@ -134,7 +134,7 @@ class TableContainer extends Component {
                                         <td className="item">{result.item}</td>
                                         <td className="total">{result.total}</td>
                                         {this.props.showChangeColumn
-                                            ? <th className="change">{result.change > 0 ? `+${result.change}` : result.change}</th>
+                                            ? <td className="change">{result.change > 0 ? `+${result.change}` : result.change}</td>
                                             : null}
                                     </tr>
                                 );
