@@ -2,15 +2,35 @@ import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { parse } from 'babyparse'
 import config from './config';
-import transform from './transformers/transform';
+import transform, { transformers } from './transformers/transform';
 import TableContainer from './app/TableContainer';
 
 class App extends Component {
   constructor(props) {
       super(props);
       this.state = { status: 'loading' };
-      const configObject = config.hasOwnProperty(props.preset) ? Object.assign(config['default'], config[props.preset]) : config['default'];
-      Object.assign(this.state, configObject);
+      Object.assign(this.state, this.getConfig(props));
+  }
+
+  getConfig (props) {
+      const configObject = config['default'];
+      if(props.preset) {
+          if (config.hasOwnProperty(props.preset)) {
+              Object.assign(configObject, config[props.preset])
+          } else {
+              console.log(`No ${props.preset} preset for now, sorry about that. Moving on with the default settings.`)
+          }
+      }
+
+      if (props.inputType) {
+          if(transformers.hasOwnProperty(props.inputType)) {
+              configObject.inputType = props.inputType;
+          } else {
+              console.log(`Cannot handle ${props.inputType} input type for now, sorry. Moving on with ${configObject.inputType}.`)
+          }
+      }
+
+      return configObject;
   }
 
   parseCSV (path) {
@@ -67,7 +87,7 @@ class App extends Component {
               }
 
               if (!this.state['startFromRound']) {
-                  this.setState({ startFromRound: this.state.roundsNames.length - 1})
+                  this.setState({ startFromRound: this.state['roundsNames'].length - 1})
               }
 
               this.setState({

@@ -1,6 +1,6 @@
 import transformChangesTable from './changesTable';
 
-const transformers = {
+export const transformers = {
     'changesTable': transformChangesTable
 };
 
