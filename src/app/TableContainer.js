@@ -70,7 +70,6 @@ class TableContainer extends Component {
 
     render() {
         return (
-<<<<<<< HEAD:src/App/TableContainer.js
             <div className="replay-table-wrap">
 
                 <div className="replay-table-controls">
@@ -101,19 +100,6 @@ class TableContainer extends Component {
                         min={0}
                         max={this.props.roundsNames.length - 1}
                         onChange={this.handleSliderChange.bind(this)} />
-=======
-            <div>
-                <h3>Standings after {this.props.roundsNames[this.state.currentRound]}</h3>
-
-                <div
-                    className={this.state.isPlaying ? 'pause' : 'play'}
-                    onClick={this.handlePlayButton.bind(this)} />
-
-                <div
-                    className={`previous ${this.state.currentRound === 0 ? 'disabled' : ''}`}
-                    onClick={() => this.state.currentRound > 0 ? this.goToRound(this.state.currentRound - 1) : null}>
-                    &lt;
->>>>>>> origin/master:src/app/TableContainer.js
                 </div>
 
                 <table className="replay-table">
