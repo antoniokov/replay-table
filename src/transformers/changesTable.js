@@ -33,7 +33,7 @@ function addPositions (results, tiesResolution = 'no ties') {
 function transformChangesTable(jsonTable, params) {
     let [itemName, ...roundsNames] = jsonTable[0];
     if (roundsNames) {
-        if(roundsNames.every(roundName => Number.isInteger(roundName))) {
+        if(roundsNames.every(roundName => !isNaN(roundName))) {
             roundsNames.forEach(roundName => Number.parseInt(roundName, 10));
         }
     } else {
@@ -43,7 +43,7 @@ function transformChangesTable(jsonTable, params) {
     const [items, ...changes] = transpose(jsonTable.slice(1));
     const currentStandings = items.map(item => 0);
     const results = changes.map(resultRow => resultRow.map((changeString, itemNumber) => {
-        const change = Number.parseInt(changeString, 10);
+        const change = isNaN(changeString) ? 0 : Number.parseInt(changeString, 10);
         currentStandings[itemNumber] += change;
         return {
             item: items[itemNumber],
@@ -52,6 +52,13 @@ function transformChangesTable(jsonTable, params) {
         };
     }))
         .map(round => stableSort(round, (a,b) => b.total - a.total));
+
+    results.unshift(items.map(item => ({
+        item: item,
+        change: 0,
+        total: 0
+    })));
+    roundsNames.unshift('start');
 
     addPositions(results, params.tiesResolution);
 

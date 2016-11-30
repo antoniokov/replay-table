@@ -71,7 +71,7 @@ class TableContainer extends Component {
     render() {
         return (
             <div>
-                <h3>Standings after {this.props.roundsNames[this.state.currentRound]} games</h3>
+                <h3>Standings after {this.props.roundsNames[this.state.currentRound]}</h3>
 
                 <div
                     className={this.state.isPlaying ? 'pause' : 'play'}
@@ -104,7 +104,7 @@ class TableContainer extends Component {
                         <th className="position">{this.props.positionName}</th>
                         <th className="item">{this.props.itemName}</th>
                         <th className="total">{this.props.totalName}</th>
-                        {this.props.showChange
+                        {this.props.showChangeColumn
                             ? <th className="change">&Delta;</th>
                             : null}
                     </tr>
@@ -133,7 +133,7 @@ class TableContainer extends Component {
                                         <td className="position">{result.position}</td>
                                         <td className="item">{result.item}</td>
                                         <td className="total">{result.total}</td>
-                                        {this.props.showChange
+                                        {this.props.showChangeColumn
                                             ? <th className="change">{result.change > 0 ? `+${result.change}` : result.change}</th>
                                             : null}
                                     </tr>

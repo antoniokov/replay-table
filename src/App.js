@@ -115,6 +115,7 @@ class App extends Component {
                       positionName={this.state['positionName']}
                       itemName={this.state['itemName']}
                       totalName={this.state['totalName']}
+                      showChangeColumn={this.state['showChangeColumn']}
                       roundsNames={this.state['roundsNames']}
                       results={this.state['results']}
                       resultName={this.state['resultName']}

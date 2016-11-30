@@ -20,6 +20,10 @@ export default {
         //String
         totalName: 'Points',
 
+        //add column with round change (+3, +1, ...)
+        //Boolean
+        showChangeColumn: false,
+
         //['Australia', 'Bahrain',...] for F1, for example. When set to undefined gets names from data source if possible; if not uses round number
         //Array of Strings
         roundsNames: undefined,
@@ -47,6 +51,7 @@ export default {
 
     "F1": {
         itemName: 'Driver',
+        showChangeColumn: true,
         resultName: {
             25: 'gold',
             18: 'silver',
