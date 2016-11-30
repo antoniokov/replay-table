@@ -53,7 +53,7 @@ export default {
         roundsNames: undefined
     },
 
-    "soccer": {
+    "football": {
         totalName: 'Pts'
     }
 }
