@@ -32,9 +32,14 @@ function addPositions (results, tiesResolution = 'no ties') {
 
 function transformChangesTable(jsonTable, params) {
     let [itemName, ...roundsNames] = jsonTable[0];
-    if(roundsNames.every(roundName => Number.isInteger(roundName))) {
-        roundsNames = roundsNames.map(roundName => Number.parseInt(roundName, 10));
+    if (roundsNames) {
+        if(roundsNames.every(roundName => Number.isInteger(roundName))) {
+            roundsNames.forEach(roundName => Number.parseInt(roundName, 10));
+        }
+    } else {
+        roundsNames = [...new Array(jsonTable[1].length).keys()];
     }
+
     const [items, ...changes] = transpose(jsonTable.slice(1));
     const currentStandings = items.map(item => 0);
     const results = changes.map(resultRow => resultRow.map((changeString, itemNumber) => {
