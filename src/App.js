@@ -23,7 +23,7 @@ class App extends Component {
   }
 
   getConfig (props) {
-      const configObject = config['default'];
+      const configObject = Object.assign({}, config['default']);
 
       if (props.preset) {
           if (config.hasOwnProperty(props.preset)) {
