@@ -1,20 +1,31 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { parse } from 'babyparse'
-import config from './config';
-import transform, { transformers } from './transformers/transform';
+import { config, isParameterValid } from './config';
+import toCamelCase from './auxiliary/toCamelCase'
+import { transform } from './transformers/transform';
 import TableContainer from './app/TableContainer';
 
 class App extends Component {
   constructor(props) {
       super(props);
       this.state = { status: 'loading' };
+
+      if (!props.csv) {
+          this.setState({
+              status: 'error',
+              errorMessage: 'Please specify csv file using data-csv attribute'
+          });
+          return;
+      }
+
       Object.assign(this.state, this.getConfig(props));
   }
 
   getConfig (props) {
       const configObject = config['default'];
-      if(props.preset) {
+
+      if (props.preset) {
           if (config.hasOwnProperty(props.preset)) {
               Object.assign(configObject, config[props.preset])
           } else {
@@ -22,25 +33,21 @@ class App extends Component {
           }
       }
 
-      if (props.inputType) {
-          if(transformers.hasOwnProperty(props.inputType)) {
-              configObject.inputType = props.inputType;
-          } else {
-              console.log(`Cannot handle ${props.inputType} input type for now, sorry. Moving on with ${configObject.inputType}.`)
-          }
-      }
+      Object.keys(props)
+          .filter(key => !['csv', 'preset', 'style', 'config'].includes(key))
+          .map(key => toCamelCase(key))
+          .forEach(key => {
+              if (isParameterValid(key, props[key])) {
+                  configObject[key] = props[key];
+              } else if (configObject.hasOwnProperty(key)) {
+                  console.log(`Sorry, we cannot accept ${props[key]} as ${key}. Moving on with the default value which is ${configObject[key]}`);
+              } else {
+                  console.log(`Sorry, there is no ${key} parameter available. Ignoring it and moving on.`);
+              }
+          });
 
       return configObject;
   }
-
-  /*
-  validateProp (propName, propValue) {
-      switch (propName) {
-          case 'inputType':
-
-      }
-  }
-  */
 
   parseCSV (path) {
       return fetch(path)
@@ -50,7 +57,7 @@ class App extends Component {
               if(json.errors.length !== 0) {
                   return {
                       status: 'error',
-                      errorMessage: json.errors.map(error => error.message).join('\n')
+                      errorMessage: 'Parsing csv file failed\n' +  json.errors.map(error => error.message).join('\n')
                   };
               }
 
@@ -62,12 +69,16 @@ class App extends Component {
           .catch(error => {
               return {
                   status: 'error',
-                  errorMessage: error
+                  errorMessage: 'Fetching csv file failed\n' + error
               };
           });
   }
 
   componentDidMount() {
+      if (this.state.status === 'error') {
+          return;
+      }
+
       Promise.resolve(this.parseCSV(this.props.csv))
           .then(result => {
               if (result.status === 'error') {
@@ -82,7 +93,7 @@ class App extends Component {
               if (transformedResult.status === 'error') {
                   this.setState({
                       status: 'error',
-                      errorMessage: result.errorMessage
+                      errorMessage: 'Transformation failed\n' + result.errorMessage
                   });
                   return;
               }
@@ -117,7 +128,7 @@ class App extends Component {
           case 'loading':
               return <p>Loading...</p>;
           case 'error':
-              return <p>Failed to load the table: {this.state.errorMessage}</p>;
+              return <p>An error occured. {this.state.errorMessage}</p>;
           default:
               return (
                   <TableContainer

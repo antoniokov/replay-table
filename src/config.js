@@ -1,4 +1,7 @@
-export default {
+import { transformers } from './transformers/transform';
+import isString from './auxiliary/isString'
+
+export const config = {
     "default": {
         //input file format. For now only changesTable is supported. See an example: https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv
         //String
@@ -25,7 +28,7 @@ export default {
         showChangeColumn: false,
 
         //['Australia', 'Bahrain',...] for F1, for example. When set to undefined gets names from data source if possible; if not uses round number
-        //Array of Strings
+        //Array of Strings or Numbers
         roundsNames: undefined,
 
         //number of round to start from. When set to undefined shows the last round
@@ -66,5 +69,42 @@ export default {
         resultName: {
             1: 'victory'
         }
+    }
+};
+
+export function isParameterValid (parameterName, parameterValue) {
+    switch (parameterName) {
+        case 'inputType':
+            return transformers.hasOwnProperty(parameterValue);
+
+        case 'positionName':
+            return isString(parameterValue);
+
+        case 'itemName':
+            return !parameterValue || isString(parameterValue);
+
+        case 'focusedItems':
+            return Array.isArray(parameterValue) && parameterValue.every(item => isString(item));
+
+        case 'totalName':
+            return isString(parameterValue);
+
+        case 'showChangeColumn':
+            return typeof parameterValue === 'boolean';
+
+        case 'roundsNames':
+            return !parameterValue || (Array.isArray(parameterValue) && parameterValue.every(item => isString(item) || !Number.isNaN(item)));
+
+        case 'startFromRound':
+            return !parameterValue || !Number.isNaN(parameterValue);
+
+        case 'animationDuration':
+            return !Number.isNaN(parameterValue);
+
+        case 'tiesResolution':
+            return ['no ties', 'highest', 'range'].includes(parameterValue);
+
+        default:
+            return false;
     }
 }
