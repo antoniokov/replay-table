@@ -53,15 +53,16 @@ function transformChangesTable(jsonTable, params) {
     }))
         .map(round => stableSort(round, (a,b) => b.total - a.total));
 
+    if (params['startRoundName']) {
+        results.unshift(items.map(item => ({
+            item: item,
+            change: 0,
+            total: 0
+        })));
+        roundsNames.unshift(params['startRoundName']);
+    }
 
-    results.unshift(items.map(item => ({
-        item: item,
-        change: 0,
-        total: 0
-    })));
-    roundsNames.unshift('start');
-
-    addPositions(results, params.tiesResolution);
+    addPositions(results, params['tiesResolution']);
 
     return {
         status: 'success',

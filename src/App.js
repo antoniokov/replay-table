@@ -89,7 +89,11 @@ class App extends Component {
                   return;
               }
 
-              const transformedResult = transform('changesTable', result.data, { tiesResolution: this.state['tiesResolution'] });
+              const params = {
+                  startRoundName: this.state['startRoundName'],
+                  tiesResolution: this.state['tiesResolution']
+              };
+              const transformedResult = transform('changesTable', result.data, params );
               if (transformedResult.status === 'error') {
                   this.setState({
                       status: 'error',

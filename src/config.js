@@ -31,6 +31,10 @@ export const config = {
         //Array of Strings or Numbers
         roundsNames: undefined,
 
+        //if defined inserts round #0 before other rounds with all items having total equal to zero
+        //String
+        startRoundName: '0',
+
         //number of round to start from. When set to undefined shows the last round
         //Number
         startFromRound: undefined,
@@ -55,6 +59,7 @@ export const config = {
     "F1": {
         itemName: 'Driver',
         showChangeColumn: true,
+        startRoundName: 'Start →',
         resultName: {
             25: 'gold',
             18: 'silver',
@@ -94,6 +99,9 @@ export function isParameterValid (parameterName, parameterValue) {
 
         case 'roundsNames':
             return !parameterValue || (Array.isArray(parameterValue) && parameterValue.every(item => isString(item) || !Number.isNaN(item)));
+
+        case 'startRoundName':
+            return isString(parameterValue);
 
         case 'startFromRound':
             return !parameterValue || !Number.isNaN(parameterValue);
