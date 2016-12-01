@@ -13,11 +13,8 @@ class TableContainer extends Component {
         };
     }
 
-    handleSliderChange (e) {
-        const round = Number.parseInt(e.target.value, 10);
-        if (round !== this.state.currentRound) {
-            this.goToRound(round);
-        }
+    handleSelect (e) {
+        this.goToRound(Number.parseInt(e.target.value, 10));
     }
 
     goToRound (roundNumber) {
@@ -73,10 +70,10 @@ class TableContainer extends Component {
             <div className="replay-table-wrap">
 
                 <div className="replay-table-controls">
-                    <h3 className="replay-table-sub-head">Standings after {this.props.roundsNames[this.state.currentRound]} games</h3>
-
                     <div
-                        className={this.state.isPlaying ? 'pause' : 'play'}
+                        className={this.state.isPlaying
+                            ? 'pause'
+                            : this.state.currentRound === this.props.roundsNames.length - 1 ? 'replay' : 'play'}
                         onClick={this.handlePlayButton.bind(this)} />
 
                     <div
@@ -91,15 +88,14 @@ class TableContainer extends Component {
                         &gt;
                     </div>
 
-                    <input
-                        className="range-line"
-                        type="range"
-                        name="rounds"
-                        autoFocus={true}
+                    <select onChange={this.handleSelect.bind(this)} value={this.state.currentRound}>
+                        {this.props.roundsNames.map((name, i) =>
+                            <option key={i} value={i}>{name}</option>)}
+                    </select>
+
+                    <progress
                         value={this.state.currentRound}
-                        min={0}
-                        max={this.props.roundsNames.length - 1}
-                        onChange={this.handleSliderChange.bind(this)} />
+                        max={this.props.roundsNames.length - 1} />
                 </div>
 
                 <table className="replay-table">

@@ -33,6 +33,15 @@ class App extends Component {
       return configObject;
   }
 
+  /*
+  validateProp (propName, propValue) {
+      switch (propName) {
+          case 'inputType':
+
+      }
+  }
+  */
+
   parseCSV (path) {
       return fetch(path)
           .then(response => response.text())
