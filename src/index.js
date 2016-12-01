@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 
-const root = document.getElementsByClassName('replayTable')[0];
-
-ReactDOM.render(
-    <App {...(root.dataset)} />,
-    root
-);
+const replayTables = Array.from(document.getElementsByClassName('replayTable'));
+replayTables.forEach(table => ReactDOM.render(
+    <App {...(table.dataset)} />,
+    table
+));
