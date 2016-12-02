@@ -38,7 +38,7 @@ body {
     margin: 0;
     padding: 5rem calc(50% - 56rem);
     font-size: 1.4rem;
-    font-family: sans-serif;
+    font-family: 'helvetica', 'arial', sans-serif;
 }
 
 h2{

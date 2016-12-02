@@ -85,45 +85,66 @@ class TableContainer extends Component {
             <div className="replay-table-wrap">
 
                 <div className="replay-table-controls">
-                    <div
-                        className={this.state.isPlaying
+
+
+                    <div className="replay-table-check">
+
+
+                        <input type="radio"
+                               id="replay-table-radio-season"
+                               name={`${this.props.name || ''}seasonRoundSwitch`}
+                               value="season"
+                               checked={this.state.show === 'season'}
+                               onChange={() => this.setState({ show: 'season' })} />
+                        <label  htmlFor="replay-table-radio-season">
+                            {this.props.seasonName}
+                        </label>
+
+                        <input type="radio"
+                               id="replay-table-radio-round"
+                               name={`${this.props.name || ''}seasonRoundSwitch`}
+                               value="round"
+                               checked={this.state.show === 'round'}
+                               onChange={() => this.setState({ show: 'round' })} />
+                        <label  htmlFor="replay-table-radio-round">
+                            {this.props.roundName}
+                        </label>
+
+                    </div>
+
+                    <div className="replay-table-controls-left">
+                        <select className="replay-table-select" onChange={this.handleSelect.bind(this)} value={this.state.currentRound}>
+                            {this.props.roundsNames.map((name, i) =>
+                                <option key={i} value={i}>{name}</option>)}
+                        </select>
+                        <div
+                            className={this.state.isPlaying
                             ? 'pause'
                             : this.state.currentRound === this.props.lastRound ? 'replay' : 'play'}
-                        onClick={this.handlePlayButton.bind(this)} />
+                            onClick={this.handlePlayButton.bind(this)} />
 
-                    <div
-                        className={`previous ${this.state.currentRound === 0 || this.state.isMoving ? 'disabled' : ''}`}
-                        onClick={this.handlePreviousButton.bind(this)}>
-                        &lt;
+                        <div
+                            className={`previous ${this.state.currentRound === 0 || this.state.isMoving ? 'disabled' : ''}`}
+                            onClick={this.handlePreviousButton.bind(this)}>
+                            &lt;
+                        </div>
+
+                        <div
+                            className={`next ${this.state.currentRound === this.props.lastRound  || this.state.isMoving? 'disabled' : ''}`}
+                            onClick={this.handleNextButton.bind(this)}>
+                            &gt;
+                        </div>
+
                     </div>
 
-                    <div
-                        className={`next ${this.state.currentRound === this.props.lastRound  || this.state.isMoving? 'disabled' : ''}`}
-                        onClick={this.handleNextButton.bind(this)}>
-                        &gt;
+                    <div className="replay-table-progress-wrap">
+                        {this.props.showProgressBar ? <progress className="replay-table-progress" value={this.state.currentRound} max={this.props.roundsNames.length - 1} /> : null}
                     </div>
 
-                    <select onChange={this.handleSelect.bind(this)} value={this.state.currentRound}>
-                        {this.props.roundsNames.map((name, i) =>
-                            <option key={i} value={i}>{name}</option>)}
-                    </select>
 
-                    {this.props.showProgressBar ? <progress value={this.state.currentRound} max={this.props.roundsNames.length - 1} /> : null}
-
-                    <input type="radio"
-                           name={`${this.props.name || ''}seasonRoundSwitch`}
-                           value="season"
-                           checked={this.state.show === 'season'}
-                           onChange={() => this.setState({ show: 'season' })} />{this.props.seasonName}
-
-                    <input type="radio"
-                           name={`${this.props.name || ''}seasonRoundSwitch`}
-                           value="round"
-                           checked={this.state.show === 'round'}
-                           onChange={() => this.setState({ show: 'round' })} />{this.props.roundName}
                 </div>
 
-                <table className="replay-table">
+                <table className="r-table">
                     <thead>
                     <tr>
                         <th className="position">{this.props.positionName}</th>

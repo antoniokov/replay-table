@@ -1,5 +1,7 @@
 
-.replay-table-wrap{}
+.replay-table-wrap{
+    margin-bottom: 8rem;
+}
 .replay-table-wrap .replay-table-sub-head{
     font-size: 1.6rem;
     font-family: 'Roboto';
@@ -8,139 +10,221 @@
 }
 
 .replay-table-controls{
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
-.replay-table-wrap .pause{
+.replay-table-controls:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.replay-table-wrap .pause,
+.replay-table-wrap .pause.disabled:hover{
     width: 1.2rem;
     height: 1.6rem;
     border-right: 0.4rem solid rgba(0,0,0,0.5);
     border-left: 0.4rem solid rgba(0,0,0,0.5);
 }
-.replay-table-wrap .play{
+.replay-table-wrap .play,
+.replay-table-wrap .play.disabled:hover{
     width: 0;
     height: 0;
-    border-top: 0.8rem solid transparent;
-    border-left: 1.2rem solid rgba(0,0,0,0.5);
-    border-bottom: 0.8rem solid transparent;
+    border-top: 1rem solid transparent;
+    border-left: 1.4rem solid #7ec038;
+    border-bottom: 1rem solid transparent;
+}
+.replay-table-wrap .replay.disabled:hover,
+.replay-table-wrap .replay{
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background: url("../img/replay.svg") no-repeat 0 0 / cover;
+    opacity: 0.5;
+}
+.replay-table-wrap .replay:hover{
+    opacity: 1;
 }
 .replay-table-wrap .previous,
-.replay-table-wrap .next{
+.replay-table-wrap .previous.disabled:hover,
+.replay-table-wrap .next,
+.replay-table-wrap .next.disabled:hover{
     position: relative;
-    width: 0.6rem;
-    height: 1rem;
-    background: rgba(0,0,0,0.5);
+    width: 1.2rem;
+    height: 1.2rem;
     font-size: 0;
-    border-top: 0.3rem solid #fff;
-    border-bottom: 0.3rem solid #fff;
+    border-top: 0.3rem solid #5a98ff;
+    border-right: 0.3rem solid #5a98ff;
     box-sizing: content-box;
 }
-
+.replay-table-wrap .previous:hover,
+.replay-table-wrap .next:hover{
+    border-top: 0.3rem solid #26a6ff;
+    border-right: 0.3rem solid #26a6ff;
+}
 .replay-table-wrap .previous{
-    border-left: 1.2rem solid #fff;
+    -webkit-transform: rotate(-135deg);
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    transform: rotate(-135deg);
 }
 .replay-table-wrap .next{
-    border-right: 1.2rem solid #fff;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
-.replay-table-wrap .previous:before,
-.replay-table-wrap .next:before{
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-top: 0.8rem solid transparent;
-    border-bottom: 0.8rem solid transparent;
-    top: -0.3rem;
-}
-.replay-table-wrap .previous:before{
-    border-right: 1rem solid rgba(0,0,0,0.5);
-    left: -1rem;
-
-}
-.replay-table-wrap .next:before{
-    border-left: 1rem solid rgba(0,0,0,0.5);
-    right: -1rem;
-
-}
-
-
+.replay-table-wrap .replay-table-select,
 .replay-table-wrap .pause,
+.replay-table-wrap .replay,
 .replay-table-wrap .play,
 .replay-table-wrap .previous,
 .replay-table-wrap .next{
     display: inline-block;
-    vertical-align: top;
-    margin-right: 1rem;
+    vertical-align: middle;
+    margin-right: 1.5rem;
     cursor: pointer;
+}
+.replay-table-wrap .pause.disabled,
+.replay-table-wrap .replay.disabled,
+.replay-table-wrap .play.disabled,
+.replay-table-wrap .previous.disabled,
+.replay-table-wrap .next.disabled{
+    opacity: 0.2;
+    cursor: default;
 }
 .replay-table-wrap .pause:hover{
     border-right: 0.4rem solid rgba(0,0,0,1);
     border-left: 0.4rem solid rgba(0,0,0,1);
 }
 .replay-table-wrap .play:hover{
-    border-left: 1.2rem solid rgba(0,0,0,1);
+    border-left-color: #a2f647;
 }
-.replay-table-wrap .previous:hover:before{
-    border-right: 1rem solid rgba(0,0,0,1);
-}
-.replay-table-wrap .next:hover:before{
-    border-left: 1rem solid rgba(0,0,0,1);
-}
-.replay-table-wrap .previous:hover,
-.replay-table-wrap .next:hover{
-    background: rgba(0,0,0,1);
-}
-.replay-table-wrap .range-line{
-    width: calc(100% - 9rem);
-    cursor: pointer;
+.replay-table-wrap .replay-table-select{
+    min-width: 4rem;
+    background: #fff;
+    font-size: 1.6rem;
+    border: 1px solid #dbdbdb;
 }
 
-.replay-table{
-    width: 100%;
+.replay-table-wrap .replay-table-check{
+    position: relative;
+    float: right;
+    margin-left: 3rem;
+    border: 0.2rem solid #dbdbdb;
+    background: #efefef;
+    -webkit-border-radius: 0.4rem;
+    -moz-border-radius: 0.4rem;
+    border-radius: 0.4rem;
 }
-.replay-table td{
+.replay-table-wrap .replay-table-check:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+.replay-table-check > input{
+    opacity: 0;
+    display: block;
+    border: 1px solid;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+}
+.replay-table-check > label{
+    position: relative;
+    z-index: 2;
+    line-height: 2.4rem;
+    padding: 0.4rem 0.8rem;
+
+    font-size: 1.3rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.replay-table-check > input + label{
+    background: transparent;
+    -webkit-border-radius: 0.4rem;
+    -moz-border-radius: 0.4rem;
+    border-radius: 0.4rem;
+    color: rgba(0,0,0,0.4);
+}
+.replay-table-check > input:checked + label {
+    color: #000;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+    background: #91d589;
+    box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.5);
+}
+
+
+.replay-table-controls-left{
+    float: left;
+    margin-right: 1rem;
+}
+.replay-table-progress-wrap{
+    overflow: hidden;
+    padding-top: 0.6rem;
+}
+.replay-table-progress-wrap .replay-table-progress{
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+
+}
+
+
+
+
+
+
+
+.r-table{
+    width: 100%;
+
+}
+.r-table td{
     padding: 0.6rem 0;
     border-bottom: 1px dotted rgba(0,0,0,0.05);
 }
-.replay-table th{
+.r-table th{
     font-weight: bold;
     font-size: 1.6rem;
     padding: 1rem 0;
     border-bottom: 1px double rgba(0,0,0,0.05);
 }
-.replay-table tr th:last-child,
-.replay-table tr td:last-child{
+.r-table tr th:last-child,
+.r-table tr td:last-child{
     width: 5rem;
     text-align: center;
 }
 
-.replay-table{}
 
-.replay-table .row {
+.r-table .row {
     color: gray;
     cursor: pointer;
 }
-.replay-table tr:hover td{
+.r-table tr:hover td{
     background: rgba(0,0,0,0.02);
 }
-.replay-table .item{
+.r-table .item{
     text-align: left;
 }
-.replay-table .position {
+.r-table .position {
     text-align: left;
-    width: 3rem;
+    width: 4rem;
 }
 
-.replay-table .row.focus {
+.r-table .row.focus {
     color: black;
+    font-weight: bold;
 }
 
 input[type="range"]:focus {
-    outline: none!important;
+
+    outline: none !important;
 }
 
-
 .disabled {
-    color: gray;
+    opacity: 0.5;
 }
 
 li {
