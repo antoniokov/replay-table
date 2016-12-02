@@ -44,6 +44,6 @@ Feel free to download this [csv](https://s3-us-west-2.amazonaws.com/replay-table
 ## Customization
 ### `name`
 | **Div Attribute** | **Accepted Type** | **Default Value** |
-|-|-|-|
+|-------------------|-------------------|-------------------|
 | `data-name` |  `String` | `undefined` |
 Name is required when you have several Replay Tables on one page.
