@@ -21,15 +21,15 @@
 .replay-table-wrap .pause.disabled:hover{
     width: 1.2rem;
     height: 1.6rem;
-    border-right: 0.4rem solid rgba(0,0,0,0.5);
-    border-left: 0.4rem solid rgba(0,0,0,0.5);
+    border-right: 0.4rem solid rgba(0,0,0,0.3);
+    border-left: 0.4rem solid rgba(0,0,0,0.3);
 }
 .replay-table-wrap .play,
 .replay-table-wrap .play.disabled:hover{
     width: 0;
     height: 0;
     border-top: 1rem solid transparent;
-    border-left: 1.4rem solid #7ec038;
+    border-left: 1.4rem solid rgba(0,0,0,0.3);
     border-bottom: 1rem solid transparent;
 }
 .replay-table-wrap .replay.disabled:hover,
@@ -37,7 +37,7 @@
     width: 2rem;
     height: 2rem;
     border: none;
-    background: url("../img/replay.svg") no-repeat 0 0 / cover;
+    background: url("../img/replay.png") no-repeat 0 0 / cover;
     opacity: 0.5;
 }
 .replay-table-wrap .replay:hover{
@@ -51,14 +51,14 @@
     width: 1.2rem;
     height: 1.2rem;
     font-size: 0;
-    border-top: 0.3rem solid #5a98ff;
-    border-right: 0.3rem solid #5a98ff;
+    border-top: 0.3rem solid rgba(0,0,0,0.3);
+    border-right: 0.3rem solid rgba(0,0,0,0.3);
     box-sizing: content-box;
 }
 .replay-table-wrap .previous:hover,
 .replay-table-wrap .next:hover{
-    border-top: 0.3rem solid #26a6ff;
-    border-right: 0.3rem solid #26a6ff;
+    border-top: 0.3rem solid rgba(0,0,0,0.5);
+    border-right: 0.3rem solid rgba(0,0,0,0.5);
 }
 .replay-table-wrap .previous{
     -webkit-transform: rotate(-135deg);
@@ -94,11 +94,11 @@
     cursor: default;
 }
 .replay-table-wrap .pause:hover{
-    border-right: 0.4rem solid rgba(0,0,0,1);
-    border-left: 0.4rem solid rgba(0,0,0,1);
+    border-right: 0.4rem solid rgba(0,0,0,0.5);
+    border-left: 0.4rem solid rgba(0,0,0,0.5);
 }
 .replay-table-wrap .play:hover{
-    border-left-color: #a2f647;
+    border-left-color: rgba(0,0,0,0.5);
 }
 .replay-table-wrap .replay-table-select{
     min-width: 4rem;
@@ -151,7 +151,7 @@
 .replay-table-check > input:checked + label {
     color: #000;
     text-shadow: 0 1px 0 rgba(255,255,255,0.3);
-    background: #91d589;
+    background: rgba(0,0,0,0.2);
     box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.5);
 }
 
@@ -214,8 +214,7 @@
 }
 
 .r-table .row.focus {
-    color: black;
-    font-weight: bold;
+    color: #000;
 }
 
 input[type="range"]:focus {
@@ -241,7 +240,7 @@ li {
 
 @keyframes draw {
     0% {background-color: transparent;}
-    50% {background-color: rgba(255,202,88,0.5);}
+    50% {background-color: rgba(0,0,0,0.1);}
     100% {background-color: transparent;}
 }
 

@@ -113,10 +113,7 @@ class TableContainer extends Component {
                     </div>
 
                     <div className="replay-table-controls-left">
-                        <select className="replay-table-select" onChange={this.handleSelect.bind(this)} value={this.state.currentRound}>
-                            {this.props.roundsNames.map((name, i) =>
-                                <option key={i} value={i}>{name}</option>)}
-                        </select>
+
                         <div
                             className={this.state.isPlaying
                             ? 'pause'
@@ -134,6 +131,11 @@ class TableContainer extends Component {
                             onClick={this.handleNextButton.bind(this)}>
                             &gt;
                         </div>
+
+                        <select className="replay-table-select" onChange={this.handleSelect.bind(this)} value={this.state.currentRound}>
+                            {this.props.roundsNames.map((name, i) =>
+                                <option key={i} value={i}>{name}</option>)}
+                        </select>
 
                     </div>
 
