@@ -13,18 +13,27 @@ class TableContainer extends Component {
         };
     }
 
-    handleSelect (e) {
-        this.goToRound(Number.parseInt(e.target.value, 10));
-    }
-
     goToRound (roundNumber) {
         this.setState({ isMoving: false }, () => {
             return new Promise(resolve => this.setState({
                 previousRound: this.state.currentRound,
                 currentRound: roundNumber,
                 isMoving: true
-            }, resolve));
+            }, () => setTimeout(() => this.setState({ isMoving: false }, resolve), this.props.animationDuration)));
         });
+    }
+
+    play () {
+        if (this.state.currentRound >= this.props.lastRound) {
+            this.setState({ isPlaying: false });
+            return;
+        }
+
+        if (this.state.isPlaying) {
+            const timeout = this.props.showChangeDuringAnimation ? this.props.animationDuration*2 : this.props.animationDuration;
+            Promise.resolve(this.goToRound(this.state.currentRound + 1))
+                .then(() => setTimeout(this.play.bind(this), timeout));
+        }
     }
 
     handlePlayButton () {
@@ -32,9 +41,10 @@ class TableContainer extends Component {
             this.setState({ isPlaying: false });
         } else {
             this.setState({ isPlaying: true }, () => {
-                if (this.state.currentRound === this.props.roundsNames.length - 1) {
+                if (this.state.currentRound === this.props.lastRound) {
+                    const timeout = this.props.showChangeDuringAnimation ? this.props.animationDuration*2 : this.props.animationDuration;
                     Promise.resolve(this.goToRound(0))
-                        .then(() => setTimeout(this.play.bind(this), this.props.animationDuration))
+                        .then(() => setTimeout(this.play.bind(this), timeout))
                 } else {
                     this.play.bind(this)()
                 }
@@ -42,16 +52,20 @@ class TableContainer extends Component {
         }
     }
 
-    play () {
-        if (this.state.currentRound >= this.props.roundsNames.length - 1) {
-            this.setState({ isPlaying: false });
-            return;
+    handlePreviousButton () {
+        if(this.state.currentRound > 0) {
+            this.goToRound(this.state.currentRound - 1)
         }
+    }
 
-        if (this.state.isPlaying) {
-                Promise.resolve(this.goToRound(this.state.currentRound + 1))
-                    .then(() => setTimeout(this.play.bind(this), this.props.animationDuration));
+    handleNextButton () {
+        if(this.state.currentRound < this.props.lastRound) {
+            this.goToRound(this.state.currentRound + 1);
         }
+    }
+
+    handleSelect (e) {
+        this.goToRound(Number.parseInt(e.target.value, 10));
     }
 
     highlightRow (item) {
@@ -73,18 +87,18 @@ class TableContainer extends Component {
                     <div
                         className={this.state.isPlaying
                             ? 'pause'
-                            : this.state.currentRound === this.props.roundsNames.length - 1 ? 'replay' : 'play'}
+                            : this.state.currentRound === this.props.lastRound ? 'replay' : 'play'}
                         onClick={this.handlePlayButton.bind(this)} />
 
                     <div
                         className={`previous ${this.state.currentRound === 0 ? 'disabled' : ''}`}
-                        onClick={() => this.state.currentRound > 0 ? this.goToRound(this.state.currentRound - 1) : null}>
+                        onClick={this.handlePreviousButton.bind(this)}>
                         &lt;
                     </div>
 
                     <div
-                        className={`next ${this.state.currentRound === this.props.roundsNames.length - 1 ? 'disabled' : ''}`}
-                        onClick={() => this.state.currentRound < this.props.roundsNames.length - 1 ? this.goToRound(this.state.currentRound + 1) : null}>
+                        className={`next ${this.state.currentRound === this.props.lastRound ? 'disabled' : ''}`}
+                        onClick={this.handleNextButton.bind(this)}>
                         &gt;
                     </div>
 
@@ -104,16 +118,12 @@ class TableContainer extends Component {
                         <th className="position">{this.props.positionName}</th>
                         <th className="item">{this.props.itemName}</th>
                         <th className="total">{this.props.totalName}</th>
-                        {this.props.showChangeColumn
-                            ? <th className="change">&Delta;</th>
-                            : null}
                     </tr>
                     </thead>
                     <FlipMove
-                        delay={this.props.animationDuration/2 - 100}
+                        delay={this.props.animationDuration/2}
                         duration={this.props.animationDuration/2}
-                        typeName='tbody'
-                        onFinishAll={() => this.setState({ isMoving: false })}>
+                        typeName='tbody' >
 
                         {this.props.results[this.state.currentRound]
                             .map(result => {
@@ -123,6 +133,8 @@ class TableContainer extends Component {
                                 }
 
                                 const isFocused = this.state.focusedItems.size === 0 || this.state.focusedItems.has(result.item);
+                                const changeString = result.change > 0 ? `+${result.change}` : result.change;
+                                const showChange = this.props.showChangeDuringAnimation && this.state.isMoving;
 
                                 return (
                                     <tr key={result.item}
@@ -132,10 +144,7 @@ class TableContainer extends Component {
 
                                         <td className="position">{result.position}</td>
                                         <td className="item">{result.item}</td>
-                                        <td className="total">{result.total}</td>
-                                        {this.props.showChangeColumn
-                                            ? <td className="change">{result.change > 0 ? `+${result.change}` : result.change}</td>
-                                            : null}
+                                        <td className="total">{showChange ? changeString : result.total}</td>
                                     </tr>
                                 );
                             })}

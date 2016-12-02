@@ -110,10 +110,12 @@ class App extends Component {
                   this.setState({ roundsNames: transformedResult['roundsNames']})
               }
 
+              const lastRound = transformedResult['results'].reduce((maxRoundNumber, round, i) => {
+                  return round.some(result => result.change !== null) && i > maxRoundNumber ? i : maxRoundNumber;
+              }, 0);
+              this.setState({ lastRound: lastRound });
+
               if (!this.state['startFromRound']) {
-                  const lastRound = transformedResult['results'].reduce((maxRoundNumber, round, i) => {
-                      return round.some(result => result.change !== null) && i > maxRoundNumber ? i : maxRoundNumber;
-                  }, 0);
                   this.setState({ startFromRound: lastRound})
               }
 
@@ -148,6 +150,7 @@ class App extends Component {
                       results={this.state['results']}
                       resultName={this.state['resultName']}
                       startFromRound={this.state['startFromRound']}
+                      lastRound={this.state['lastRound']}
                       animationDuration={this.state['animationDuration']}
                   />
               );
