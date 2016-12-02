@@ -111,7 +111,10 @@ class App extends Component {
               }
 
               if (!this.state['startFromRound']) {
-                  this.setState({ startFromRound: this.state['roundsNames'].length - 1})
+                  const lastRound = transformedResult['results'].reduce((maxRoundNumber, round, i) => {
+                      return round.some(result => result.change !== null) && i > maxRoundNumber ? i : maxRoundNumber;
+                  }, 0);
+                  this.setState({ startFromRound: lastRound})
               }
 
               this.setState({
@@ -139,7 +142,8 @@ class App extends Component {
                       positionName={this.state['positionName']}
                       itemName={this.state['itemName']}
                       totalName={this.state['totalName']}
-                      showChangeColumn={this.state['showChangeColumn']}
+                      showChangeDuringAnimation={this.state['showChangeDuringAnimation']}
+                      showProgressBar={this.state['showProgressBar']}
                       roundsNames={this.state['roundsNames']}
                       results={this.state['results']}
                       resultName={this.state['resultName']}

@@ -23,9 +23,13 @@ export const config = {
         //String
         totalName: 'Points',
 
-        //add column with round change (+3, +1, ...)
+        //show total change (+3, +1, ...) during animation
         //Boolean
-        showChangeColumn: false,
+        showChangeDuringAnimation: false,
+
+        //show progress bar
+        //Boolean
+        showProgressBar: true,
 
         //['Australia', 'Bahrain',...] for F1, for example. When set to undefined gets names from data source if possible; if not uses round number
         //Array of Strings or Numbers
@@ -58,7 +62,7 @@ export const config = {
 
     "F1": {
         itemName: 'Driver',
-        showChangeColumn: true,
+        showChangeDuringAnimation: true,
         startRoundName: 'Start →',
         resultName: {
             25: 'gold',
@@ -94,7 +98,10 @@ export function isParameterValid (parameterName, parameterValue) {
         case 'totalName':
             return isString(parameterValue);
 
-        case 'showChangeColumn':
+        case 'showChangeDuringAnimation':
+            return typeof parameterValue === 'boolean';
+
+        case 'showProgressBar':
             return typeof parameterValue === 'boolean';
 
         case 'roundsNames':

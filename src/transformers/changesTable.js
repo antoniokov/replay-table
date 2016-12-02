@@ -43,8 +43,8 @@ function transformChangesTable(jsonTable, params) {
     const [items, ...changes] = transpose(jsonTable.slice(1));
     const currentStandings = items.map(item => 0);
     const results = changes.map(resultRow => resultRow.map((changeString, itemNumber) => {
-        const change = Number.parseInt(changeString, 10) || 0;
-        currentStandings[itemNumber] += change;
+        const change = changeString ? Number.parseInt(changeString, 10) || 0 : null;
+        currentStandings[itemNumber] += change || 0;
         return {
             item: items[itemNumber],
             change: change,
