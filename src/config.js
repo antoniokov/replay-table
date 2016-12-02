@@ -3,9 +3,21 @@ import isString from './auxiliary/isString'
 
 export const config = {
     "default": {
+        //name is required when you have several replayTables on one page
+        //String
+        name: undefined,
+
         //input file format. For now only changesTable is supported. See an example: https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv
         //String
         inputType: 'changesTable',
+
+        //'Season', 'Tournament',...
+        //String
+        seasonName: 'Season',
+
+        //'Game', 'Match', 'Round', 'Leg',...
+        //String
+        roundName: 'Game',
 
         //'Position', 'Rank',...
         //String
@@ -83,8 +95,17 @@ export const config = {
 
 export function isParameterValid (parameterName, parameterValue) {
     switch (parameterName) {
+        case 'name':
+            return isString(parameterValue);
+
         case 'inputType':
             return transformers.hasOwnProperty(parameterValue);
+
+        case 'seasonName':
+            return isString(parameterValue);
+
+        case 'roundName':
+            return isString(parameterValue);
 
         case 'positionName':
             return isString(parameterValue);
