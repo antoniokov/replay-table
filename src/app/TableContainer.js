@@ -107,9 +107,7 @@ class TableContainer extends Component {
                             <option key={i} value={i}>{name}</option>)}
                     </select>
 
-                    <progress
-                        value={this.state.currentRound}
-                        max={this.props.roundsNames.length - 1} />
+                    {this.props.showProgressBar ? <progress value={this.state.currentRound} max={this.props.roundsNames.length - 1} /> : null}
                 </div>
 
                 <table className="replay-table">
