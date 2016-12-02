@@ -53,13 +53,13 @@ class TableContainer extends Component {
     }
 
     handlePreviousButton () {
-        if(this.state.currentRound > 0) {
+        if(this.state.currentRound > 0 && !this.state.isMoving) {
             this.goToRound(this.state.currentRound - 1)
         }
     }
 
     handleNextButton () {
-        if(this.state.currentRound < this.props.lastRound) {
+        if(this.state.currentRound < this.props.lastRound && !this.state.isMoving) {
             this.goToRound(this.state.currentRound + 1);
         }
     }
@@ -91,13 +91,13 @@ class TableContainer extends Component {
                         onClick={this.handlePlayButton.bind(this)} />
 
                     <div
-                        className={`previous ${this.state.currentRound === 0 ? 'disabled' : ''}`}
+                        className={`previous ${this.state.currentRound === 0 || this.state.isMoving ? 'disabled' : ''}`}
                         onClick={this.handlePreviousButton.bind(this)}>
                         &lt;
                     </div>
 
                     <div
-                        className={`next ${this.state.currentRound === this.props.lastRound ? 'disabled' : ''}`}
+                        className={`next ${this.state.currentRound === this.props.lastRound  || this.state.isMoving? 'disabled' : ''}`}
                         onClick={this.handleNextButton.bind(this)}>
                         &gt;
                     </div>
