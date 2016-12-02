@@ -111,13 +111,13 @@ class TableContainer extends Component {
                     {this.props.showProgressBar ? <progress value={this.state.currentRound} max={this.props.roundsNames.length - 1} /> : null}
 
                     <input type="radio"
-                           name={`${this.props.name} seasonRoundSwitch`}
+                           name={`${this.props.name || ''}seasonRoundSwitch`}
                            value="season"
                            checked={this.state.show === 'season'}
                            onChange={() => this.setState({ show: 'season' })} />{this.props.seasonName}
 
                     <input type="radio"
-                           name={`${this.props.name} seasonRoundSwitch`}
+                           name={`${this.props.name || ''}seasonRoundSwitch`}
                            value="round"
                            checked={this.state.show === 'round'}
                            onChange={() => this.setState({ show: 'round' })} />{this.props.roundName}
@@ -145,7 +145,7 @@ class TableContainer extends Component {
 
                                 const isFocused = this.state.focusedItems.size === 0 || this.state.focusedItems.has(result.item);
                                 const changeString = result.change > 0 ? `+${result.change}` : result.change;
-                                const showChange = this.props.showChangeDuringAnimation && this.state.isMoving;
+                                const showChange = this.state.show === 'round' || (this.props.showChangeDuringAnimation && this.state.isMoving);
 
                                 return (
                                     <tr key={result.item}

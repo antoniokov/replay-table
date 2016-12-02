@@ -73,6 +73,7 @@ export const config = {
     },
 
     "F1": {
+        roundName: 'Race',
         itemName: 'Driver',
         showChangeDuringAnimation: true,
         startRoundName: 'Start →',
@@ -84,6 +85,7 @@ export const config = {
     },
 
     "ЧГК": {
+        roundName: 'Вопрос',
         itemName: 'Команда',
         totalName: 'Взято',
         tiesResolution: 'range',
