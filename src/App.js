@@ -139,20 +139,11 @@ class App extends Component {
           case 'error':
               return <p>An error occured. {this.state.errorMessage}</p>;
           default:
+              const props = ['positionName', 'itemName', 'totalName', 'showChangeDuringAnimation', 'showProgressBar',
+                  'roundsNames', 'results', 'resultName', 'startFromRound', 'lastRound', 'animationDuration']
+                  .reduce((props, param) => Object.assign(props, { [param]: this.state[param] }), {});
               return (
-                  <TableContainer
-                      positionName={this.state['positionName']}
-                      itemName={this.state['itemName']}
-                      totalName={this.state['totalName']}
-                      showChangeDuringAnimation={this.state['showChangeDuringAnimation']}
-                      showProgressBar={this.state['showProgressBar']}
-                      roundsNames={this.state['roundsNames']}
-                      results={this.state['results']}
-                      resultName={this.state['resultName']}
-                      startFromRound={this.state['startFromRound']}
-                      lastRound={this.state['lastRound']}
-                      animationDuration={this.state['animationDuration']}
-                  />
+                  <TableContainer {...(props)} />
               );
       }
   }
