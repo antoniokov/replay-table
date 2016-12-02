@@ -32,17 +32,7 @@
     border-left: 1.4rem solid rgba(0,0,0,0.3);
     border-bottom: 1rem solid transparent;
 }
-.replay-table-wrap .replay.disabled:hover,
-.replay-table-wrap .replay{
-    width: 2rem;
-    height: 2rem;
-    border: none;
-    background: url("../img/replay.png") no-repeat 0 0 / cover;
-    opacity: 0.5;
-}
-.replay-table-wrap .replay:hover{
-    opacity: 1;
-}
+
 .replay-table-wrap .previous,
 .replay-table-wrap .previous.disabled:hover,
 .replay-table-wrap .next,
@@ -75,8 +65,8 @@
     transform: rotate(45deg);
 }
 .replay-table-wrap .replay-table-select,
-.replay-table-wrap .pause,
 .replay-table-wrap .replay,
+.replay-table-wrap .pause,
 .replay-table-wrap .play,
 .replay-table-wrap .previous,
 .replay-table-wrap .next{
@@ -84,6 +74,18 @@
     vertical-align: middle;
     margin-right: 1.5rem;
     cursor: pointer;
+}
+.replay-table-wrap .replay.disabled:hover,
+.replay-table-wrap .replay{
+    width: 2.6rem;
+    height: 2.6rem;
+    border: none;
+    background: url("../img/replay.png") no-repeat 0 0 / cover;
+    opacity: 0.5;
+    margin-right: 1.8rem;
+}
+.replay-table-wrap .replay:hover{
+    opacity: 1;
 }
 .replay-table-wrap .pause.disabled,
 .replay-table-wrap .replay.disabled,
@@ -112,8 +114,8 @@
     position: relative;
     float: right;
     margin-left: 3rem;
-    border: 0.2rem solid #dbdbdb;
-    background: #efefef;
+    border: 0.2rem solid rgba(0,0,0,0.08);
+    background: rgba(0,0,0,0.01);
     -webkit-border-radius: 0.4rem;
     -moz-border-radius: 0.4rem;
     border-radius: 0.4rem;
@@ -150,9 +152,9 @@
     color: rgba(0,0,0,0.4);
 }
 .replay-table-check > input:checked + label {
-    color: #000;
+    color: rgba(0,0,0,0.8);
     text-shadow: 0 1px 0 rgba(255,255,255,0.3);
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.1);
     box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.5);
 }
 
@@ -163,15 +165,20 @@
 }
 .replay-table-progress-wrap{
     overflow: hidden;
-    padding-top: 0.6rem;
 }
 .replay-table-progress-wrap .replay-table-progress{
     display: inline-block;
     vertical-align: middle;
     width: 100%;
-
+    height: 2.8rem !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
+.replay-table-progress-wrap .replay-table-progress[value]::-webkit-progress-value {
+    background: #efe9a7;
+}
 
 
 
@@ -200,8 +207,9 @@
 
 
 .r-table .row {
-    color: gray;
+    color: rgba(0,0,0,0.6);
     cursor: pointer;
+    opacity: 0.4;
 }
 .r-table tr:hover td{
     background: rgba(0,0,0,0.02);
@@ -216,6 +224,7 @@
 
 .r-table .row.focus {
     color: #000;
+    opacity: 1;
 }
 
 input[type="range"]:focus {
