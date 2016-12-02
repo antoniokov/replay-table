@@ -139,7 +139,7 @@ class App extends Component {
           case 'error':
               return <p>An error occured. {this.state.errorMessage}</p>;
           default:
-              const props = ['name', 'positionName', 'seasonName', 'roundName', 'itemName', 'totalName', 'showChangeDuringAnimation',
+              const props = ['tableName', 'positionName', 'seasonName', 'roundName', 'itemName', 'totalName', 'showChangeDuringAnimation',
                   'showProgressBar', 'roundsNames', 'results', 'resultName', 'startFromRound', 'lastRound', 'animationDuration']
                   .reduce((props, param) => Object.assign(props, { [param]: this.state[param] }), {});
               return (

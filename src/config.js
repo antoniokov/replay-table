@@ -3,65 +3,66 @@ import isString from './auxiliary/isString'
 
 export const config = {
     "default": {
-        //name is required when you have several replayTables on one page
-        //String
-        name: undefined,
-
         //input file format. For now only changesTable is supported. See an example: https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv
         //String
         inputType: 'changesTable',
 
-        //'Season', 'Tournament',...
+        //'Tournament', 'Saison' or a term of your choice.
         //String
         seasonName: 'Season',
 
-        //'Game', 'Match', 'Round', 'Leg',...
+        //'Game', 'Match', 'Round', 'Leg' or a term of your choice.
         //String
         roundName: 'Game',
 
-        //'Position', 'Rank',...
+        //'Position', 'Rank' or a term of your choice.
         //String
         positionName: '#',
 
-        //'Team', 'Player', 'Driver',... When set to undefined gets name from data source if possible
+        //'Team', 'Player', 'Driver' or a term of your choice. When undefined tries to get the name from data source.
         //String
         itemName: undefined,
 
-        //focus on particular items (teams, players, drivers). ['Liverpool', 'Everton'], for example
-        //Array of Strings
-        focusedItems: [],
-
-        //'Points', 'Wins',...
-        //String
-        totalName: 'Points',
-
-        //show total change (+3, +1, ...) during animation
-        //Boolean
-        showChangeDuringAnimation: false,
-
-        //show progress bar
-        //Boolean
-        showProgressBar: true,
-
-        //['Australia', 'Bahrain',...] for F1, for example. When set to undefined gets names from data source if possible; if not uses round number
+        //['Australia', 'Bahrain',...] for F1, for example. When set to undefined gets names from data source if possible; if not uses rounds numbers.
         //Array of Strings or Numbers
         roundsNames: undefined,
 
-        //if defined inserts round #0 before other rounds with all items having total equal to zero
-        //String
+        //If defined inserts round #0 before all other rounds with all items having total equal to zero.
+        //String or undefined
         startRoundName: '0',
 
-        //number of round to start from. When set to undefined shows the last round
+        //'Points', 'Wins' or a term of your choice.
+        //String
+        totalName: 'Points',
+
+        //Focus on particular items (teams, players, drivers). ['Liverpool', 'Everton'], for example.
+        //Array of Strings
+        focusedItems: [],
+
+        //Show change in total (+3, +1, ...) during the animation.
+        //Boolean
+        showChangeDuringAnimation: false,
+
+        //Show or hide the progress bar.
+        //Boolean
+        showProgressBar: true,
+
+        //Number of round to start from. When set to undefined shows the last round.
         //Number
         startFromRound: undefined,
 
-        //animation duration in ms
+        //Animation duration in ms
         //Number
         animationDuration: 1800,
 
-        //determines position when totals are equal. Can be 'no ties' (1, 2, 3, 4,...), 'highest' (1, 2, 2, 4,...) and 'range' (1, 2-3, 2-3, 4,...)
+        //Determines position when totals are equal. Can be 'no ties' (1, 2, 3, 4,...), 'highest' (1, 2, 2, 4,...) and 'range' (1, 2-3, 2-3, 4,...)
         //String
         tiesResolution: 'no ties',
+
+
+        //Name is required when you have several Replay Tables on one page.
+        //String
+        tableName: undefined,
 
         //resultName is used for color coding and animation. There are three options out of the box: 'victory', 'draw' or 'defeat'
         //Object: key — result, value — name
@@ -85,6 +86,7 @@ export const config = {
     },
 
     "ЧГК": {
+        seasonName: 'Турнир',
         roundName: 'Вопрос',
         itemName: 'Команда',
         totalName: 'Взято',
@@ -97,9 +99,6 @@ export const config = {
 
 export function isParameterValid (parameterName, parameterValue) {
     switch (parameterName) {
-        case 'name':
-            return isString(parameterValue);
-
         case 'inputType':
             return transformers.hasOwnProperty(parameterValue);
 
@@ -115,23 +114,23 @@ export function isParameterValid (parameterName, parameterValue) {
         case 'itemName':
             return !parameterValue || isString(parameterValue);
 
-        case 'focusedItems':
-            return Array.isArray(parameterValue) && parameterValue.every(item => isString(item));
+        case 'roundsNames':
+            return !parameterValue || (Array.isArray(parameterValue) && parameterValue.every(item => isString(item) || !Number.isNaN(item)));
+
+        case 'startRoundName':
+            return isString(parameterValue);
 
         case 'totalName':
             return isString(parameterValue);
+
+        case 'focusedItems':
+            return Array.isArray(parameterValue) && parameterValue.every(item => isString(item));
 
         case 'showChangeDuringAnimation':
             return typeof parameterValue === 'boolean';
 
         case 'showProgressBar':
             return typeof parameterValue === 'boolean';
-
-        case 'roundsNames':
-            return !parameterValue || (Array.isArray(parameterValue) && parameterValue.every(item => isString(item) || !Number.isNaN(item)));
-
-        case 'startRoundName':
-            return isString(parameterValue);
 
         case 'startFromRound':
             return !parameterValue || !Number.isNaN(parameterValue);
@@ -141,6 +140,9 @@ export function isParameterValid (parameterName, parameterValue) {
 
         case 'tiesResolution':
             return ['no ties', 'highest', 'range'].includes(parameterValue);
+
+        case 'tableName':
+            return isString(parameterValue);
 
         default:
             return false;
