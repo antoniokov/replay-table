@@ -155,5 +155,5 @@ There is a chance we'll transfrom this option into a function to cope with compl
 ### `tableName`
 | **Div Attribute** | **Accepted Type** | **Default Value** |
 |-------------------|-------------------|-------------------|
-| `data-name` |  `String` | `undefined` |
+| `data-table-name` |  `String` | `undefined` |
 Name is required when you have several Replay Tables on one page.
