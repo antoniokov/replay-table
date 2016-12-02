@@ -209,8 +209,8 @@
     text-align: left;
 }
 .r-table .position {
-    text-align: left;
-    width: 4rem;
+    text-align: center;
+    width: 6rem;
 }
 
 .r-table .row.focus {
