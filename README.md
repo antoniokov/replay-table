@@ -12,7 +12,6 @@ Watch the [live demo](https://targetprocess.github.io/replayTable/) for football
 * [Input File](#input-file)
 * [Presets](#presets)
 * [Customization](#customization)
-  * [name](#name)
   * [seasonName](#seasonname)
   * [roundName](#roundname)
   * [positionName](#positionname)
@@ -26,6 +25,7 @@ Watch the [live demo](https://targetprocess.github.io/replayTable/) for football
   * [startFromRound](#startfromround)
   * [animationDuration](#animationduration)
   * [tiesResolution](#tiesresolution)
+  * [tableName](#tablename)
   
 
 ## Quickstart
@@ -71,12 +71,6 @@ You can check presets' settings in the [config file](https://github.com/TargetPr
 Replay Table can be easily customized via `div` `data-` attributes. You can specify your terms, adjust the animation duration, hide unnecessary elements and do other lovely things.
 
 It is possible to use this options together with a preset: in this case they will override preset's settings.
-
-### `name`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-name` |  `String` | `undefined` |
-Name is required when you have several Replay Tables on one page.
 
 ### `seasonName`
 | **Div Attribute** | **Accepted Type** | **Default Value** |
@@ -157,3 +151,9 @@ Animation duration in ms.
 Determines position when totals are equal. Can be 'no ties' (1, 2, 3, 4,...), 'highest' (1, 2, 2, 4,...) and 'range' (1, 2-3, 2-3, 4,...).
 
 There is a chance we'll transfrom this option into a function to cope with complex cases when position depends on number of wins and other parameters.
+
+### `tableName`
+| **Div Attribute** | **Accepted Type** | **Default Value** |
+|-------------------|-------------------|-------------------|
+| `data-name` |  `String` | `undefined` |
+Name is required when you have several Replay Tables on one page.
