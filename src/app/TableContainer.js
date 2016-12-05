@@ -15,7 +15,7 @@ class TableContainer extends Component {
     }
 
     getChange (result) {
-        const areRoundsConsecutive = !this.state.previousRound || Math.abs(this.state.previousRound - this.state.currentRound) === 1;
+        const areRoundsConsecutive = this.state.previousRound === undefined || Math.abs(this.state.previousRound - this.state.currentRound) === 1;
         if (areRoundsConsecutive || !this.state.isMoving) {
             return result.change;
         } else {
@@ -172,7 +172,7 @@ class TableContainer extends Component {
                         {this.props.results[this.state.currentRound]
                             .map(result => {
                                 const styleObject = { 'zIndex': result.position };
-                                const areRoundsConsecutive = !this.state.previousRound || Math.abs(this.state.previousRound - this.state.currentRound) === 1;
+                                const areRoundsConsecutive = this.state.previousRound === undefined || Math.abs(this.state.previousRound - this.state.currentRound) === 1;
 
                                 const shouldAnimate = this.state.isMoving && this.state.currentRound > 0;
                                 const resultClass = this.props.resultName[result.change] || '';
@@ -182,8 +182,8 @@ class TableContainer extends Component {
 
                                 const isFocused = this.state.focusedItems.size === 0 || this.state.focusedItems.has(result.item);
 
-                                const showChange = this.state.show === 'round' ||
-                                                  (this.state.isMoving && (this.props.showChangeDuringAnimation || !areRoundsConsecutive));
+                                const showChange = this.state.currentRound !== 0 &&
+                                    (this.state.show === 'round' || (this.state.isMoving && (this.props.showChangeDuringAnimation || !areRoundsConsecutive)));
 
                                 const change = this.getChange(result);
                                 const changeString = change > 0 ? `+${change}` : change;
@@ -192,8 +192,8 @@ class TableContainer extends Component {
                                     const absChange = Math.abs(this.getChange(result));
                                     return absChange > maxChange ? absChange : maxChange
                                 }, 0);
-                                if (this.state.currentRound !== 0 && ((this.state.show === 'round' && !resultClass) || (this.state.isMoving && (!areRoundsConsecutive || !resultClass)))) {
-                                    styleObject.backgroundColor = `rgba(70,180,60,${Math.abs(change)/maxAbsChange})`;
+                                if (this.state.currentRound !== 0 && ((this.state.show === 'round' && !resultClass))) {
+                                    styleObject.backgroundColor = `rgba(105,189,36,${Math.abs(change)/maxAbsChange})`;
                                 }
                                 if (shouldAnimate && (!areRoundsConsecutive || !resultClass)) {
                                     const percent = 10*Math.round(10*Math.abs(change)/maxAbsChange);
