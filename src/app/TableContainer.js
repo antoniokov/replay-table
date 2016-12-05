@@ -195,6 +195,10 @@ class TableContainer extends Component {
                                 if (this.state.currentRound !== 0 && ((this.state.show === 'round' && !resultClass) || (this.state.isMoving && (!areRoundsConsecutive || !resultClass)))) {
                                     styleObject.backgroundColor = `rgba(70,180,60,${Math.abs(change)/maxAbsChange})`;
                                 }
+                                if (shouldAnimate && (!areRoundsConsecutive || !resultClass)) {
+                                    const percent = 10*Math.round(10*Math.abs(change)/maxAbsChange);
+                                    styleObject.animation = `continuous-${percent} ${this.props.animationDuration}ms`
+                                }
 
                                 return (
                                     <tr key={result.item}

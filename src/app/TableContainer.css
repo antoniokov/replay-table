@@ -282,3 +282,63 @@ li {
     50% {background-color: rgba(255,158,158,0.3);}
     100% {background-color: transparent;}
 }
+
+@keyframes continuous-100 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(105,189,36,1);}
+    100% {background-color: transparent;}
+}
+
+@keyframes continuous-90 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(105,189,36,0.9);}
+    100% {background-color: transparent;}
+}
+
+@keyframes continuous-80 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(105,189,36,0.8);}
+    100% {background-color: transparent;}
+}
+
+@keyframes continuous-70 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(105,189,36,0.7);}
+    100% {background-color: transparent;}
+}
+
+@keyframes continuous-60 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(105,189,36,0.6);}
+    100% {background-color: transparent;}
+}
+
+@keyframes continuous-50 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(105,189,36,0.5);}
+    100% {background-color: transparent;}
+}
+
+@keyframes continuous-40 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(105,189,36,0.4);}
+    100% {background-color: transparent;}
+}
+
+@keyframes continuous-30 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(105,189,36,0.3);}
+    100% {background-color: transparent;}
+}
+
+@keyframes continuous-20 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(105,189,36,0.2);}
+    100% {background-color: transparent;}
+}
+
+@keyframes continuous-10 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(105,189,36,0.1);}
+    100% {background-color: transparent;}
+}
