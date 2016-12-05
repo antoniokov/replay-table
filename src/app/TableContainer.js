@@ -91,22 +91,22 @@ class TableContainer extends Component {
 
 
                         <input type="radio"
-                               id="replay-table-radio-season"
+                               id={`${this.props.tableName || ''}-season-radio`}
                                name={`${this.props.tableName || ''}seasonRoundSwitch`}
                                value="season"
                                checked={this.state.show === 'season'}
                                onChange={() => this.setState({ show: 'season' })} />
-                        <label  htmlFor="replay-table-radio-season">
+                        <label  htmlFor={`${this.props.tableName || ''}-season-radio`}>
                             {this.props.seasonName}
                         </label>
 
                         <input type="radio"
-                               id="replay-table-radio-round"
+                               id={`${this.props.tableName || ''}-round-radio`}
                                name={`${this.props.tableName || ''}seasonRoundSwitch`}
                                value="round"
                                checked={this.state.show === 'round'}
                                onChange={() => this.setState({ show: 'round' })} />
-                        <label  htmlFor="replay-table-radio-round">
+                        <label  htmlFor={`${this.props.tableName || ''}-round-radio`}>
                             {this.props.roundName}
                         </label>
 
