@@ -1,5 +1,5 @@
-import transpose from '../auxiliary/transpose'
-import stableSort from '../auxiliary/stableSort'
+import transpose from '../auxiliary/transpose';
+import stableSort from '../auxiliary/stableSort';
 
 
 function addPositions (results, tieBreaking = 'no ties') {
@@ -27,6 +27,12 @@ function addPositions (results, tieBreaking = 'no ties') {
                 result.position += `-${itemsHigher + itemsEqual + 1}`
             }
         }
+    }));
+}
+
+function addExtras (results, extraColumnsNames, extraColumns) {
+    results.forEach(round => round.forEach((result, itemNumber) => {
+        result.extras = extraColumns.reduce((obj, col, i) => Object.assign(obj, { [extraColumnsNames[i]]: col[itemNumber] }), {});
     }));
 }
 
@@ -63,16 +69,12 @@ function transformChangesTable(jsonTable, params) {
         const change = changeString ? Number.parseInt(changeString, 10) || 0 : null;
         currentStandings[itemNumber] += change || 0;
 
-        const extras = extraColumns.reduce((obj, col, i) => Object.assign(obj, { [extraColumnsNames[i]]: col[itemNumber] }), {});
-
         return {
             item: items[itemNumber],
-            extras: extras,
             change: change,
             total: currentStandings[itemNumber]
         };
-    }))
-        .map(round => stableSort(round, (a,b) => b.total - a.total));
+    }));
 
     if (params['startRoundName']) {
         results.unshift(items.map(item => ({
@@ -83,14 +85,20 @@ function transformChangesTable(jsonTable, params) {
         roundsNames.unshift(params['startRoundName']);
     }
 
-    addPositions(results, params['tieBreaking']);
+    if (params['extraColumnsNumber']) {
+        addExtras(results, extraColumnsNames, extraColumns);
+    }
+
+    const resultsSorted = results.map(round => stableSort(round, (a,b) => b.total - a.total));
+    addPositions(resultsSorted, params['tieBreaking']);
+
 
     return {
         status: 'success',
         itemName: itemName,
         extraColumnsNames: extraColumnsNames || [],
         roundsNames: roundsNames,
-        results: results
+        results: resultsSorted
     };
 }
 

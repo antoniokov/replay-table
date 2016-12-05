@@ -80,13 +80,8 @@ export const config = {
     "F1": {
         roundName: 'Race',
         itemName: 'Driver',
-        showChangeDuringAnimation: true,
         startRoundName: 'Start →',
-        resultName: {
-            25: 'gold',
-            18: 'silver',
-            15: 'bronze'
-        }
+        resultName: {}
     },
 
     "ЧГК": {
