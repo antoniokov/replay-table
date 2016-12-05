@@ -54,13 +54,13 @@ class TableContainer extends Component {
     }
 
     handlePreviousButton () {
-        if(this.state.currentRound > 0 && !this.state.isMoving) {
+        if(this.state.currentRound > 0) {
             this.goToRound(this.state.currentRound - 1)
         }
     }
 
     handleNextButton () {
-        if(this.state.currentRound < this.props.lastRound && !this.state.isMoving) {
+        if(this.state.currentRound < this.props.lastRound) {
             this.goToRound(this.state.currentRound + 1);
         }
     }
@@ -121,13 +121,13 @@ class TableContainer extends Component {
                             onClick={this.handlePlayButton.bind(this)} />
 
                         <div
-                            className={`previous ${this.state.currentRound === 0 || this.state.isMoving ? 'disabled' : ''}`}
+                            className={`previous ${this.state.currentRound === 0? 'disabled' : ''}`}
                             onClick={this.handlePreviousButton.bind(this)}>
                             &lt;
                         </div>
 
                         <div
-                            className={`next ${this.state.currentRound === this.props.lastRound  || this.state.isMoving? 'disabled' : ''}`}
+                            className={`next ${this.state.currentRound === this.props.lastRound? 'disabled' : ''}`}
                             onClick={this.handleNextButton.bind(this)}>
                             &gt;
                         </div>
@@ -163,13 +163,25 @@ class TableContainer extends Component {
                         {this.props.results[this.state.currentRound]
                             .map(result => {
                                 const styleObject = { 'zIndex': result.position };
-                                if (this.state.isMoving && this.state.currentRound > 0) {
+                                const areRoundsConsecutive = !this.state.previousRound || Math.abs(this.state.previousRound - this.state.currentRound) === 1;
+                                const shouldAnimate = this.state.isMoving && this.state.currentRound > 0 && areRoundsConsecutive;
+                                if (shouldAnimate) {
                                     styleObject.animation = `${this.props.resultName[result.change]} ${this.props.animationDuration}ms`;
                                 }
 
                                 const isFocused = this.state.focusedItems.size === 0 || this.state.focusedItems.has(result.item);
-                                const changeString = result.change > 0 ? `+${result.change}` : result.change;
-                                const showChange = this.state.show === 'round' || (this.props.showChangeDuringAnimation && this.state.isMoving);
+                                const showChange = this.state.show === 'round' ||
+                                                  (this.state.isMoving && (this.props.showChangeDuringAnimation || !areRoundsConsecutive));
+
+                                let change;
+                                if (areRoundsConsecutive) {
+                                    change = result.change;
+                                } else {
+                                    const previousResult = this.props.results[this.state.previousRound]
+                                        .filter(res => res.item === result.item)[0].total;
+                                    change = result.total - previousResult;
+                                }
+                                const changeString = change > 0 ? `+${change}` : change;
 
                                 return (
                                     <tr key={result.item}
