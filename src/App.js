@@ -91,7 +91,8 @@ class App extends Component {
 
               const params = {
                   startRoundName: this.state['startRoundName'],
-                  tiesResolution: this.state['tiesResolution']
+                  tieBreaking: this.state['tieBreaking'],
+                  extraColumnsNumber: Number.parseInt(this.state['extraColumnsNumber'], 10)
               };
               const transformedResult = transform('changesTable', result.data, params );
               if (transformedResult.status === 'error') {
@@ -109,6 +110,11 @@ class App extends Component {
               if (!this.state['roundsNames']) {
                   this.setState({ roundsNames: transformedResult['roundsNames']})
               }
+
+              this.setState({
+                  extraColumnsNames: transformedResult['extraColumnsNames'],
+                  extraColumns: transformedResult['extraColumns']
+              });
 
               const lastRound = transformedResult['results'].reduce((maxRoundNumber, round, i) => {
                   return round.some(result => result.change !== null) && i > maxRoundNumber ? i : maxRoundNumber;
@@ -139,8 +145,9 @@ class App extends Component {
           case 'error':
               return <p>An error occured. {this.state.errorMessage}</p>;
           default:
-              const props = ['tableName', 'positionName', 'seasonName', 'roundName', 'itemName', 'totalName', 'showChangeDuringAnimation',
-                  'showProgressBar', 'roundsNames', 'results', 'resultName', 'startFromRound', 'lastRound', 'animationDuration']
+              const props = ['tableName', 'positionName', 'seasonName', 'roundName', 'itemName', 'extraColumnsNames',
+                  'totalName', 'showChangeDuringAnimation', 'showProgressBar', 'roundsNames', 'results', 'extraColumns',
+                  'resultName', 'startFromRound', 'lastRound', 'animationDuration']
                   .reduce((props, param) => Object.assign(props, { [param]: this.state[param] }), {});
               return (
                   <TableContainer {...(props)} />

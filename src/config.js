@@ -35,6 +35,10 @@ export const config = {
         //String
         totalName: 'Points',
 
+        //Number of columns with extra data about items like city they represent or team they are part of. The columns should go after the items column and before the results columns.
+        //Number
+        extraColumnsNumber: 0,
+
         //Focus on particular items (teams, players, drivers). ['Liverpool', 'Everton'], for example.
         //Array of Strings
         focusedItems: [],
@@ -57,7 +61,7 @@ export const config = {
 
         //Determines position when totals are equal. Can be 'no ties' (1, 2, 3, 4,...), 'highest' (1, 2, 2, 4,...) and 'range' (1, 2-3, 2-3, 4,...)
         //String
-        tiesResolution: 'no ties',
+        tieBreaking: 'no ties',
 
 
         //Name is required when you have several Replay Tables on one page.
@@ -90,7 +94,7 @@ export const config = {
         roundName: 'Вопрос',
         itemName: 'Команда',
         totalName: 'Взято',
-        tiesResolution: 'range',
+        tieBreaking: 'range',
         resultName: {
             1: 'victory'
         }
@@ -123,6 +127,9 @@ export function isParameterValid (parameterName, parameterValue) {
         case 'totalName':
             return isString(parameterValue);
 
+        case 'extraColumnsNumber':
+            return !Number.isNaN(parameterValue);
+
         case 'focusedItems':
             return Array.isArray(parameterValue) && parameterValue.every(item => isString(item));
 
@@ -138,7 +145,7 @@ export function isParameterValid (parameterName, parameterValue) {
         case 'animationDuration':
             return !Number.isNaN(parameterValue);
 
-        case 'tiesResolution':
+        case 'tieBreaking':
             return ['no ties', 'highest', 'range'].includes(parameterValue);
 
         case 'tableName':

@@ -151,6 +151,7 @@ class TableContainer extends Component {
                     <tr>
                         <th className="position">{this.props.positionName}</th>
                         <th className="item">{this.props.itemName}</th>
+                        {this.props['extraColumnsNames'].map(name => <th className="extra" key={name}>{name}</th>)}
                         <th className="total">{this.props.totalName}</th>
                     </tr>
                     </thead>
@@ -178,6 +179,9 @@ class TableContainer extends Component {
 
                                         <td className="position">{result.position}</td>
                                         <td className="item">{result.item}</td>
+                                        {this.props.extraColumnsNames.map(name =>
+                                            <td key={name} className="extras">{result.extras[name]}</td>
+                                        )}
                                         <td className="total">{showChange ? changeString : result.total}</td>
                                     </tr>
                                 );

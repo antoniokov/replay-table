@@ -19,12 +19,13 @@ Watch the [live demo](https://targetprocess.github.io/replayTable/) for football
   * [roundsNames](#roundsnames)
   * [startRoundName](#startroundname)
   * [totalName](#totalname)
+  * [extraColumnsNumber](#extracolumnsnumber)
   * [focusedItems](#focuseditems)
   * [showChangeDuringAnimation](#showchangeduringanimation)
   * [showProgressBar](#showprogressbar)
   * [startFromRound](#startfromround)
   * [animationDuration](#animationduration)
-  * [tiesResolution](#tiesresolution)
+  * [tieBreaking](#tiesresolution)
   * [tableName](#tablename)
   
 
@@ -114,6 +115,12 @@ If defined inserts a round before all other rounds with all items having total e
 | `data-total-name` |  `String` | `Points` |
 'Points', 'Wins' or a term of your choice.
 
+### `extraColumnsNumber`
+| **Div Attribute** | **Accepted Type** | **Default Value** |
+|-------------------|-------------------|-------------------|
+| `data-extra-columns-number` |  `Number` | `0` |
+Number of columns with extra data about items like city they represent or team they are part of. The columns should go after the items column and before the results columns.
+
 ### `focusedItems`
 | **Div Attribute** | **Accepted Type** | **Default Value** |
 |-------------------|-------------------|-------------------|
@@ -144,7 +151,7 @@ Number of round to start from. When set to undefined the last unempty round is u
 | `data-animation-duration` |  `Number` | `1800` |
 Animation duration in ms.
 
-### `tiesResolution`
+### `tieBreaking`
 | **Div Attribute** | **Accepted Type** | **Default Value** |
 |-------------------|-------------------|-------------------|
 | `data-ties-resolution` |  `no ties`, `highest` or `range` | `no ties` |
