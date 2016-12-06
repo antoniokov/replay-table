@@ -123,11 +123,13 @@ class TableContainer extends Component {
 
                     <div className="replay-table-controls-left">
 
-                        <div
-                            className={this.state.isPlaying
+                        <div className="replay-table-start-control">
+                            <div
+                                className={this.state.isPlaying
                             ? 'pause'
                             : this.state.currentRound === this.props.lastRound ? 'replay' : 'play'}
-                            onClick={this.handlePlayButton.bind(this)} />
+                                onClick={this.handlePlayButton.bind(this)} />
+                        </div>
 
                         <div
                             className={`previous ${this.state.currentRound === 0? 'disabled' : ''}`}

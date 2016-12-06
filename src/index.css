@@ -36,7 +36,7 @@ html{
 
 body {
     margin: 0;
-    padding: 5rem calc(50% - 56rem);
+    padding: 5rem 10%;
     font-size: 1.4rem;
     font-family: 'helvetica', 'arial', sans-serif;
 }
@@ -44,7 +44,7 @@ body {
 h2{
     text-align: left;
     font-family: 'Roboto';
-    font-size: 4.2rem;
+    font-size: 3.2rem;
     font-weight: normal;
     margin-bottom: 5rem;
 }
