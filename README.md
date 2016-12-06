@@ -54,6 +54,8 @@ Finally, include the stylesheet inside the `head` tag:
 ## Input file
 There's only one csv table format available for now: a column with item names followed by results of each round. Here's an example with the 2015–16 Premier League season results:
 ![csv-visual](https://s3-us-west-2.amazonaws.com/replay-table/images/github/csv-visual.PNG)
+
+We recommend to use comma as separator and UTF-8 as encoding.
 Feel free to download this [csv](https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv).
 
 ## Presets
@@ -119,7 +121,9 @@ If defined inserts a round before all other rounds with all items having total e
 | **Div Attribute** | **Accepted Type** | **Default Value** |
 |-------------------|-------------------|-------------------|
 | `data-extra-columns-number` |  `Number` | `0` |
-Number of columns with extra data about items like city they represent or team they are part of. The columns should go after the items column and before the results columns.
+Number of columns with extra data about items like city they represent or team they are part of. The columns should go after the items column and before the results columns:
+
+![extra columns](https://s3-us-west-2.amazonaws.com/replay-table/images/github/extra-colums.png)
 
 ### `focusedItems`
 | **Div Attribute** | **Accepted Type** | **Default Value** |
