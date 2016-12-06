@@ -49,8 +49,8 @@
 .replay-table-wrap .pause.disabled:hover{
     width: 1.2rem;
     height: 1.8rem;
-    border-right: 0.4rem solid #e9e9e9;
-    border-left: 0.4rem solid #e9e9e9;
+    border-right: 0.4rem solid #bababa;
+    border-left: 0.4rem solid #bababa;
 }
 .replay-table-wrap .play,
 .replay-table-wrap .play.disabled:hover{
@@ -59,7 +59,7 @@
     width: 0;
     height: 0;
     border-top: 1.2rem solid transparent;
-    border-left: 1.8rem solid #e9e9e9;
+    border-left: 1.8rem solid #bababa;
     border-bottom: 1.2rem solid transparent;
 }
 
@@ -75,8 +75,8 @@
     width: 1.2rem;
     height: 1.2rem;
     font-size: 0;
-    border-top: 0.3rem solid  #e9e9e9;
-    border-right: 0.3rem solid  #e9e9e9;
+    border-top: 0.3rem solid  #bababa;
+    border-right: 0.3rem solid  #bababa;
     box-sizing: content-box;
 }
 .replay-table-wrap .previous:hover,
