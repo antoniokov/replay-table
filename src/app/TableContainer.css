@@ -117,6 +117,7 @@
 }
 .replay-table-wrap .replay:hover{
     opacity: 0.7;
+    /*opacity: 0.7;*/
 }
 .replay-table-wrap .pause.disabled,
 .replay-table-wrap .replay.disabled,
