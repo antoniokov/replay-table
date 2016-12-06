@@ -2,7 +2,9 @@ Replay Table
 =========
 
 This is a script that transforms a csv file with season results into interactive standings:
+
 ![demo](https://s3-us-west-2.amazonaws.com/replay-table/images/github/demo.gif)
+
 Watch the [live demo](https://targetprocess.github.io/replayTable/) for football, Formula One and other sports.
 
 ## Table of Contents
@@ -38,14 +40,14 @@ Include the script near the end of the `body` tag:
 ```
 <body>
     ...
-    <script type="text/javascript" src="/replayTable/static/js/main.38b8fdef.js"></script>
+    <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/replay-table/cdn/replayTable.js"></script>
 </body>
 ```
 Finally, include the stylesheet inside the `head` tag:
 ```
 <head>
     ...
-    <link rel="stylesheet" type="text/css" link href="/replayTable/static/css/main.bd0bd88b.css">
+    <link rel="stylesheet" type="text/css" link href="https://s3-us-west-2.amazonaws.com/replay-table/cdn/replayTable.css">
 </head>
 ```
 
@@ -56,7 +58,7 @@ Feel free to download this [csv](https://s3-us-west-2.amazonaws.com/replay-table
 
 ## Presets
 Default settings are suited for most of the team sports like football and hockey.
-We also built presets for other kinds of sports to make customization easy. Just add `data-preset="preset_name"` to replayTable `div` and the appropriate terms and settings will apply.
+We've also built presets for other kinds of sports to make customization easy. Just add `data-preset="preset_name"` to replayTable `div` and the appropriate terms and settings will apply.
 
 There are two options available at the moment:
 * `F1`
