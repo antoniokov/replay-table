@@ -2,9 +2,7 @@ Replay Table
 =========
 
 This is a script that transforms a csv file with season results into interactive standings:
-
-This is a place for gif
-
+![demo](https://s3-us-west-2.amazonaws.com/replay-table/images/github/demo.gif)
 Watch the [live demo](https://targetprocess.github.io/replayTable/) for football, Formula One and other sports.
 
 ## Table of Contents
