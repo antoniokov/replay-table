@@ -92,9 +92,9 @@ class App extends Component {
               const params = {
                   startRoundName: this.state['startRoundName'],
                   tieBreaking: this.state['tieBreaking'],
-                  extraColumnsNumber: Number.parseInt(this.state['extraColumnsNumber'], 10)
+                  extraColumnsNumber: Number.parseInt(this.state['extraColumnsNumber'], 10) || 0
               };
-              const transformedResult = transform('changesTable', result.data, params );
+              const transformedResult = transform(this.state['transformer'], result.data, params );
               if (transformedResult.status === 'error') {
                   this.setState({
                       status: 'error',
@@ -103,18 +103,9 @@ class App extends Component {
                   return;
               }
 
-              if (!this.state['itemName']) {
-                  this.setState({ itemName: transformedResult['itemName']})
-              }
-
-              if (!this.state['roundsNames']) {
-                  this.setState({ roundsNames: transformedResult['roundsNames']})
-              }
-
-              this.setState({
-                  extraColumnsNames: transformedResult['extraColumnsNames'],
-                  extraColumns: transformedResult['extraColumns']
-              });
+              ['itemName', 'roundsNames', 'extraColumnsNames', 'extraColumns']
+                  .filter(param => !this.state[param] && transformedResult[param])
+                  .forEach(param => this.setState({ [param]: transformedResult[param]}));
 
               const lastRound = transformedResult['results'].reduce((maxRoundNumber, round, i) => {
                   return round.some(result => result.change !== null) && i > maxRoundNumber ? i : maxRoundNumber;

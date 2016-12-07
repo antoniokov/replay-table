@@ -1,34 +1,7 @@
-import transpose from '../auxiliary/transpose';
-import stableSort from '../auxiliary/stableSort';
+import transpose from '../../auxiliary/transpose';
+import stableSort from '../../auxiliary/stableSort';
+import addPositions from '../auxiliary/addPositions';
 
-
-function addPositions (results, tieBreaking = 'no ties') {
-    results.forEach(round => round.forEach((result, i) => {
-        if(tieBreaking === 'no ties') {
-            result.position = i + 1;
-            return;
-        }
-
-        const itemsHigher = round.reduce((acc, res) => res.item !== result.item && res.total > result.total
-                ? acc + 1
-                : acc
-            , 0);
-
-        result.position = itemsHigher + 1;
-
-        if (tieBreaking === 'range') {
-            const itemsEqual = round.reduce((acc, res) => res.item !== result.item && res.total === result.total
-                    ? acc + 1
-                    : acc
-                , 0);
-
-
-            if (itemsEqual) {
-                result.position += `-${itemsHigher + itemsEqual + 1}`
-            }
-        }
-    }));
-}
 
 function addExtras (results, extraColumnsNames, extraColumns) {
     results.forEach(round => round.forEach((result, itemNumber) => {
@@ -91,7 +64,6 @@ function transformChangesTable(jsonTable, params) {
 
     const resultsSorted = results.map(round => stableSort(round, (a,b) => b.total - a.total));
     addPositions(resultsSorted, params['tieBreaking']);
-
 
     return {
         status: 'success',
