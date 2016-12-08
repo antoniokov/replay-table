@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { parse } from 'babyparse'
-import { config, isParameterValid } from './config';
+import { config, presets } from './config';
 import toCamelCase from './auxiliary/toCamelCase'
 import { transform } from './transformers/transform';
 import TableContainer from './app/TableContainer';
@@ -23,11 +23,12 @@ class App extends Component {
   }
 
   getConfig (props) {
-      const configObject = Object.assign({}, config['default']);
+      const configObject = {};
+      Object.keys(config).forEach(key => configObject[key] = config[key].default);
 
       if (props.preset) {
-          if (config.hasOwnProperty(props.preset)) {
-              Object.assign(configObject, config[props.preset])
+          if (presets.hasOwnProperty(props.preset)) {
+              Object.assign(configObject, presets[props.preset])
           } else {
               console.log(`No ${props.preset} preset for now, sorry about that. Moving on with the default settings.`)
           }
@@ -37,12 +38,15 @@ class App extends Component {
           .filter(key => !['csv', 'preset', 'style', 'config'].includes(key))
           .map(key => toCamelCase(key))
           .forEach(key => {
-              if (isParameterValid(key, props[key])) {
-                  configObject[key] = props[key];
-              } else if (configObject.hasOwnProperty(key)) {
-                  console.log(`Sorry, we cannot accept ${props[key]} as ${key}. Moving on with the default value which is ${configObject[key]}`);
+              if (!config.hasOwnProperty(key)) {
+                  return console.log(`Sorry, there is no ${key} parameter available. Ignoring it and moving on.`);
+              }
+
+              const value = config[key].hasOwnProperty('parse') ? config[key].parse(props[key]) : props[key];
+              if (config[key].validate(value)) {
+                  configObject[key] = value;
               } else {
-                  console.log(`Sorry, there is no ${key} parameter available. Ignoring it and moving on.`);
+                  console.log(`Sorry, we cannot accept ${props[key]} as ${key}. Moving on with the default value which is ${configObject[key]}`);
               }
           });
 
@@ -89,12 +93,10 @@ class App extends Component {
                   return;
               }
 
-              const params = {
-                  startRoundName: this.state['startRoundName'],
-                  tieBreaking: this.state['tieBreaking'],
-                  extraColumnsNumber: Number.parseInt(this.state['extraColumnsNumber'], 10) || 0,
-                  itemsToShow: this.state['itemsToShow'] ? this.state['itemsToShow'].split(',') : null
-              };
+              const params = Object.keys(config)
+                  .filter(key => config[key].goesToTransform)
+                  .map(key => this.state[key]);
+
               const transformedResult = transform(this.state['transformer'], result.data, params );
               if (transformedResult.status === 'error') {
                   this.setState({

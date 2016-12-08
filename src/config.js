@@ -2,85 +2,169 @@ import { transformers } from './transformers/transform';
 import isString from './auxiliary/isString'
 
 export const config = {
-    "default": {
-        //input file format. For now only changesTable is supported. See an example: https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv
-        //String
-        transformer: 'changesTable',
+    //input file format. For now only changesTable is supported. See an example: https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv
+    //String
+    transformer: {
+        default: 'changesTable',
+        validate: value => transformers.hasOwnProperty(value)
+    },
 
-        //'Tournament', 'Saison' or a term of your choice.
-        //String
-        seasonName: 'Season',
+    //'Tournament', 'Saison' or a term of your choice.
+    //String
+    seasonName: {
+        default: 'Season',
+        validate: value => isString(value)
+    },
 
-        //'Game', 'Match', 'Round', 'Leg' or a term of your choice.
-        //String
-        roundName: 'Game',
+    //'Game', 'Match', 'Round', 'Leg' or a term of your choice.
+    //String
+    roundName: {
+        default: 'Game',
+        validate: value => isString(value)
+    },
 
-        //'Position', 'Rank' or a term of your choice.
-        //String
-        positionName: '#',
+    //'Position', 'Rank' or a term of your choice.
+    //String
+    positionName: {
+        default: '#',
+        validate: value => isString(value)
+    },
 
-        //'Team', 'Player', 'Driver' or a term of your choice. When undefined tries to get the name from data source.
-        //String
-        itemName: undefined,
+    //'Team', 'Player', 'Driver' or a term of your choice. When undefined tries to get the name from data source.
+    //String
+    itemName: {
+        default: undefined,
+        validate: value => !value || isString(value)
+    },
 
-        //['Australia', 'Bahrain',...] for F1, for example. When set to undefined gets names from data source if possible; if not uses rounds numbers.
-        //Array of Strings or Numbers
-        roundsNames: undefined,
+    //['Australia', 'Bahrain',...] for F1, for example. When set to undefined gets names from data source if possible; if not uses rounds numbers.
+    //Comma-separated string
+    roundsNames: {
+        default: undefined,
+        parse: input => input.split(','),
+        validate: (value) => !value || (Array.isArray(value) && value.every(item => isString(item) || !Number.isNaN(item)))
+    },
 
-        //If defined inserts round #0 before all other rounds with all items having total equal to zero.
-        //String or undefined
-        startRoundName: '0',
+    //If defined inserts round #0 before all other rounds with all items having total equal to zero.
+    //String or undefined
+    startRoundName: {
+        default: '0',
+        validate: value => isString(value),
+        goesToTransform: true
+    },
 
-        //'Points', 'Wins' or a term of your choice.
-        //String
-        totalName: 'Points',
+    //'Points', 'Wins' or a term of your choice.
+    //String
+    totalName: {
+        default: 'Points',
+        validate: value => isString(value)
+    },
 
-        //Number of columns with extra data about items like city they represent or team they are part of. The columns should go after the items column and before the results columns.
-        //Number
-        extraColumnsNumber: 0,
+    //Number of columns with extra data about items like city they represent or team they are part of. The columns should go after the items column and before the results columns.
+    //Number
+    extraColumnsNumber: {
+        default: 0,
+        parse: input => Number.parseInt(input, 10),
+        validate: value => !Number.isNaN(value),
+        goesToTransform: true
+    },
 
-        //Specifies items that will be shown. When set to undefined shows all. This option is useful when there are teams from both conferences in results but you wan to display them in separate tables
-        //Array of Strings
-        itemsToShow: undefined,
+    //Add calculated columns like number of wins and losses
+    //Object: key = calculated column, value = your term. Keys available: 'wins', 'losses'
+    calculatedColumns: {
+        default: undefined,
+        parse: input => JSON.parse(input),
+        validate: obj => {
+            if (!obj) {
+                return true;
+            } else if (typeof obj !== 'object') {
+                return false;
+            }
 
-        //Focus on particular items (teams, players, drivers). ['Liverpool', 'Everton'], for example.
-        //Array of Strings
-        focusedItems: [],
-
-        //Show change in total (+3, +1, ...) during the animation.
-        //Boolean
-        showChangeDuringAnimation: false,
-
-        //Show or hide the progress bar.
-        //Boolean
-        showProgressBar: true,
-
-        //Number of round to start from. When set to undefined shows the last round.
-        //Number
-        startFromRound: undefined,
-
-        //Animation duration in ms
-        //Number
-        animationDuration: 1800,
-
-        //Determines position when totals are equal. Can be 'no ties' (1, 2, 3, 4,...), 'highest' (1, 2, 2, 4,...) and 'range' (1, 2-3, 2-3, 4,...)
-        //String
-        tieBreaking: 'no ties',
-
-
-        //Name is required when you have several Replay Tables on one page.
-        //String
-        tableName: undefined,
-
-        //resultName is used for color coding and animation. There are three options out of the box: 'victory', 'draw' or 'defeat'
-        //Object: key — result, value — name
-        resultName: {
-            3: 'victory',
-            1: 'draw',
-            0: 'defeat'
+            const areKeysAvailable = Object.keys(obj).every(key => ['wins', 'losses'].includes(key));
+            const areTermsValid = Object.values(obj).every(value => isString(value));
+            return areKeysAvailable && areTermsValid;
         }
     },
 
+    //Specifies items that will be shown. When set to undefined shows all. This option is useful when there are teams from both conferences in results but you wan to display them in separate tables
+    //Comma-separated string
+    itemsToShow: {
+        default: undefined,
+        parse: input => input.split(','),
+        validate: value => !value || (Array.isArray(value) && value.every(item => isString(item))),
+        goesToTransform: true
+    },
+
+    //Focus on particular items (teams, players, drivers). "Liverpool,Everton" for example.
+    //Comma-separated string
+    focusedItems: {
+        default: [],
+        parse: input => input.split(','),
+        validate: value => Array.isArray(value) && value.every(item => isString(item))
+    },
+
+    //Show change in total (+3, +1, ...) during the animation.
+    //Boolean
+    showChangeDuringAnimation: {
+        default: false,
+        parse: input => input === "true",
+        validate: value => typeof value === 'boolean'
+    },
+
+    //Show or hide the progress bar.
+    //Boolean
+    showProgressBar: {
+        default: true,
+        parse: input => input === "true",
+        validate: value => typeof value === 'boolean'
+    },
+
+    //Number of round to start from. When set to undefined shows the last round.
+    //Number
+    startFromRound: {
+        default: undefined,
+        parse: input => Number.parseInt(input, 10),
+        validate: value => !value || !Number.isNaN(value)
+    },
+
+    //Animation duration in ms
+    //Number
+    animationDuration: {
+        default: 1800,
+        parse: input => Number.parseInt(input, 10),
+        validate: value => !Number.isNaN(value)
+    },
+
+    //Determines position when totals are equal. Can be 'no ties' (1, 2, 3, 4,...), 'highest' (1, 2, 2, 4,...) and 'range' (1, 2-3, 2-3, 4,...)
+    //String
+    tieBreaking: {
+        default: 'no ties',
+        validate: value => ['no ties', 'highest', 'range'].includes(value),
+        goesToTransform: true
+    },
+
+
+    //Name is required when you have several Replay Tables on one page.
+    //String
+    tableName: {
+        default: undefined,
+        validate: value => isString(value)
+    },
+
+    //resultName is used for color coding and animation. There are three options out of the box: 'victory', 'draw' or 'defeat'
+    //Object: key — result, value — name
+    resultName: {
+        default: {
+            3: 'victory',
+            1: 'draw',
+            0: 'defeat'
+        },
+        validate: value => false
+    }
+};
+
+export const presets = {
     "WinsLosses": {
         itemName: 'Team',
         totalName: 'Win %',
@@ -105,64 +189,7 @@ export const config = {
         tieBreaking: 'range',
         resultName: {
             1: 'victory'
+
         }
     }
 };
-
-export function isParameterValid (parameterName, parameterValue) {
-    switch (parameterName) {
-        case 'transformer':
-            return transformers.hasOwnProperty(parameterValue);
-
-        case 'seasonName':
-            return isString(parameterValue);
-
-        case 'roundName':
-            return isString(parameterValue);
-
-        case 'positionName':
-            return isString(parameterValue);
-
-        case 'itemName':
-            return !parameterValue || isString(parameterValue);
-
-        case 'roundsNames':
-            return !parameterValue || (Array.isArray(parameterValue) && parameterValue.every(item => isString(item) || !Number.isNaN(item)));
-
-        case 'startRoundName':
-            return isString(parameterValue);
-
-        case 'totalName':
-            return isString(parameterValue);
-
-        case 'extraColumnsNumber':
-            return !Number.isNaN(parameterValue);
-
-        case 'itemsToShow':
-            return !parameterValue || isString(parameterValue);
-
-        case 'focusedItems':
-            return Array.isArray(parameterValue) && parameterValue.every(item => isString(item));
-
-        case 'showChangeDuringAnimation':
-            return typeof parameterValue === 'boolean';
-
-        case 'showProgressBar':
-            return typeof parameterValue === 'boolean';
-
-        case 'startFromRound':
-            return !parameterValue || !Number.isNaN(parameterValue);
-
-        case 'animationDuration':
-            return !Number.isNaN(parameterValue);
-
-        case 'tieBreaking':
-            return ['no ties', 'highest', 'range'].includes(parameterValue);
-
-        case 'tableName':
-            return isString(parameterValue);
-
-        default:
-            return false;
-    }
-}
