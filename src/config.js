@@ -39,6 +39,10 @@ export const config = {
         //Number
         extraColumnsNumber: 0,
 
+        //Specifies items that will be shown. When set to undefined shows all. This option is useful when there are teams from both conferences in results but you wan to display them in separate tables
+        //Array of Strings
+        itemsToShow: undefined,
+
         //Focus on particular items (teams, players, drivers). ['Liverpool', 'Everton'], for example.
         //Array of Strings
         focusedItems: [],
@@ -133,6 +137,9 @@ export function isParameterValid (parameterName, parameterValue) {
 
         case 'extraColumnsNumber':
             return !Number.isNaN(parameterValue);
+
+        case 'itemsToShow':
+            return !parameterValue || isString(parameterValue);
 
         case 'focusedItems':
             return Array.isArray(parameterValue) && parameterValue.every(item => isString(item));

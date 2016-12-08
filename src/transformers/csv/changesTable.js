@@ -42,13 +42,16 @@ function transformChangesTable(jsonTable, params) {
     const results = changes.map(resultRow => {
         const roundResults = new Map();
         resultRow.forEach((changeString, itemNumber) => {
+            const item = items[itemNumber];
             const change = changeString ? Number.parseInt(changeString, 10) || 0 : null;
             currentStandings[itemNumber] += change || 0;
 
-            roundResults.set(items[itemNumber], {
-                change: change,
-                total: currentStandings[itemNumber]
-            });
+            if (!params['itemsToShow'] || params['itemsToShow'].includes(item)) {
+                roundResults.set(item, {
+                    change: change,
+                    total: currentStandings[itemNumber]
+                });
+            }
         });
 
         return roundResults;

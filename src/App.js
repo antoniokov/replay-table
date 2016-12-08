@@ -92,7 +92,8 @@ class App extends Component {
               const params = {
                   startRoundName: this.state['startRoundName'],
                   tieBreaking: this.state['tieBreaking'],
-                  extraColumnsNumber: Number.parseInt(this.state['extraColumnsNumber'], 10) || 0
+                  extraColumnsNumber: Number.parseInt(this.state['extraColumnsNumber'], 10) || 0,
+                  itemsToShow: this.state['itemsToShow'] ? this.state['itemsToShow'].split(',') : null
               };
               const transformedResult = transform(this.state['transformer'], result.data, params );
               if (transformedResult.status === 'error') {

@@ -44,20 +44,24 @@ function transformMatchesList(jsonList, params) {
                 const winnerItem = updateItemsStats(itemsStats, homeItem, homeScore, awayItem, awayScore);
 
                 [homeItem, awayItem].forEach(item => {
-                    const stats = itemsStats.get(item);
-                    roundResults.set(item, {
-                        change: item === winnerItem ? 1 : 0,
-                        total: (stats.wins/stats.games).toFixed(3)
-                    });
+                    if (!params['itemsToShow'] || params['itemsToShow'].includes(item)) {
+                        const stats = itemsStats.get(item);
+                        roundResults.set(item, {
+                            change: item === winnerItem ? 1 : 0,
+                            total: (stats.wins/stats.games).toFixed(3)
+                        });
+                    }
                 });
             });
         itemsNames.filter(item => !roundResults.has(item))
             .forEach(item => {
-                const stats = itemsStats.get(item);
-                roundResults.set(item, {
-                    change: null,
-                    total: stats.games ? (stats.wins/stats.games).toFixed(3) : (0).toFixed(3)
-                });
+                if (!params['itemsToShow'] || params['itemsToShow'].includes(item)) {
+                    const stats = itemsStats.get(item);
+                    roundResults.set(item, {
+                        change: null,
+                        total: stats.games ? (stats.wins / stats.games).toFixed(3) : (0).toFixed(3)
+                    });
+                }
             });
 
         return roundResults;
