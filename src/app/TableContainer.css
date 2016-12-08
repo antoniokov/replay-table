@@ -234,7 +234,7 @@
 }
 .r-table tr th:last-child,
 .r-table tr td:last-child{
-    width: 5rem;
+    width: 6rem;
     text-align: center;
 }
 
@@ -271,11 +271,11 @@ input[type="range"]:focus {
     opacity: 0.5;
 }
 
-li {
-    list-style-type: none;
-    list-style-position:inside;
-    border-bottom: 1px dashed lightgrey;
-}
+/*li {*/
+    /*list-style-type: none;*/
+    /*list-style-position:inside;*/
+    /*border-bottom: 1px dashed lightgrey;*/
+/*}*/
 
 .victory {
     background-color: rgba(170,255,102,0.3);

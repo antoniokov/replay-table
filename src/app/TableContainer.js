@@ -93,6 +93,8 @@ class TableContainer extends Component {
 
     render() {
         return (
+
+
             <div className="replay-table-wrap">
 
                 <div className="replay-table-controls">
@@ -126,8 +128,8 @@ class TableContainer extends Component {
                         <div className="replay-table-start-control">
                             <div
                                 className={this.state.isPlaying
-                                    ? 'pause'
-                                    : this.state.currentRound === this.props.lastRound ? 'replay' : 'play'}
+                            ? 'pause'
+                            : this.state.currentRound === this.props.lastRound ? 'replay' : 'play'}
                                 onClick={this.handlePlayButton.bind(this)} />
                         </div>
 
