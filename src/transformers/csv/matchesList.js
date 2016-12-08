@@ -3,27 +3,24 @@ import addPositions from '../auxiliary/addPositions';
 
 
 function updateItemsStats(itemsStats, homeItem, homeScore, awayItem, awayScore) {
-    const newHomeItemStats = itemsStats.get(homeItem);
-    const newAwayItemStats = itemsStats.get(awayItem);
-    newHomeItemStats.games++;
-    newAwayItemStats.games++;
+    const homeItemStats = itemsStats.get(homeItem);
+    const awayItemStats = itemsStats.get(awayItem);
+    homeItemStats.games++;
+    awayItemStats.games++;
 
     let winnerItem;
     if (homeScore > awayScore) {
         winnerItem = homeItem;
-        newHomeItemStats.wins++;
-        newAwayItemStats.losses++;
+        homeItemStats.wins++;
+        awayItemStats.losses++;
     } else if (homeScore < awayScore) {
         winnerItem = awayItem;
-        newHomeItemStats.losses++;
-        newAwayItemStats.wins++;
+        homeItemStats.losses++;
+        awayItemStats.wins++;
     } else {
-        newHomeItemStats.ties++;
-        newAwayItemStats.ties++;
+        homeItemStats.ties++;
+        awayItemStats.ties++;
     }
-
-    itemsStats.set(homeItem, newHomeItemStats);
-    itemsStats.set(awayItem, newAwayItemStats);
 
     return winnerItem;
 }
@@ -37,7 +34,7 @@ function transformMatchesList(jsonList, params) {
     itemsNames.forEach(item => itemsStats.set(item, { games: 0, wins: 0, losses: 0, ties: 0 }));
 
     const results = roundsNames.map(round => {
-        const roundResults = [];
+        const roundResults = new Map();
         matches.filter(match => match[0] === round)
             .forEach(match => {
                 const homeItem = match[1];
@@ -48,19 +45,16 @@ function transformMatchesList(jsonList, params) {
 
                 [homeItem, awayItem].forEach(item => {
                     const stats = itemsStats.get(item);
-                    roundResults.push({
-                        item: item,
+                    roundResults.set(item, {
                         change: item === winnerItem ? 1 : 0,
                         total: (stats.wins/stats.games).toFixed(3)
                     });
                 });
             });
-        const itemsPlayed = roundResults.map(result => result.item);
-        itemsNames.filter(item => !itemsPlayed.includes(item))
+        itemsNames.filter(item => !roundResults.has(item))
             .forEach(item => {
                 const stats = itemsStats.get(item);
-                roundResults.push({
-                    item: item,
+                roundResults.set(item, {
                     change: null,
                     total: stats.games ? (stats.wins/stats.games).toFixed(3) : (0).toFixed(3)
                 });
@@ -69,7 +63,7 @@ function transformMatchesList(jsonList, params) {
         return roundResults;
     });
 
-    const resultsSorted = results.map(round => stableSort(round, (a,b) => b.total - a.total));
+    const resultsSorted = results.map(round => new Map(stableSort([...round.entries()], (a,b) => b[1].total - a[1].total)));
     addPositions(resultsSorted, params['tieBreaking']);
 
     return {

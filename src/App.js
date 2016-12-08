@@ -108,7 +108,7 @@ class App extends Component {
                   .forEach(param => this.setState({ [param]: transformedResult[param]}));
 
               const lastRound = transformedResult['results'].reduce((maxRoundNumber, round, i) => {
-                  return round.some(result => result.change !== null) && i > maxRoundNumber ? i : maxRoundNumber;
+                  return [...round.values()].some(result => result.change !== null) && i > maxRoundNumber ? i : maxRoundNumber;
               }, 0);
               this.setState({ lastRound: lastRound });
 
@@ -140,9 +140,8 @@ class App extends Component {
                   'totalName', 'showChangeDuringAnimation', 'showProgressBar', 'roundsNames', 'results', 'extraColumns',
                   'resultName', 'startFromRound', 'lastRound', 'animationDuration']
                   .reduce((props, param) => Object.assign(props, { [param]: this.state[param] }), {});
-              return (
-                  <TableContainer {...(props)} />
-              );
+
+              return <TableContainer {...(props)} />;
       }
   }
 }

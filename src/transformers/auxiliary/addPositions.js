@@ -1,26 +1,20 @@
 function addPositions (results, tieBreaking = 'no ties') {
-    results.forEach(round => round.forEach((result, i) => {
+    results.forEach(round => [...round.entries()].forEach(([item, result], i) => {
         if(tieBreaking === 'no ties') {
             result.position = i + 1;
             return;
         }
 
-        const itemsHigher = round.reduce((acc, res) => res.item !== result.item && res.total > result.total
-                ? acc + 1
-                : acc
-            , 0);
+        const itemsHigher = [...round.values()].filter(res => res.total > result.total).length;
 
-        result.position = itemsHigher + 1;
-
-        if (tieBreaking === 'range') {
-            const itemsEqual = round.reduce((acc, res) => res.item !== result.item && res.total === result.total
-                    ? acc + 1
-                    : acc
-                , 0);
-
-
+        if (tieBreaking === 'highest') {
+            result.position = itemsHigher + 1;
+        } else if (tieBreaking === 'range') {
+            const itemsEqual = [...round.values()].filter(res => res.total === result.total).length - 1;
             if (itemsEqual) {
-                result.position += `-${itemsHigher + itemsEqual + 1}`
+                result.position = `${itemsHigher + 1}-${itemsHigher + itemsEqual + 1}`
+            } else {
+                result.position = itemsHigher + 1;
             }
         }
     }));

@@ -4,9 +4,9 @@ import addPositions from '../auxiliary/addPositions';
 
 
 function addExtras (results, extraColumnsNames, extraColumns) {
-    results.forEach(round => round.forEach((result, itemNumber) => {
-        result.extras = extraColumns.reduce((obj, col, i) => Object.assign(obj, { [extraColumnsNames[i]]: col[itemNumber] }), {});
-    }));
+    results.forEach(round => round.forEach((result, item) => {
+            result.extras = extraColumns.reduce((obj, col, i) => Object.assign(obj, { [extraColumnsNames[i]]: col.get(item) }), {});
+        }));
 }
 
 function transformChangesTable(jsonTable, params) {
@@ -33,28 +33,33 @@ function transformChangesTable(jsonTable, params) {
         [items, ...changes] =  transposed;
     } else {
         items = transposed[0];
-        extraColumns = transposed.slice(1, params['extraColumnsNumber'] + 1);
+        extraColumns = transposed.slice(1, params['extraColumnsNumber'] + 1)
+            .map(column => new Map(items.map((item, i) => [item, column[i]])));
         changes = transposed.slice(params['extraColumnsNumber'] + 1);
     }
 
     const currentStandings = items.map(item => 0);
-    const results = changes.map(resultRow => resultRow.map((changeString, itemNumber) => {
-        const change = changeString ? Number.parseInt(changeString, 10) || 0 : null;
-        currentStandings[itemNumber] += change || 0;
+    const results = changes.map(resultRow => {
+        const roundResults = new Map();
+        resultRow.forEach((changeString, itemNumber) => {
+            const change = changeString ? Number.parseInt(changeString, 10) || 0 : null;
+            currentStandings[itemNumber] += change || 0;
 
-        return {
-            item: items[itemNumber],
-            change: change,
-            total: currentStandings[itemNumber]
-        };
-    }));
+            roundResults.set(items[itemNumber], {
+                change: change,
+                total: currentStandings[itemNumber]
+            });
+        });
+
+        return roundResults;
+    });
 
     if (params['startRoundName']) {
-        results.unshift(items.map(item => ({
-            item: item,
+        const startRoundResults = new Map(items.map(item => [item, {
             change: 0,
             total: 0
-        })));
+        }]));
+        results.unshift(startRoundResults);
         roundsNames.unshift(params['startRoundName']);
     }
 
@@ -62,7 +67,7 @@ function transformChangesTable(jsonTable, params) {
         addExtras(results, extraColumnsNames, extraColumns);
     }
 
-    const resultsSorted = results.map(round => stableSort(round, (a,b) => b.total - a.total));
+    const resultsSorted = results.map(round => new Map(stableSort([...round.entries()], (a,b) => b[1].total - a[1].total)));
     addPositions(resultsSorted, params['tieBreaking']);
 
     return {

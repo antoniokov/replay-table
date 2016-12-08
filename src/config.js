@@ -79,7 +79,7 @@ export const config = {
 
     "WinsLosses": {
         itemName: 'Team',
-        totalName: 'Wins %',
+        totalName: 'Win %',
         resultName: {
             1: 'victory',
             0: 'defeat'
