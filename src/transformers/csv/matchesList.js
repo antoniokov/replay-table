@@ -48,7 +48,7 @@ function transformMatchesList(jsonList, params) {
                     stats.total = (stats.wins/stats.rounds).toFixed(3);
 
                     if (!params['itemsToShow'] || params['itemsToShow'].includes(item.name)) {
-                        roundResults.set(item.name, stats);
+                        roundResults.set(item.name, Object.assign({}, stats));
                     }
                 });
             });
@@ -58,7 +58,7 @@ function transformMatchesList(jsonList, params) {
                     const stats = itemsStats.get(name);
                     stats.change = null;
                     stats.total = stats.rounds ? (stats.wins / stats.rounds).toFixed(3) : (0).toFixed(3);
-                    roundResults.set(name, stats);
+                    roundResults.set(name, Object.assign({}, stats));
                 }
             });
 

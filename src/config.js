@@ -72,7 +72,7 @@ export const config = {
     //Add calculated columns like number of wins and losses
     //Object: key = calculated column, value = your term. Keys available: 'rounds', 'wins', 'losses', 'draws'
     calculatedColumns: {
-        default: undefined,
+        default: {},
         parse: input => JSON.parse(input),
         validate: obj => {
             if (!obj) {
@@ -84,8 +84,7 @@ export const config = {
             const areKeysAvailable = Object.keys(obj).every(key => ['rounds', 'wins', 'losses', 'draws'].includes(key));
             const areTermsValid = Object.values(obj).every(value => isString(value));
             return areKeysAvailable && areTermsValid;
-        },
-        goesToTransform: true
+        }
     },
 
     //Specifies items that will be shown. When set to undefined shows all. This option is useful when there are teams from both conferences in results but you wan to display them in separate tables
@@ -175,6 +174,7 @@ export const presets = {
             0: 'loss'
         },
         calculatedColumns: {
+            'rounds': 'Games',
             'wins': 'Wins',
             'losses': 'Losses'
         }

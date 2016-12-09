@@ -133,17 +133,19 @@ class TableContainer extends Component {
 
         const shouldAnimateChange =  this.state.isMoving && (this.props.showChangeDuringAnimation || !areRoundsConsecutive);
         if (this.state.show === 'round' || shouldAnimateChange) {
-            return change > 0 ? `+${change}` : change;
+            let changeString = change.toString();
+            if (Math.abs(change) > 0 && Math.abs(change) < 1) {
+                changeString = change.toFixed(3).toString().replace('0.', '.');
+            }
+            return change > 0 ? `+${changeString}` : changeString;
         } else {
-            return total > 0 && total < 1 ? total.toString().substring(1) : total;
+            return total > 0 && total < 1 ? total.toString().replace('0.', '.') : total;
         }
     }
 
 
     render() {
         return (
-
-
             <div className="replay-table-wrap">
 
                 <div className="replay-table-controls">
@@ -213,6 +215,7 @@ class TableContainer extends Component {
                     <tr>
                         <th className="position">{this.props.positionName}</th>
                         <th className="item">{this.props.itemName}</th>
+                        {Object.values(this.props['calculatedColumns']).map(name => <th key={name} className="calculated">{name}</th>)}
                         {this.props['extraColumnsNames'].map(name => <th className="extra" key={name}>{name}</th>)}
                         <th className="total">{this.props.totalName}</th>
                     </tr>
@@ -237,6 +240,9 @@ class TableContainer extends Component {
 
                                         <td className="position">{result.position}</td>
                                         <td className="item">{item}</td>
+                                        {Object.keys(this.props['calculatedColumns']).map(key =>
+                                            <td key={key} className="calculated">{result[key]}</td>
+                                        )}
                                         {this.props.extraColumnsNames.map(name =>
                                             <td key={name} className="extras">{result.extras[name]}</td>
                                         )}
