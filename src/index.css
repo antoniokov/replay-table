@@ -155,6 +155,7 @@ h2{
 }
 
 .examples h3{
+    position: relative;
     text-align: center;
     font-family: 'Roboto';
     font-size: 2.2rem;
@@ -167,4 +168,15 @@ h2{
 .examples .replayTable .replay-table-wrap{
     float: none;
 }
-.examples .replayTable {}
+
+.examples h3 a{
+    display: inline-block;
+    width: 1.6rem;
+    height: 1.6rem;
+    margin-right: 1rem;
+    background: url("img/link.svg") no-repeat 0 0 / 100%;
+    opacity: 0.3;
+}
+.examples h3 a:hover{
+    opacity: 0.6;
+}
