@@ -277,7 +277,7 @@ input[type="range"]:focus {
     /*border-bottom: 1px dashed lightgrey;*/
 /*}*/
 
-.victory {
+.win {
     background-color: rgba(170,255,102,0.3);
 }
 
@@ -285,11 +285,11 @@ input[type="range"]:focus {
     background-color: rgba(0,0,0,0.05);
 }
 
-.defeat {
+.loss {
     background-color: rgba(255,158,158,0.3);
 }
 
-@keyframes victory {
+@keyframes win {
     0% {background-color: transparent;}
     50% {background-color: rgba(170,255,102,0.3);}
     100% {background-color: transparent;}
@@ -301,7 +301,7 @@ input[type="range"]:focus {
     100% {background-color: transparent;}
 }
 
-@keyframes defeat {
+@keyframes loss {
     0% {background-color: transparent;}
     50% {background-color: rgba(255,158,158,0.3);}
     100% {background-color: transparent;}

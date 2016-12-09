@@ -1,66 +1,64 @@
+import flipObject from '../../auxiliary/flipObject';
 import stableSort from '../../auxiliary/stableSort';
+import pluralizeResult from '../auxiliary/pluralizeResult';
 import addPositions from '../auxiliary/addPositions';
 
 
-function updateItemsStats(itemsStats, homeItem, homeScore, awayItem, awayScore) {
-    const homeItemStats = itemsStats.get(homeItem);
-    const awayItemStats = itemsStats.get(awayItem);
-    homeItemStats.games++;
-    awayItemStats.games++;
-
-    let winnerItem;
-    if (homeScore > awayScore) {
-        winnerItem = homeItem;
-        homeItemStats.wins++;
-        awayItemStats.losses++;
-    } else if (homeScore < awayScore) {
-        winnerItem = awayItem;
-        homeItemStats.losses++;
-        awayItemStats.wins++;
-    } else {
-        homeItemStats.ties++;
-        awayItemStats.ties++;
+function getResult(score, opponentScore) {
+    if (score > opponentScore) {
+        return 'win';
+    } else if (score < opponentScore) {
+        return 'loss'
+    } else if (score === opponentScore) {
+        return 'draw'
     }
-
-    return winnerItem;
 }
 
 function transformMatchesList(jsonList, params) {
+    const resultChange = flipObject(params['resultName']);
+
     const [headers, ...matches] = jsonList;
     const roundsNames = [...new Set(matches.map(match => match[0]))];
     const itemsNames = [...new Set(matches.map(match => match[1]))];
 
     const itemsStats = new Map();
-    itemsNames.forEach(item => itemsStats.set(item, { games: 0, wins: 0, losses: 0, ties: 0 }));
+    itemsNames.forEach(name => itemsStats.set(name, { change: null, total: 0, rounds: 0, wins: 0, losses: 0, draws: 0 }));
 
     const results = roundsNames.map(round => {
         const roundResults = new Map();
         matches.filter(match => match[0] === round)
             .forEach(match => {
-                const homeItem = match[1];
-                const awayItem = match[3];
-                const homeScore = Number.parseInt(match[2], 10);
-                const awayScore = Number.parseInt(match[4], 10);
-                const winnerItem = updateItemsStats(itemsStats, homeItem, homeScore, awayItem, awayScore);
+                const homeItem = {
+                    name: match[1],
+                    score: Number.parseInt(match[2], 10)
+                };
+                const awayItem = {
+                    name: match[3],
+                    score: Number.parseInt(match[4], 10)
+                };
+
+                homeItem.result = getResult(homeItem.score, awayItem.score);
+                awayItem.result = getResult(awayItem.score, homeItem.score);
 
                 [homeItem, awayItem].forEach(item => {
-                    if (!params['itemsToShow'] || params['itemsToShow'].includes(item)) {
-                        const stats = itemsStats.get(item);
-                        roundResults.set(item, {
-                            change: item === winnerItem ? 1 : 0,
-                            total: (stats.wins/stats.games).toFixed(3)
-                        });
+                    const stats = itemsStats.get(item.name);
+                    stats.rounds++;
+                    stats[pluralizeResult(item.result)]++;
+                    stats.change = resultChange[item.result];
+                    stats.total = (stats.wins/stats.rounds).toFixed(3);
+
+                    if (!params['itemsToShow'] || params['itemsToShow'].includes(item.name)) {
+                        roundResults.set(item.name, stats);
                     }
                 });
             });
-        itemsNames.filter(item => !roundResults.has(item))
-            .forEach(item => {
-                if (!params['itemsToShow'] || params['itemsToShow'].includes(item)) {
-                    const stats = itemsStats.get(item);
-                    roundResults.set(item, {
-                        change: null,
-                        total: stats.games ? (stats.wins / stats.games).toFixed(3) : (0).toFixed(3)
-                    });
+        itemsNames.filter(name => !roundResults.has(name))
+            .forEach(name => {
+                if (!params['itemsToShow'] || params['itemsToShow'].includes(name)) {
+                    const stats = itemsStats.get(name);
+                    stats.change = null;
+                    stats.total = stats.rounds ? (stats.wins / stats.rounds).toFixed(3) : (0).toFixed(3);
+                    roundResults.set(name, stats);
                 }
             });
 

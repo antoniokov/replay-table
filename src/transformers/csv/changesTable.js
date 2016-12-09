@@ -1,5 +1,6 @@
 import transpose from '../../auxiliary/transpose';
 import stableSort from '../../auxiliary/stableSort';
+import pluralizeResult from '../auxiliary/pluralizeResult';
 import addPositions from '../auxiliary/addPositions';
 
 
@@ -27,30 +28,41 @@ function transformChangesTable(jsonTable, params) {
         roundsNames = [...new Array(jsonTable[1].length).keys()];
     }
 
-    let items, extraColumns = [], changes;
+    let itemsNames, extraColumns = [], changes;
     const transposed = transpose(jsonTable.slice(1));
     if (!params['extraColumnsNumber']) {
-        [items, ...changes] =  transposed;
+        [itemsNames, ...changes] =  transposed;
     } else {
-        items = transposed[0];
+        itemsNames = transposed[0];
         extraColumns = transposed.slice(1, params['extraColumnsNumber'] + 1)
-            .map(column => new Map(items.map((item, i) => [item, column[i]])));
+            .map(column => new Map(itemsNames.map((item, i) => [item, column[i]])));
         changes = transposed.slice(params['extraColumnsNumber'] + 1);
     }
 
-    const currentStandings = items.map(item => 0);
+    const itemsStats = new Map();
+    const initialStats = { change: null, total: 0, rounds: 0, wins: 0, losses: 0, draws: 0 };
+    itemsNames.forEach(name => itemsStats.set(name, Object.assign({}, initialStats)));
+
     const results = changes.map(resultRow => {
         const roundResults = new Map();
         resultRow.forEach((changeString, itemNumber) => {
-            const item = items[itemNumber];
-            const change = changeString ? Number.parseInt(changeString, 10) || 0 : null;
-            currentStandings[itemNumber] += change || 0;
+            const name = itemsNames[itemNumber];
+            const stats = itemsStats.get(name);
 
-            if (!params['itemsToShow'] || params['itemsToShow'].includes(item)) {
-                roundResults.set(item, {
-                    change: change,
-                    total: currentStandings[itemNumber]
-                });
+            stats.change = changeString ? Number.parseInt(changeString, 10) || 0 : null;
+            if (stats.change !== null) {
+                stats.rounds++;
+            }
+
+            const result = params['resultName'][stats.change];
+            if (result) {
+                stats[pluralizeResult(result)]++;
+            }
+
+            stats.total += stats.change || 0;
+
+            if (!params['itemsToShow'] || params['itemsToShow'].includes(name)) {
+                roundResults.set(name, Object.assign({}, stats));
             }
         });
 
@@ -58,10 +70,7 @@ function transformChangesTable(jsonTable, params) {
     });
 
     if (params['startRoundName']) {
-        const startRoundResults = new Map(items.map(item => [item, {
-            change: 0,
-            total: 0
-        }]));
+        const startRoundResults = new Map(itemsNames.map(item => [item, Object.assign({}, initialStats)]));
         results.unshift(startRoundResults);
         roundsNames.unshift(params['startRoundName']);
     }

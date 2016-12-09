@@ -70,7 +70,7 @@ export const config = {
     },
 
     //Add calculated columns like number of wins and losses
-    //Object: key = calculated column, value = your term. Keys available: 'wins', 'losses'
+    //Object: key = calculated column, value = your term. Keys available: 'rounds', 'wins', 'losses', 'draws'
     calculatedColumns: {
         default: undefined,
         parse: input => JSON.parse(input),
@@ -81,10 +81,11 @@ export const config = {
                 return false;
             }
 
-            const areKeysAvailable = Object.keys(obj).every(key => ['wins', 'losses'].includes(key));
+            const areKeysAvailable = Object.keys(obj).every(key => ['rounds', 'wins', 'losses', 'draws'].includes(key));
             const areTermsValid = Object.values(obj).every(value => isString(value));
             return areKeysAvailable && areTermsValid;
-        }
+        },
+        goesToTransform: true
     },
 
     //Specifies items that will be shown. When set to undefined shows all. This option is useful when there are teams from both conferences in results but you wan to display them in separate tables
@@ -152,15 +153,16 @@ export const config = {
         validate: value => isString(value)
     },
 
-    //resultName is used for color coding and animation. There are three options out of the box: 'victory', 'draw' or 'defeat'
+    //resultName is used for color coding and animation. There are three options out of the box: 'win', 'draw' or 'loss'
     //Object: key — result, value — name
     resultName: {
         default: {
-            3: 'victory',
+            3: 'win',
             1: 'draw',
-            0: 'defeat'
+            0: 'loss'
         },
-        validate: value => false
+        validate: value => false,
+        goesToTransform: true
     }
 };
 
@@ -169,16 +171,19 @@ export const presets = {
         itemName: 'Team',
         totalName: 'Win %',
         resultName: {
-            1: 'victory',
-            0: 'defeat'
+            1: 'win',
+            0: 'loss'
+        },
+        calculatedColumns: {
+            'wins': 'Wins',
+            'losses': 'Losses'
         }
     },
 
     "F1": {
         roundName: 'Race',
         itemName: 'Driver',
-        startRoundName: 'Start →',
-        resultName: {}
+        startRoundName: 'Start →'
     },
 
     "ЧГК": {
@@ -188,8 +193,7 @@ export const presets = {
         totalName: 'Взято',
         tieBreaking: 'range',
         resultName: {
-            1: 'victory'
-
+            1: 'win'
         }
     }
 };

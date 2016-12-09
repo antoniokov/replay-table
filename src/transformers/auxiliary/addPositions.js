@@ -1,4 +1,4 @@
-function addPositions (results, tieBreaking = 'no ties') {
+export default function addPositions (results, tieBreaking = 'no ties') {
     results.forEach(round => [...round.entries()].forEach(([item, result], i) => {
         if(tieBreaking === 'no ties') {
             result.position = i + 1;
@@ -19,5 +19,3 @@ function addPositions (results, tieBreaking = 'no ties') {
         }
     }));
 }
-
-export default addPositions;
