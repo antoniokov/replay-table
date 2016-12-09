@@ -152,9 +152,9 @@ export const config = {
         validate: value => isString(value)
     },
 
-    //resultName is used for color coding and animation. There are three options out of the box: 'win', 'draw' or 'loss'
+    //resultMapping is used for color coding and animation. There are three options out of the box: 'win', 'draw' or 'loss'
     //Object: key — result, value — name
-    resultName: {
+    resultMapping: {
         default: {
             3: 'win',
             1: 'draw',
@@ -169,7 +169,7 @@ export const presets = {
     "WinsLosses": {
         itemName: 'Team',
         totalName: 'Win %',
-        resultName: {
+        resultMapping: {
             1: 'win',
             0: 'loss'
         },
@@ -192,7 +192,7 @@ export const presets = {
         itemName: 'Команда',
         totalName: 'Взято',
         tieBreaking: 'range',
-        resultName: {
+        resultMapping: {
             1: 'win'
         }
     }

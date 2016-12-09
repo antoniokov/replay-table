@@ -81,7 +81,7 @@ class TableContainer extends Component {
 
     getRowStyle (result, change, areRoundsConsecutive) {
         const styleObject = {};
-        const resultClass = this.props.resultName[result.change];
+        const resultClass = this.props.resultMapping[result.change];
 
         const customStyleNeeded = this.state.show === 'round' && !resultClass;
         const animationNeeded = this.state.isMoving && this.state.currentRound > 0;
@@ -115,8 +115,8 @@ class TableContainer extends Component {
 
     getRowClasses (item, result) {
         const classes = ['row'];
-        if (this.state.show === 'round' && this.props.resultName[result.change]) {
-            classes.push(this.props.resultName[result.change]);
+        if (this.state.show === 'round' && this.props.resultMapping[result.change]) {
+            classes.push(this.props.resultMapping[result.change]);
         }
 
         if (this.state.focusedItems.size === 0 || this.state.focusedItems.has(item)) {
@@ -133,9 +133,13 @@ class TableContainer extends Component {
 
         const shouldAnimateChange =  this.state.isMoving && (this.props.showChangeDuringAnimation || !areRoundsConsecutive);
         if (this.state.show === 'round' || shouldAnimateChange) {
-            let changeString = change.toString();
-            if (Math.abs(change) > 0 && Math.abs(change) < 1) {
+            let changeString;
+            if (change === null) {
+                changeString = '';
+            } else if (Math.abs(change) > 0 && Math.abs(change) < 1) {
                 changeString = change.toFixed(3).toString().replace('0.', '.');
+            } else {
+                changeString = change.toString()
             }
             return change > 0 ? `+${changeString}` : changeString;
         } else {

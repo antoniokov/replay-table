@@ -1,39 +1,17 @@
 Replay Table
 =========
 
-This is a script that transforms a csv file with season results into interactive standings:
+Transforms a csv file with season results into interactive standings:
 
 ![demo](https://s3-us-west-2.amazonaws.com/replay-table/images/github/demo.gif)
 
-Watch the [live demo](https://targetprocess.github.io/replayTable/) for football, Formula One and other sports.
-
-## Table of Contents
-* [Quickstart](#quickstart)
-* [Input File](#input-file)
-* [Presets](#presets)
-* [Customization](#customization)
-  * [seasonName](#seasonname)
-  * [roundName](#roundname)
-  * [positionName](#positionname)
-  * [itemName](#itemname)
-  * [roundsNames](#roundsnames)
-  * [startRoundName](#startroundname)
-  * [totalName](#totalname)
-  * [extraColumnsNumber](#extracolumnsnumber)
-  * [focusedItems](#focuseditems)
-  * [showChangeDuringAnimation](#showchangeduringanimation)
-  * [showProgressBar](#showprogressbar)
-  * [startFromRound](#startfromround)
-  * [animationDuration](#animationduration)
-  * [tieBreaking](#tiesresolution)
-  * [tableName](#tablename)
-  
+Watch the [live demo](https://targetprocess.github.io/replayTable/) for Premier League, NBA Formula One and other sports.
 
 ## Quickstart
 Put a `div` with `replayTable` class on your page and supply a link to your csv file using `data-csv` attribute.
 ```
 <div class="replayTable"
-     data-csv="/csv/football/england/premier-league/2015-2016.csv">
+     data-csv="/path/to/file.csv">
 </div>
 ```
 Include the script near the end of the `body` tag:
@@ -50,6 +28,44 @@ Finally, include the stylesheet inside the `head` tag:
     <link rel="stylesheet" type="text/css" link href="cdn.jsdelivr.net/replay-table/latest/replay-table.css">
 </head>
 ```
+
+There are ready to embed Replay Tables in our [gallery](https://targetprocess.github.io/replayTable/#examples-section) or you can make your own.
+
+
+## Customization
+* [Table Structure](#table-structure)
+  * [Position](#position)
+  * [Item](#item)
+  * [Extra Columns](#extra-columns)
+  * [Calculated Columns](#calculated-columns)
+  * [Total](#total)
+  * [Change](#change)
+* [Input](#input)
+  * [Changes Table](#changes-table)
+  * [Matches List](#mathes-list)
+* [Presets](#presets)
+* [Parameters](#parameters)
+  * [Terms](#terms)
+    * [seasonName](#seasonname)
+    * [roundName](#roundname)
+    * [positionName](#positionname)
+    * [itemName](#itemname)
+    * [roundsNames](#roundsnames)
+    * [startRoundName](#startroundname)
+    * [totalName](#totalname)
+  * [Playback](#playback)
+    * [startFromRound](#startfromround)
+    * [animationDuration](#animationduration)
+    * [showChangeDuringAnimation](#showchangeduringanimation)
+  * [Appearance](#appereance)
+    * [showProgressBar](#showprogressbar)
+    * [showSeasonRoundSwitch](#showseasonroundswitch)
+  * [Other](#other)
+    * [extraColumnsNumber](#extracolumnsnumber)
+    * [tieBreaking](#tiesresolution)
+    * [focusedItems](#focuseditems)
+    * [tableName](#tablename)
+
 
 ## Input file
 There's only one csv table format available for now: a column with item names followed by results of each round. Here's an example with the 2015–16 Premier League season results:

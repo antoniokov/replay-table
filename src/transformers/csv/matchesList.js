@@ -15,7 +15,7 @@ function getResult(score, opponentScore) {
 }
 
 function transformMatchesList(jsonList, params) {
-    const resultChange = flipObject(params['resultName']);
+    const resultChange = flipObject(params['resultMapping']);
 
     const [headers, ...matches] = jsonList;
     const roundsNames = [...new Set(matches.map(match => match[0]))];

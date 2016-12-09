@@ -54,7 +54,7 @@ function transformChangesTable(jsonTable, params) {
                 stats.rounds++;
             }
 
-            const result = params['resultName'][stats.change];
+            const result = params['resultMapping'][stats.change];
             if (result) {
                 stats[pluralizeResult(result)]++;
             }
