@@ -5,7 +5,11 @@ Transforms a csv file with season results into interactive standings:
 
 ![demo](https://s3-us-west-2.amazonaws.com/replay-table/images/github/demo.gif)
 
-Watch the [live demo](https://targetprocess.github.io/replayTable/) for Premier League, NBA Formula One and other sports.
+## Live Demos
+
+* [Premier League](https://targetprocess.github.io/replayTable/#premier-league)
+* [NBA](https://targetprocess.github.io/replayTable/#nba)
+* [Formula One](https://targetprocess.github.io/replayTable/#f1)
 
 ## Quickstart
 Put a `div` with `replayTable` class on your page and supply a link to your csv file using `data-csv` attribute.
@@ -41,30 +45,35 @@ There are ready to embed Replay Tables in our [gallery](https://targetprocess.gi
   * [Total](#total)
   * [Change](#change)
 * [Input](#input)
-  * [Changes Table](#changes-table)
-  * [Matches List](#mathes-list)
+  * [Points Table](#points-table)
+  * [List of Matches](#list-of-matches)
 * [Presets](#presets)
+  * [Wins-Losses](#wins-losses)
+  * [F1](#f1)
+  * [ЧГК](#chgk)
 * [Parameters](#parameters)
   * [Terms](#terms)
-    * [seasonName](#seasonname)
-    * [roundName](#roundname)
-    * [positionName](#positionname)
-    * [itemName](#itemname)
-    * [roundsNames](#roundsnames)
-    * [startRoundName](#startroundname)
-    * [totalName](#totalname)
+    * [seasonName](#season-name)
+    * [roundName](#round-name)
+    * [positionName](#position-name)
+    * [itemName](#item-name)
+    * [startRoundName](#start-round-name)
+    * [totalName](#total-name)
+  * [Data](#data)
+    * [extraColumnsNumber](#extra-columns-number)
+    * [roundsNames](#rounds-names)
+    * [itemsToShow](#items-to-show)
   * [Playback](#playback)
-    * [startFromRound](#startfromround)
-    * [animationDuration](#animationduration)
-    * [showChangeDuringAnimation](#showchangeduringanimation)
+    * [startFromRound](#start-from-round)
+    * [animationDuration](#animation-duration)
+    * [showChangeDuringAnimation](#show-change-during-animation)
   * [Appearance](#appereance)
-    * [showProgressBar](#showprogressbar)
-    * [showSeasonRoundSwitch](#showseasonroundswitch)
+    * [showProgressBar](#show-progress-bar)
+    * [showSeasonRoundSwitch](#show-season-round-switch)
   * [Other](#other)
-    * [extraColumnsNumber](#extracolumnsnumber)
-    * [tieBreaking](#tiesresolution)
-    * [focusedItems](#focuseditems)
-    * [tableName](#tablename)
+    * [tieBreaking](#tie-breaking)
+    * [focusedItems](#focused-items)
+    * [tableName](#table-name)
 
 
 ## Input file
@@ -184,3 +193,7 @@ There is a chance we'll transfrom this option into a function to cope with compl
 |-------------------|-------------------|-------------------|
 | `data-table-name` |  `String` | `undefined` |
 Name is required when you have several Replay Tables on one page.
+
+
+## Contact
+Feel free to suggest features and presets, offer tables for our public gallery and ask questions via [anton.iokov@targetprocess.com](mailto:anton.iokov@targetprocess.com) or [@antoniokov](https://twitter.com/antoniokov).

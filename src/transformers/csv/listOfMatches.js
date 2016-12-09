@@ -19,7 +19,7 @@ function transformMatchesList(jsonList, params) {
 
     const [headers, ...matches] = jsonList;
     const roundsNames = [...new Set(matches.map(match => match[0]))];
-    const itemsNames = [...new Set(matches.map(match => match[1]))];
+    const itemsNames = [...new Set([...matches.map(match => match[1]), ...matches.map(match => match[3])])];
 
     const itemsStats = new Map();
     itemsNames.forEach(name => itemsStats.set(name, { change: null, total: 0, rounds: 0, wins: 0, losses: 0, draws: 0 }));

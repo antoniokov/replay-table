@@ -1,9 +1,9 @@
-import transformChangesTable from './csv/changesTable';
-import transformMatchesList from './csv/matchesList';
+import transformChangesTable from './csv/pointsTable';
+import transformListOfMatches from './csv/listOfMatches';
 
 export const transformers = {
-    'changesTable': transformChangesTable,
-    'matchesList': transformMatchesList
+    'pointsTable': transformChangesTable,
+    'listOfMatches': transformListOfMatches
 };
 
 export function transform (transformer, data, params) {
