@@ -40,14 +40,14 @@ Include the script near the end of the `body` tag:
 ```
 <body>
     ...
-    <script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/replay-table/cdn/replayTable.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/replay-table/latest/replay-table.min.js"></script>
 </body>
 ```
 Finally, include the stylesheet inside the `head` tag:
 ```
 <head>
     ...
-    <link rel="stylesheet" type="text/css" link href="https://s3-us-west-2.amazonaws.com/replay-table/cdn/replayTable.css">
+    <link rel="stylesheet" type="text/css" link href="cdn.jsdelivr.net/replay-table/latest/replay-table.css">
 </head>
 ```
 
