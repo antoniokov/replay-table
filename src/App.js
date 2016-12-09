@@ -95,7 +95,7 @@ class App extends Component {
 
               const params = Object.keys(config)
                   .filter(key => config[key].goesToTransform)
-                  .map(key => this.state[key]);
+                  .reduce((obj, key) => Object.assign(obj, { [key]: this.state[key] }), {});
 
               const transformedResult = transform(this.state['transformer'], result.data, params );
               if (transformedResult.status === 'error') {
@@ -139,12 +139,7 @@ class App extends Component {
           case 'error':
               return <p>An error occured. {this.state.errorMessage}</p>;
           default:
-              const props = ['tableName', 'positionName', 'seasonName', 'roundName', 'itemName', 'extraColumnsNames',
-                  'totalName', 'showChangeDuringAnimation', 'showProgressBar', 'roundsNames', 'results', 'extraColumns',
-                  'resultName', 'startFromRound', 'lastRound', 'animationDuration']
-                  .reduce((props, param) => Object.assign(props, { [param]: this.state[param] }), {});
-
-              return <TableContainer {...(props)} />;
+              return <TableContainer {...(this.state)} />;
       }
   }
 }
