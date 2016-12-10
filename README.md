@@ -184,8 +184,11 @@ This preset is built for major professional sport leagues in US and Canada.
 | [`itemName`](#item-name) | Team |
 | [`totalName`](#total-name) | Win % |
 | [`totalValue`](#total-value) | win % |
-| [`resultMapping`](#result-mapping) | `{<br/>1: 'win',<br/>0: 'loss'<br/>}` |
-| [`calculatedColumns`](#calculated-columns) | `{<br/>'rounds': 'Games',<br/>'wins': 'Wins',<br/>'losses': 'Losses'<br/>}` |
+| [`resultMapping`](#result-mapping) | ```{
+1: 'win',
+0: 'loss'
+}``` |
+| [`calculatedColumns`](#calculated-columns) | `{ 'rounds': 'Games', 'wins': 'Wins', 'losses': 'Losses' }` |
 
 Watch the [NBA live demo](https://targetprocess.github.io/replayTable/#nba).
 
