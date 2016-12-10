@@ -75,6 +75,15 @@ There are ready to embed Replay Tables in our [gallery](https://targetprocess.gi
     * [focusedItems](#focused-items)
     * [tableName](#table-name)
 
+## Table Structure
+
+### Position
+| **Required** | **Examples** | **Customization** |
+|-------------------|-------------------|-------------------|
+| Yes |  `1, 2, 3, 4...`, `1, 2, 2, 4,...` | [`tieBreaking`](#tie-breaking) |
+
+### Item
+
 
 ## Input file
 There's only one csv table format available for now: a column with item names followed by results of each round. Here's an example with the 2015–16 Premier League season results:
