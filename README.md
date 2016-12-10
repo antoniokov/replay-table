@@ -60,9 +60,11 @@ There are ready to embed Replay Tables in our [gallery](https://targetprocess.gi
     * [startRoundName](#start-round-name)
     * [totalName](#total-name)
   * [Data](#data)
-    * [extraColumnsNumber](#extra-columns-number)
-    * [roundsNames](#rounds-names)
     * [itemsToShow](#items-to-show)
+    * [totalValue](#total-value)
+    * [extraColumnsNumber](#extra-columns-number)
+    * [calculatedColumns](#calculated-columns)
+    * [roundsNames](#rounds-names)
   * [Playback](#playback)
     * [startFromRound](#start-from-round)
     * [animationDuration](#animation-duration)
@@ -80,20 +82,85 @@ There are ready to embed Replay Tables in our [gallery](https://targetprocess.gi
 ### Position
 | **Required** | **Examples** | **Customization** |
 |-------------------|-------------------|-------------------|
-| Yes |  `1, 2, 3, 4...`, `1, 2, 2, 4,...` | [`positionName`](#position-name)<br/>[`tieBreaking`](#tie-breaking)|
+| Yes |  `1, 2, 3, 4...`<br/>`1, 2, 2, 4,...` | [`positionName`](#position-name)<br/>[`tieBreaking`](#tie-breaking)|
 
 ### Item
 | **Required** | **Examples** | **Customization** |
 |-------------------|-------------------|-------------------|
-| Yes |  `Chelsea, Liverpool, Arsenal,...`, `Nico Rosberg, Lewis Hamilton, Daniel Ricciardo...` | [`itemName`](#item-name)<br/>[`itemsToShow`](#items-to-show)<br/>[`focusedItems`](#focused-items)|
+| Yes |  Teams: `Chelsea, Liverpool, Arsenal,...`<br/>Drivers: `Nico Rosberg, Lewis Hamilton, Daniel Ricciardo...` | [`itemName`](#item-name)<br/>[`itemsToShow`](#items-to-show)<br/>[`focusedItems`](#focused-items)|
 
+Note: items should be unique for table to work properly.
 
-## Input file
-There's only one csv table format available for now: a column with item names followed by results of each round. Here's an example with the 2015–16 Premier League season results:
-![csv-visual](https://s3-us-west-2.amazonaws.com/replay-table/images/github/csv-visual.PNG)
+### Extra Columns
+| **Required** | **Examples** | **Customization** | ** Compatible input types ** |
+|-------------------|-------------------|-------------------|-------------------|
+| No |  City: `London, Liverpool, London,...`<br/>Car: `Mercedes, Mercedes, Red Bull,...` | [`extraColumnsNumber`](#extra-columns-number) | [`Points Table`](#points-table) |
 
+Columns with static info about items.
+
+### Calculated Columns
+| **Required** | **Examples** | **Customization** |
+|-------------------|-------------------|-------------------|
+| No |  Wins: `73, 67, 55,...`<br/>Losses: `9, 15, 27,...` | [`calculatedColumns`](#calculated-columns) |
+
+Predefined calculated columns with stats.
+
+### Total
+| **Required** | **Examples** | **Customization** |
+|-------------------|-------------------|-------------------|
+| Yes |  Points: `81, 71, 70,...`<br/>Win %: `.890, .817, .671,...` | [`totalName`](#total-name)<br/>[totalValue](#total-value) |
+
+Table is sorted using this column. When totals are equal position is determined by [`tieBreaking`](#tie-breaking) parameter.
+
+### Change
+| **Required** | **Examples** | **Customization** |
+|-------------------|-------------------|-------------------|
+| Yes |  `+3, +1, 0,...`<br/>`+25, +18, +15,...` | [`showChangeDuringAnimation`](#show-change-during-animation) |
+
+Total change since previous round, is shown in the same column as [`Total`](#total).
+
+## Input
+
+### Points Table
+
+The structure looks like this:
+
+| Item | [Extra Column 1] | [Extra Column 2] | ... | 1st Round Points | 2nd Round Points | ... |
+
+The English Premier League example:
+
+| Team | 1 | 2 | 3 | ... |
+|------|---|---|---|-----|
+| Chelsea | 1 | 0 | 3 | ... |
+| Manchester City | 3 | 3 | 3 | ... |
+| Arsenal | 0 | 3 | 1 | ... |
+| ... | ... | .... | ... | ... |
+
+Watch the [live demo](https://targetprocess.github.io/replayTable/#premier-league).
+Feel free to download this example as a [csv](https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv).
 We recommend to use comma as separator and UTF-8 as encoding.
-Feel free to download this [csv](https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv).
+
+### List of Matches
+
+The structure looks like this:
+
+| Round | Home Item | Home Item Score | Away Item | Away Item Score |
+
+List should be sorted by round.
+
+The NBA example:
+
+| Date | Home | Points | Away | Points |
+|------|------|--------|------|--------|
+| Tue Oct 27 2015 | Atlanta Hawks | 94 | Detroit Pistons | 106 |
+| Tue Oct 27 2015 | Chicago Bulls | 97 | Cleveland Cavaliers | 95 |
+| Tue Oct 27 2015 | Golden State Warriors | 111 | New Orleans Pelicans | 95 |
+| ... | ... | ... | ... | ... |
+
+Watch the [live demo](https://targetprocess.github.io/replayTable/#nba).
+Feel free to download this example as a [csv](https://s3-us-west-2.amazonaws.com/replay-table/csv/basketball/nba/regular/2015-2016.csv).
+We recommend to use comma as separator and UTF-8 as encoding.
+
 
 ## Presets
 Default settings are suited for most of the team sports like football and hockey.

@@ -1,6 +1,7 @@
 import transpose from '../../auxiliary/transpose';
 import stableSort from '../../auxiliary/stableSort';
 import pluralizeResult from '../auxiliary/pluralizeResult';
+import calculateTotal from '../auxiliary/calculateTotal';
 import addPositions from '../auxiliary/addPositions';
 
 
@@ -59,7 +60,7 @@ function transformChangesTable(jsonTable, params) {
                 stats[pluralizeResult(result)]++;
             }
 
-            stats.total += stats.change || 0;
+            stats.total = calculateTotal(params['totalValue'], stats);;
 
             if (!params['itemsToShow'] || params['itemsToShow'].includes(name)) {
                 roundResults.set(name, Object.assign({}, stats));

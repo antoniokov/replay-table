@@ -60,6 +60,12 @@ export const config = {
         validate: value => isString(value)
     },
 
+    totalValue: {
+        default: 'cumulative',
+        validate: value => ['cumulative', 'win %'].includes(value),
+        goesToTransform: true
+    },
+
     //Number of columns with extra data about items like city they represent or team they are part of. The columns should go after the items column and before the results columns.
     //Number
     extraColumnsNumber: {
@@ -170,6 +176,7 @@ export const presets = {
         transformer: 'listOfMatches',
         itemName: 'Team',
         totalName: 'Win %',
+        totalValue: 'win %',
         resultMapping: {
             1: 'win',
             0: 'loss'

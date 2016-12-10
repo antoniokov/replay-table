@@ -1,6 +1,7 @@
 import flipObject from '../../auxiliary/flipObject';
 import stableSort from '../../auxiliary/stableSort';
 import pluralizeResult from '../auxiliary/pluralizeResult';
+import calculateTotal from '../auxiliary/calculateTotal';
 import addPositions from '../auxiliary/addPositions';
 
 
@@ -45,7 +46,7 @@ function transformMatchesList(jsonList, params) {
                     stats.rounds++;
                     stats[pluralizeResult(item.result)]++;
                     stats.change = resultChange[item.result];
-                    stats.total = (stats.wins/stats.rounds).toFixed(3);
+                    stats.total = calculateTotal(params['totalValue'], stats);
 
                     if (!params['itemsToShow'] || params['itemsToShow'].includes(item.name)) {
                         roundResults.set(item.name, Object.assign({}, stats));
@@ -57,7 +58,7 @@ function transformMatchesList(jsonList, params) {
                 if (!params['itemsToShow'] || params['itemsToShow'].includes(name)) {
                     const stats = itemsStats.get(name);
                     stats.change = null;
-                    stats.total = stats.rounds ? (stats.wins / stats.rounds).toFixed(3) : (0).toFixed(3);
+                    stats.total = calculateTotal(params['totalValue'], stats);
                     roundResults.set(name, Object.assign({}, stats));
                 }
             });
