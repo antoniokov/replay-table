@@ -184,18 +184,35 @@ This preset is built for major professional sport leagues in US and Canada.
 | [`itemName`](#item-name) | Team |
 | [`totalName`](#total-name) | Win % |
 | [`totalValue`](#total-value) | win % |
-| [`resultMapping`](#result-mapping) | ```{
-1: 'win',
-0: 'loss'
-}``` |
+| [`resultMapping`](#result-mapping) | `{ 1: 'win', 0: 'loss' }` |
 | [`calculatedColumns`](#calculated-columns) | `{ 'rounds': 'Games', 'wins': 'Wins', 'losses': 'Losses' }` |
 
-Watch the [NBA live demo](https://targetprocess.github.io/replayTable/#nba).
+Watch the [NBA demo](https://targetprocess.github.io/replayTable/#nba).
 
 ### `F1`
 
+| Parameter | Value |
+|-----------|-------|
+| [`roundName`](#round-name) | Race |
+| [`itemName`](#item-name) | Driver |
+| [`startRoundName`](#start-round-name) | Start → |
+
+Watch the [2015-2016 season demo](https://targetprocess.github.io/replayTable/#f1).
 
 ### `ЧГК`
+
+This is for the [intellectual game](https://en.wikipedia.org/wiki/What%3F_Where%3F_When%3F#Competitive_game) popular in russian speaking world.
+
+| Parameter | Value |
+|-----------|-------|
+| [`seasonName`](#season-name) | Турнир |
+| [`roundName`](#round-name) | Вопрос |
+| [`itemName`](#item-name) | Команда |
+| [`totalName`](#total-name) | Взято |
+| [`tieBreaking`](#tie-breaking) | range |
+| [`resultMapping`](#result-mapping) | `{ 1: 'win' }` |
+
+Watch the [2016 World Championship demo](https://targetprocess.github.io/replayTable/#chgk).
 
 Feel free to [suggest](#contact) more presets.
 
@@ -290,7 +307,7 @@ Animation duration in ms.
 | `data-ties-resolution` |  `no ties`, `highest` or `range` | `no ties` |
 Determines position when totals are equal. Can be 'no ties' (1, 2, 3, 4,...), 'highest' (1, 2, 2, 4,...) and 'range' (1, 2-3, 2-3, 4,...).
 
-There is a chance we'll transfrom this option into a function to cope with complex cases when position depends on number of wins and other parameters.
+There is a chance we'll transform this option into a function to cope with complex cases when position depends on number of wins and other parameters.
 
 ### `tableName`
 | **Div Attribute** | **Accepted Type** | **Default Value** |
@@ -300,4 +317,4 @@ Name is required when you have several Replay Tables on one page.
 
 
 ## Contact
-Feel free to suggest features and presets, offer tables for our public gallery and ask questions via [anton.iokov@targetprocess.com](mailto:anton.iokov@targetprocess.com) or [@antoniokov](https://twitter.com/antoniokov).
+Feel free to suggest features and presets, offer tables for our public gallery and ask questions via [anton.iokov@targetprocess.com](mailto:anton.iokov@targetprocess.com) and [@antoniokov](https://twitter.com/antoniokov).
