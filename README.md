@@ -80,9 +80,12 @@ There are ready to embed Replay Tables in our [gallery](https://targetprocess.gi
 ### Position
 | **Required** | **Examples** | **Customization** |
 |-------------------|-------------------|-------------------|
-| Yes |  `1, 2, 3, 4...`, `1, 2, 2, 4,...` | [`tieBreaking`](#tie-breaking) |
+| Yes |  `1, 2, 3, 4...`, `1, 2, 2, 4,...` | [`positionName`](#position-name)<br/>[`tieBreaking`](#tie-breaking)|
 
 ### Item
+| **Required** | **Examples** | **Customization** |
+|-------------------|-------------------|-------------------|
+| Yes |  `Chelsea, Liverpool, Arsenal,...`, `Nico Rosberg, Lewis Hamilton, Daniel Ricciardo...` | [`itemName`](#item-name)<br/>[`itemsToShow`](#items-to-show)<br/>[`focusedItems`](#focused-items)|
 
 
 ## Input file
