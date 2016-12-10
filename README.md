@@ -60,8 +60,10 @@ There are ready to embed Replay Tables in our [gallery](https://targetprocess.gi
     * [startRoundName](#start-round-name)
     * [totalName](#total-name)
   * [Data](#data)
+    * [inputType](#input-type)
     * [itemsToShow](#items-to-show)
     * [totalValue](#total-value)
+    * [resultMapping](#result-mapping)
     * [extraColumnsNumber](#extra-columns-number)
     * [calculatedColumns](#calculated-columns)
     * [roundsNames](#rounds-names)
@@ -87,28 +89,28 @@ There are ready to embed Replay Tables in our [gallery](https://targetprocess.gi
 ### Item
 | **Required** | **Examples** | **Customization** |
 |-------------------|-------------------|-------------------|
-| Yes |  Teams: `Chelsea, Liverpool, Arsenal,...`<br/>Drivers: `Nico Rosberg, Lewis Hamilton, Daniel Ricciardo...` | [`itemName`](#item-name)<br/>[`itemsToShow`](#items-to-show)<br/>[`focusedItems`](#focused-items)|
+| Yes |  `Chelsea, Liverpool, Arsenal,...`<br/>`Nico Rosberg, Lewis Hamilton, Daniel Ricciardo...` | [`itemName`](#item-name)<br/>[`itemsToShow`](#items-to-show)<br/>[`focusedItems`](#focused-items)|
 
 Note: items should be unique for table to work properly.
 
 ### Extra Columns
-| **Required** | **Examples** | **Customization** | ** Compatible input types ** |
+| **Required** | **Examples** | **Customization** | **Compatible input types** |
 |-------------------|-------------------|-------------------|-------------------|
-| No |  City: `London, Liverpool, London,...`<br/>Car: `Mercedes, Mercedes, Red Bull,...` | [`extraColumnsNumber`](#extra-columns-number) | [`Points Table`](#points-table) |
+| No |  `London, Liverpool, London,...`<br/>`Mercedes, Mercedes, Red Bull,...` | [`extraColumnsNumber`](#extra-columns-number) | [`Points Table`](#points-table) |
 
 Columns with static info about items.
 
 ### Calculated Columns
 | **Required** | **Examples** | **Customization** |
 |-------------------|-------------------|-------------------|
-| No |  Wins: `73, 67, 55,...`<br/>Losses: `9, 15, 27,...` | [`calculatedColumns`](#calculated-columns) |
+| No |  `rounds`, `wins`, `losses` | [`calculatedColumns`](#calculated-columns) |
 
 Predefined calculated columns with stats.
 
 ### Total
 | **Required** | **Examples** | **Customization** |
 |-------------------|-------------------|-------------------|
-| Yes |  Points: `81, 71, 70,...`<br/>Win %: `.890, .817, .671,...` | [`totalName`](#total-name)<br/>[totalValue](#total-value) |
+| Yes |  `81, 71, 70,...`<br/>`.890, .817, .671,...` | [`totalName`](#total-name)<br/>[`totalValue`](#total-value) |
 
 Table is sorted using this column. When totals are equal position is determined by [`tieBreaking`](#tie-breaking) parameter.
 
@@ -117,7 +119,7 @@ Table is sorted using this column. When totals are equal position is determined 
 |-------------------|-------------------|-------------------|
 | Yes |  `+3, +1, 0,...`<br/>`+25, +18, +15,...` | [`showChangeDuringAnimation`](#show-change-during-animation) |
 
-Total change since previous round, is shown in the same column as [`Total`](#total).
+Total change since previous round, is shown in the same column as total.
 
 ## Input
 
@@ -125,26 +127,31 @@ Total change since previous round, is shown in the same column as [`Total`](#tot
 
 The structure looks like this:
 
-| Item | [Extra Column 1] | [Extra Column 2] | ... | 1st Round Points | 2nd Round Points | ... |
+| Item name | [1st extra column name] | [2nd extra column name] | [...] | 1st round name | 2nd round name | ... | last round name |
+|-----------|-------------------------|-------------------------|-----|----------------|----------------|-----|-----------------|
+| item | [1st piece of extra info] | [2nd piece of extra info] | [...] | 1st round points | 2nd round points | ... | last round points |
 
 The English Premier League example:
 
-| Team | 1 | 2 | 3 | ... |
-|------|---|---|---|-----|
-| Chelsea | 1 | 0 | 3 | ... |
-| Manchester City | 3 | 3 | 3 | ... |
-| Arsenal | 0 | 3 | 1 | ... |
-| ... | ... | .... | ... | ... |
+| Team | 1 | 2 | 3 | ... | 38 |
+|------|---|---|---|-----|----|
+| Chelsea | 1 | 0 | 3 | ... | 1 |
+| Manchester City | 3 | 3 | 3 | ... | 1 |
+| Arsenal | 0 | 3 | 1 | ... | 3 |
+| ... | ... | .... | ... | ... | ... |
 
 Watch the [live demo](https://targetprocess.github.io/replayTable/#premier-league).
+
 Feel free to download this example as a [csv](https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv).
-We recommend to use comma as separator and UTF-8 as encoding.
+We recommend you to also use comma as separator and UTF-8 as encoding.
 
 ### List of Matches
 
 The structure looks like this:
 
-| Round | Home Item | Home Item Score | Away Item | Away Item Score |
+| Round name | Home Item | Home Item Score | Away Item | Away Item Score |
+|------------|-----------|-----------------|-----------|-----------------|
+| Round | Item | Score | Item | Score |
 
 List should be sorted by round.
 
@@ -158,21 +165,36 @@ The NBA example:
 | ... | ... | ... | ... | ... |
 
 Watch the [live demo](https://targetprocess.github.io/replayTable/#nba).
+
 Feel free to download this example as a [csv](https://s3-us-west-2.amazonaws.com/replay-table/csv/basketball/nba/regular/2015-2016.csv).
-We recommend to use comma as separator and UTF-8 as encoding.
+We recommend you to also use comma as separator and UTF-8 as encoding.
 
 
 ## Presets
-Default settings are suited for most of the team sports like football and hockey.
-We've also built presets for other kinds of sports to make customization easy. Just add `data-preset="preset_name"` to replayTable `div` and the appropriate terms and settings will apply.
+Default settings are suited to work with most of the team sports like football and hockey.
+We've also built presets for other kinds of sports to make customization easy. Just add `data-preset="_preset_name_"` to replayTable `div` and the appropriate terms and settings will apply.
 
-There are two options available at the moment:
-* `F1`
-* `ЧГК`
+### `Wins-Losses`
 
-Feel free to suggest more presets.
+This preset is built for major professional sport leagues in US and Canada.
 
-You can check presets' settings in the [config file](https://github.com/TargetProcess/replayTable/blob/master/src/config.js).
+| Parameter | Value |
+|-----------|-------|
+| [`inputType`](#input-type) | listOfMatches |
+| [`itemName`](#item-name) | Team |
+| [`totalName`](#total-name) | Win % |
+| [`totalValue`](#total-value) | win % |
+| [`resultMapping`](#result-mapping) | `{<br/>1: 'win',<br/>0: 'loss'<br/>}` |
+| [`calculatedColumns`](#calculated-columns) | `{<br/>'rounds': 'Games',<br/>'wins': 'Wins',<br/>'losses': 'Losses'<br/>}` |
+
+Watch the [NBA live demo](https://targetprocess.github.io/replayTable/#nba).
+
+### `F1`
+
+
+### `ЧГК`
+
+Feel free to [suggest](#contact) more presets.
 
 ## Customization
 Replay Table can be easily customized via `div` `data-` attributes. You can specify your terms, adjust the animation duration, hide unnecessary elements and do other lovely things.

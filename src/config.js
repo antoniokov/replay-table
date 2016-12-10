@@ -2,9 +2,9 @@ import { transformers } from './transformers/transform';
 import isString from './auxiliary/isString'
 
 export const config = {
-    //input file format. For now only pointsTable is supported. See an example: https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv
+    //inputType file format. For now only pointsTable is supported. See an example: https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv
     //String
-    transformer: {
+    inputType: {
         default: 'pointsTable',
         validate: value => transformers.hasOwnProperty(value)
     },
@@ -173,7 +173,7 @@ export const config = {
 
 export const presets = {
     "WinsLosses": {
-        transformer: 'listOfMatches',
+        inputType: 'listOfMatches',
         itemName: 'Team',
         totalName: 'Win %',
         totalValue: 'win %',

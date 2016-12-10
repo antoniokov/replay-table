@@ -97,7 +97,7 @@ class App extends Component {
                   .filter(key => config[key].goesToTransform)
                   .reduce((obj, key) => Object.assign(obj, { [key]: this.state[key] }), {});
 
-              const transformedResult = transform(this.state['transformer'], result.data, params );
+              const transformedResult = transform(this.state['inputType'], result.data, params );
               if (transformedResult.status === 'error') {
                   this.setState({
                       status: 'error',

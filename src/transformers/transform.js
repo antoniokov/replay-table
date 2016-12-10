@@ -6,13 +6,13 @@ export const transformers = {
     'listOfMatches': transformListOfMatches
 };
 
-export function transform (transformer, data, params) {
-    if(transformers.hasOwnProperty(transformer)) {
-        return transformers[transformer](data, params);
+export function transform (input, data, params) {
+    if(transformers.hasOwnProperty(input)) {
+        return transformers[input](data, params);
     } else {
         return {
             status: 'error',
-            errorMessage: `No transformer for transformer ${transformer}`
+            errorMessage: `No input for input ${input}`
         }
     }
 }
