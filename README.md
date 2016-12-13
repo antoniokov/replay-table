@@ -291,15 +291,15 @@ Sometimes you don't want to include all items that appear in results in Replay t
 |---------------|---------------|---------------|----------|
 | `data-total-value` |  `cumulative`, `win %` | `cumulative` |
 
-| Option | Formula | Notes |
+| Option | Formula |
 |--------|---------|-------|
 | `cumulative` | `total = previousRoundTotal + currentRoundPoints` | |
-| `win %` | `total = wins/rounds` | A win is determined by match result or using [`resultMapping`](#result-mapping) parameter |
+| `win %` | `total = wins/rounds` |
 
 ### `resultMapping`
 | Div attribute | Accepted type | Default value | Examples |
 |---------------|---------------|---------------|----------|
-| `data-result-mapping` |  `Object` with points as keys and result as value | `{ 3: 'win', 1: `draw`, 0: 'loss' }` | `{ 1: 'win', 0: 'loss' }` |
+| `data-result-mapping` |  `Object` with points as keys and result as value | `{ 3: 'win', 1: 'draw', 0: 'loss' }` | `{ 1: 'win', 0: 'loss' }` |
 
 Maps a change in points to a `win`, `draw` or `loss`. Makes sense for the [`pointsTable`](#[points-table) input type.
 
@@ -357,7 +357,7 @@ If checked shows change in total (+3, +1, ...) during the animation. This ss use
 ### `focusedItems`
 | Div attribute | Accepted type | Default value | Examples |
 |---------------|---------------|---------------|----------|
-| `data-focused-items` |  `Comma-separated string` | `` | `Liverpool, Everton` |
+| `data-focused-items` |  `Comma-separated string` |  | `Liverpool, Everton` |
 
 
 ## Other
