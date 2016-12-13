@@ -37,6 +37,9 @@ There are ready to embed Replay Tables in our [gallery](https://targetprocess.gi
 
 
 ## Customization
+* [Input](#input)
+  * [Points Table](#points-table)
+  * [List of Matches](#list-of-matches)
 * [Table Structure](#table-structure)
   * [Position](#position)
   * [Item](#item)
@@ -44,82 +47,16 @@ There are ready to embed Replay Tables in our [gallery](https://targetprocess.gi
   * [Calculated Columns](#calculated-columns)
   * [Total](#total)
   * [Change](#change)
-* [Input](#input)
-  * [Points Table](#points-table)
-  * [List of Matches](#list-of-matches)
 * [Presets](#presets)
   * [Wins-Losses](#wins-losses)
   * [F1](#f1)
-  * [ЧГК](#chgk)
+  * [ЧГК](#чгк)
 * [Parameters](#parameters)
   * [Terms](#terms)
-    * [seasonName](#season-name)
-    * [roundName](#round-name)
-    * [positionName](#position-name)
-    * [itemName](#item-name)
-    * [startRoundName](#start-round-name)
-    * [totalName](#total-name)
   * [Data](#data)
-    * [inputType](#input-type)
-    * [itemsToShow](#items-to-show)
-    * [totalValue](#total-value)
-    * [resultMapping](#result-mapping)
-    * [extraColumnsNumber](#extra-columns-number)
-    * [calculatedColumns](#calculated-columns)
-    * [roundsNames](#rounds-names)
   * [Playback](#playback)
-    * [startFromRound](#start-from-round)
-    * [animationDuration](#animation-duration)
-    * [showChangeDuringAnimation](#show-change-during-animation)
   * [Appearance](#appereance)
-    * [showProgressBar](#show-progress-bar)
-    * [showSeasonRoundSwitch](#show-season-round-switch)
   * [Other](#other)
-    * [tieBreaking](#tie-breaking)
-    * [focusedItems](#focused-items)
-    * [tableName](#table-name)
-
-## Table Structure
-
-### Position
-| **Required** | **Examples** | **Customization** |
-|-------------------|-------------------|-------------------|
-| Yes |  `1, 2, 3, 4...`<br/>`1, 2, 2, 4,...` | [`positionName`](#position-name)<br/>[`tieBreaking`](#tie-breaking)|
-
-### Item
-| **Required** | **Examples** | **Customization** |
-|-------------------|-------------------|-------------------|
-| Yes |  `Chelsea, Liverpool, Arsenal,...`<br/>`Nico Rosberg, Lewis Hamilton, Daniel Ricciardo...` | [`itemName`](#item-name)<br/>[`itemsToShow`](#items-to-show)<br/>[`focusedItems`](#focused-items)|
-
-Note: items should be unique for table to work properly.
-
-### Extra Columns
-| **Required** | **Examples** | **Customization** | **Compatible input types** |
-|-------------------|-------------------|-------------------|-------------------|
-| No |  `London, Liverpool, London,...`<br/>`Mercedes, Mercedes, Red Bull,...` | [`extraColumnsNumber`](#extra-columns-number) | [`Points Table`](#points-table) |
-
-Columns with static info about items.
-
-### Calculated Columns
-| **Required** | **Examples** | **Customization** |
-|-------------------|-------------------|-------------------|
-| No |  `rounds`, `wins`, `losses` | [`calculatedColumns`](#calculated-columns) |
-
-Predefined calculated columns with stats.
-
-### Total
-| **Required** | **Examples** | **Customization** |
-|-------------------|-------------------|-------------------|
-| Yes |  `81, 71, 70,...`<br/>`.890, .817, .671,...` | [`totalName`](#total-name)<br/>[`totalValue`](#total-value) |
-
-Table is sorted using this column. When totals are equal position is determined by [`tieBreaking`](#tie-breaking) parameter.
-
-### Change
-| **Required** | **Examples** | **Customization** |
-|-------------------|-------------------|-------------------|
-| Yes |  `+3, +1, 0,...`<br/>`+25, +18, +15,...` | [`showChangeDuringAnimation`](#show-change-during-animation) |
-
-Total change since previous round, is shown in the same column as total.
 
 ## Input
 
@@ -170,9 +107,54 @@ Feel free to download this example as a [csv](https://s3-us-west-2.amazonaws.com
 We recommend you to also use comma as separator and UTF-8 as encoding.
 
 
+## Table Structure
+
+### Position
+| Required | Examples | Customization |
+|-------------------|-------------------|-------------------|
+| Yes |  `1, 2, 3, 4...`<br/>`1, 2, 2, 4,...` | [`positionName`](#position-name)<br/>[`tieBreaking`](#tie-breaking)|
+
+### Item
+| Required | Examples | Customization |
+|-------------------|-------------------|-------------------|
+| Yes |  `Chelsea, Liverpool, Arsenal,...`<br/>`Nico Rosberg, Lewis Hamilton, Daniel Ricciardo...` | [`itemName`](#item-name)<br/>[`itemsToShow`](#items-to-show)<br/>[`focusedItems`](#focused-items)|
+
+Note: items should be unique for table to work properly.
+
+### Extra Columns
+| Required | Examples | Customization | Compatible input types |
+|-------------------|-------------------|-------------------|-------------------|
+| No |  `London, Liverpool, London,...`<br/>`Mercedes, Mercedes, Red Bull,...` | [`extraColumnsNumber`](#extra-columns-number) | [`pointsTable`](#points-table) |
+
+Columns with static info about items.
+
+### Calculated Columns
+| Required | Examples | Customization |
+|-------------------|-------------------|-------------------|
+| No |  `rounds`, `wins`, `losses` | [`calculatedColumns`](#calculated-columns) |
+
+Predefined calculated columns with stats.
+
+### Total
+| Required | Examples | Customization |
+|-------------------|-------------------|-------------------|
+| Yes |  `81, 71, 70,...`<br/>`.890, .817, .671,...` | [`totalName`](#total-name)<br/>[`totalValue`](#total-value)<br/>[`resultMapping`](#result-mapping) |
+
+Table is sorted using this column. When totals are equal position is determined by [`tieBreaking`](#tie-breaking) parameter.
+
+### Change
+| Required | Examples | Customization |
+|-------------------|-------------------|-------------------|
+| Yes |  `+3, +1, 0,...`<br/>`+25, +18, +15,...` | [`showChangeDuringAnimation`](#show-change-during-animation) |
+
+Total change since previous round, is shown in the same column as total.
+
+
 ## Presets
 Default settings are suited to work with most of the team sports like football and hockey.
-We've also built presets for other kinds of sports to make customization easy. Just add `data-preset="_preset_name_"` to replayTable `div` and the appropriate terms and settings will apply.
+We've also built presets for other kinds of sports to make customization easy.
+
+Just add `data-preset="_preset_name_"` to replayTable `div` and the appropriate terms and settings will apply.
 
 ### `Wins-Losses`
 
@@ -180,10 +162,10 @@ This preset is built for major professional sport leagues in US and Canada.
 
 | Parameter | Value |
 |-----------|-------|
-| [`inputType`](#input-type) | listOfMatches |
-| [`itemName`](#item-name) | Team |
-| [`totalName`](#total-name) | Win % |
-| [`totalValue`](#total-value) | win % |
+| [`inputType`](#input-type) | `listOfMatches` |
+| [`itemName`](#item-name) | `Team` |
+| [`totalName`](#total-name) | `Win %` |
+| [`totalValue`](#total-value) | `win %` |
 | [`resultMapping`](#result-mapping) | `{ 1: 'win', 0: 'loss' }` |
 | [`calculatedColumns`](#calculated-columns) | `{ 'rounds': 'Games', 'wins': 'Wins', 'losses': 'Losses' }` |
 
@@ -193,9 +175,9 @@ Watch the [NBA demo](https://targetprocess.github.io/replayTable/#nba).
 
 | Parameter | Value |
 |-----------|-------|
-| [`roundName`](#round-name) | Race |
-| [`itemName`](#item-name) | Driver |
-| [`startRoundName`](#start-round-name) | Start → |
+| [`roundName`](#round-name) | `Race` |
+| [`itemName`](#item-name) | `Driver` |
+| [`startRoundName`](#start-round-name) | `Start →` |
 
 Watch the [2015-2016 season demo](https://targetprocess.github.io/replayTable/#f1).
 
@@ -205,116 +187,201 @@ This is for the [intellectual game](https://en.wikipedia.org/wiki/What%3F_Where%
 
 | Parameter | Value |
 |-----------|-------|
-| [`seasonName`](#season-name) | Турнир |
-| [`roundName`](#round-name) | Вопрос |
-| [`itemName`](#item-name) | Команда |
-| [`totalName`](#total-name) | Взято |
-| [`tieBreaking`](#tie-breaking) | range |
+| [`seasonName`](#season-name) | `Турнир` |
+| [`roundName`](#round-name) | `Вопрос` |
+| [`itemName`](#item-name) | `Команда` |
+| [`totalName`](#total-name) | `Взято` |
+| [`tieBreaking`](#tie-breaking) | `range` |
 | [`resultMapping`](#result-mapping) | `{ 1: 'win' }` |
 
 Watch the [2016 World Championship demo](https://targetprocess.github.io/replayTable/#chgk).
 
+
 Feel free to [suggest](#contact) more presets.
 
-## Customization
+## Parameters
 Replay Table can be easily customized via `div` `data-` attributes. You can specify your terms, adjust the animation duration, hide unnecessary elements and do other lovely things.
 
 It is possible to use this options together with a preset: in this case they will override preset's settings.
 
+* [Terms](#terms)
+  * [seasonName](#season-name)
+  * [roundName](#round-name)
+  * [startRoundName](#start-round-name)
+  * [positionName](#position-name)
+  * [itemName](#item-name)
+  * [totalName](#total-name)
+* [Data](#data)
+  * [inputType](#input-type)
+  * [itemsToShow](#items-to-show)
+  * [totalValue](#total-value)
+  * [resultMapping](#result-mapping)
+  * [extraColumnsNumber](#extra-columns-number)
+  * [calculatedColumns](#calculated-columns)
+  * [roundsNames](#rounds-names)
+* [Playback](#playback)
+  * [startFromRound](#start-from-round)
+  * [animationDuration](#animation-duration)
+  * [showChangeDuringAnimation](#show-change-during-animation)
+* [Appearance](#appereance)
+  * [showProgressBar](#show-progress-bar)
+  * [showSeasonRoundSwitch](#show-season-round-switch)
+  * [focusedItems](#focused-items)
+* [Other](#other)
+  * [tieBreaking](#tie-breaking)
+  * [tableName](#table-name)
+
+
+## Terms
+
+Terms are great for adapting table to a specific sport or localizing it.
+
 ### `seasonName`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-season-name` |  `String` | `Season` |
-'Tournament', 'Saison' or a term of your choice.
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-season-name` |  `String` | `Season` | `Tournament`, `Saison` |
 
 ### `roundName`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-round-name` |  `String` | `Game` |
-'Game', 'Match', 'Round', 'Leg' or a term of your choice.
-
-### `positionName`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-position-name` |  `String` | `#` |
-'Position', 'Rank' or a term of your choice.
-
-### `itemName`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-item-name` |  `String` or `undefined` | `undefined` |
-'Team', 'Player', 'Driver' or a term of your choice. When undefined tries to get the name from data source.
-
-### `roundsNames`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-rounds-names` |  `Array of Strings` or `undefined` | `undefined` |
-['Australia', 'Bahrain',...] for F1, for example. When set to undefined gets names from data source if possible; if not uses rounds' numbers.
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-round-name` | `String` | `Game` | `Match` , `Round` , `Leg`  |
 
 ### `startRoundName`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-start-round-name` |  `String` or `undefined` | `0` |
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-start-round-name` |  `String` or `undefined` | `0` | `Start`, `---` |
 If defined inserts a round before all other rounds with all items having total equal to zero.
 
+### `positionName`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-position-name` |  `String` | `#` | `Position` , `Rank`  |
+
+### `itemName`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-item-name` |  `String` or `undefined` | `undefined` | `Team` , `Player` , `Driver`  |
+
+When undefined tries to get the name from data source.
+
 ### `totalName`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-total-name` |  `String` | `Points` |
-'Points', 'Wins' or a term of your choice.
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-total-name` |  `String` | `Points` | `Win %` , `Total`  |
+
+
+##Data
+
+Data parameters help Replay table transform csv file correctly and insert extra data if needed.
+
+### `inputType`
+| Div attribute | Available options | Default value |
+|---------------|-------------------|---------------|
+| `data-input-type` |  [`pointsTable`](#points-table)<br/>[`listOfMatches`](#list-of-matches) | `pointsTable` |
+
+### `itemsToShow`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-items-to-show` |  `Comma-separated string` or `undefined` | `undefined` | `Golden State Warriors,San Antonio Spurs,...` |
+
+Sometimes you don't want to include all items that appear in results in Replay table. For example, it makes sense to split the NBA regular season results into two separate tables for each conference.
+
+### `totalValue`
+| Div attribute | Available options | Default value |
+|---------------|---------------|---------------|----------|
+| `data-total-value` |  `cumulative`, `win %` | `cumulative` |
+
+| Option | Formula | Notes |
+|--------|---------|-------|
+| `cumulative` | `total = previousRoundTotal + currentRoundPoints` | |
+| `win %` | `total = wins/rounds` | A win is determined by match result or using [`resultMapping`](#result-mapping) parameter |
+
+### `resultMapping`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-result-mapping` |  `Object` with points as keys and result as value | `{ 3: 'win', 1: `draw`, 0: 'loss' }` | `{ 1: 'win', 0: 'loss' }` |
+
+Maps a change in points to a `win`, `draw` or `loss`. Makes sense for the [`pointsTable`](#[points-table) input type.
 
 ### `extraColumnsNumber`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-extra-columns-number` |  `Number` | `0` |
-Number of columns with extra data about items like city they represent or team they are part of. The columns should go after the items column and before the results columns:
+| Div attribute | Accepted type | Default value | Examples | Compatible input types |
+|---------------|---------------|---------------|----------|------------------------|
+| `data-extra-columns-number` |  `Number` | `0` | `1`, `2` | `[pointsTable](#points-table)`
 
-![extra columns](https://s3-us-west-2.amazonaws.com/replay-table/images/github/extra-colums.png)
+Number of [extra columns)[#extra-columns] with info about items located between items and results.
 
-### `focusedItems`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-focused-items` |  `Array of Strings` | `[]` |
-Focus on particular items (teams, players or drivers). ['Liverpool', 'Everton'], for example.
+### `roundsNames`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-rounds-names` |  `Comma-separated string` or `undefined` | `undefined` | `Australia, Bahrain, China...` |
 
-### `showChangeDuringAnimation`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-show-change-during-animation` |  `Boolean` | `false` |
-Show change in total (+3, +1, ...) during the animation. Might be useful when color coding is hard as in F1 (+25, +18,...).
+When set to undefined tries to get names from data source. If fails uses rounds' numbers.
 
-### `showProgressBar`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-show-progress-bar` |  `Boolean` | `true` |
-Show or hide the progress bar.
+
+## Playback
 
 ### `startFromRound`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-start-from-round` |  `Number` | `undefined` |
-Number of round to start from. When set to undefined the last unempty round is used.
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-start-from-round` |  `Number` | `undefined` | `0`, `42` |
+
+Number of round to start from. When set to undefined the last round containing at least one non-null result is used.
 
 ### `animationDuration`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-animation-duration` |  `Number` | `1800` |
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-animation-duration` |  `Number` | `1800` | `2600`, `1200` |
+
 Animation duration in ms.
 
-### `tieBreaking`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-ties-resolution` |  `no ties`, `highest` or `range` | `no ties` |
-Determines position when totals are equal. Can be 'no ties' (1, 2, 3, 4,...), 'highest' (1, 2, 2, 4,...) and 'range' (1, 2-3, 2-3, 4,...).
+### `showChangeDuringAnimation`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-show-change-during-animation` |  `Boolean` | `false` | `true`, `false` |
 
-There is a chance we'll transform this option into a function to cope with complex cases when position depends on number of wins and other parameters.
+If checked shows change in total (+3, +1, ...) during the animation. This ss useful when color coding is hard as in F1 (+25, +18,...).
+
+
+## Appearance
+
+### `showProgressBar`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-show-progress-bar` |  `Boolean` | `true` | `true`, `false` |
+
+### `showSeasonRoundSwitch`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-season-round-switch` |  `Boolean` | `true` | `true`, `false` |
+
+### `focusedItems`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-focused-items` |  `Comma-separated string` | `` | `Liverpool, Everton` |
+
+
+## Other
+
+### `tieBreaking`
+| Div attribute | Available options | Default value |
+|---------------|-------------------|---------------|
+| `data-tie-breaking` |  `no ties`, `highest`, `range` | `no ties` |
+
+Determines position when totals are equal.
+
+| Option | Positions |
+|--------|-----------|
+| `no ties` | `1, 2, 3, 4,...` |
+| `highest` | `1, 2, 2, 4,...` |
+| `range` | `1, 2-3, 2-3, 4,...` |
 
 ### `tableName`
-| **Div Attribute** | **Accepted Type** | **Default Value** |
-|-------------------|-------------------|-------------------|
-| `data-table-name` |  `String` | `undefined` |
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-table-name` |  `String` | `undefined` | `Premier League`, `NBA`, `F1` |
+
 Name is required when you have several Replay Tables on one page.
 
 
 ## Contact
-Feel free to suggest features and presets, offer tables for our public gallery and ask questions via [anton.iokov@targetprocess.com](mailto:anton.iokov@targetprocess.com) and [@antoniokov](https://twitter.com/antoniokov).
+Feel free to suggest features and presets, offer tables for our public gallery and ask questions via [anton.iokov@targetprocess.com](mailto:anton.iokov@targetprocess.com) or [@antoniokov](https://twitter.com/antoniokov).

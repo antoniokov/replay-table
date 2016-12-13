@@ -154,6 +154,7 @@ class TableContainer extends Component {
 
                 <div className="replay-table-controls">
 
+                    {!this.props.showSeasonRoundSwitch ? null :
                     <div className="replay-table-check">
 
                         <input type="radio"
@@ -177,6 +178,8 @@ class TableContainer extends Component {
                         </label>
 
                     </div>
+                    }
+
 
                     <div className="replay-table-controls-left">
 
@@ -207,9 +210,11 @@ class TableContainer extends Component {
 
                     </div>
 
+                    {!this.props.showProgressBar ? null :
                     <div className="replay-table-progress-wrap">
-                        {this.props.showProgressBar ? <progress className="replay-table-progress" value={this.state.currentRound} max={this.props.roundsNames.length - 1} /> : null}
+                         <progress className="replay-table-progress" value={this.state.currentRound} max={this.props.roundsNames.length - 1} />
                     </div>
+                    }
 
 
                 </div>
