@@ -112,40 +112,40 @@ We recommend you to also use comma as separator and UTF-8 as encoding.
 ### Position
 | Required | Examples | Customization |
 |-------------------|-------------------|-------------------|
-| Yes |  `1, 2, 3, 4...`<br/>`1, 2, 2, 4,...` | [`positionName`](#position-name)<br/>[`tieBreaking`](#tie-breaking)|
+| Yes |  `1, 2, 3, 4...`<br/>`1, 2, 2, 4,...` | [`positionName`](#positionname)<br/>[`tieBreaking`](#tiebreaking)|
 
 ### Item
 | Required | Examples | Customization |
 |-------------------|-------------------|-------------------|
-| Yes |  `Chelsea, Liverpool, Arsenal,...`<br/>`Nico Rosberg, Lewis Hamilton, Daniel Ricciardo...` | [`itemName`](#item-name)<br/>[`itemsToShow`](#items-to-show)<br/>[`focusedItems`](#focused-items)|
+| Yes |  `Chelsea, Liverpool, Arsenal,...`<br/>`Nico Rosberg, Lewis Hamilton, Daniel Ricciardo...` | [`itemName`](#itemname)<br/>[`itemsToShow`](#itemstoshow)<br/>[`focusedItems`](#focuseditems)|
 
 Note: items should be unique for table to work properly.
 
 ### Extra Columns
 | Required | Examples | Customization | Compatible input types |
 |-------------------|-------------------|-------------------|-------------------|
-| No |  `London, Liverpool, London,...`<br/>`Mercedes, Mercedes, Red Bull,...` | [`extraColumnsNumber`](#extra-columns-number) | [`pointsTable`](#points-table) |
+| No |  `London, Liverpool, London,...`<br/>`Mercedes, Mercedes, Red Bull,...` | [`extraColumnsNumber`](#extracolumnsnumber) | [`pointsTable`](#pointstable) |
 
 Columns with static info about items.
 
 ### Calculated Columns
 | Required | Examples | Customization |
 |-------------------|-------------------|-------------------|
-| No |  `rounds`, `wins`, `losses` | [`calculatedColumns`](#calculated-columns) |
+| No |  `rounds`, `wins`, `losses` | [`calculatedColumns`](#calculatedcolumns) |
 
 Predefined calculated columns with stats.
 
 ### Total
 | Required | Examples | Customization |
 |-------------------|-------------------|-------------------|
-| Yes |  `81, 71, 70,...`<br/>`.890, .817, .671,...` | [`totalName`](#total-name)<br/>[`totalValue`](#total-value)<br/>[`resultMapping`](#result-mapping) |
+| Yes |  `81, 71, 70,...`<br/>`.890, .817, .671,...` | [`totalName`](#totalname)<br/>[`totalValue`](#totalvalue)<br/>[`resultMapping`](#resultmapping) |
 
-Table is sorted using this column. When totals are equal position is determined by [`tieBreaking`](#tie-breaking) parameter.
+Table is sorted using this column. When totals are equal position is determined by [`tieBreaking`](#tiebreaking) parameter.
 
 ### Change
 | Required | Examples | Customization |
 |-------------------|-------------------|-------------------|
-| Yes |  `+3, +1, 0,...`<br/>`+25, +18, +15,...` | [`showChangeDuringAnimation`](#show-change-during-animation) |
+| Yes |  `+3, +1, 0,...`<br/>`+25, +18, +15,...` | [`showChangeDuringAnimation`](#showchangeduringanimation) |
 
 Total change since previous round, is shown in the same column as total.
 
@@ -162,12 +162,12 @@ This preset is built for major professional sport leagues in US and Canada.
 
 | Parameter | Value |
 |-----------|-------|
-| [`inputType`](#input-type) | `listOfMatches` |
-| [`itemName`](#item-name) | `Team` |
-| [`totalName`](#total-name) | `Win %` |
-| [`totalValue`](#total-value) | `win %` |
-| [`resultMapping`](#result-mapping) | `{ 1: 'win', 0: 'loss' }` |
-| [`calculatedColumns`](#calculated-columns) | `{ 'rounds': 'Games', 'wins': 'Wins', 'losses': 'Losses' }` |
+| [`inputType`](#inputtype) | `listOfMatches` |
+| [`itemName`](#itemname) | `Team` |
+| [`totalName`](#totalname) | `Win %` |
+| [`totalValue`](#totalvalue) | `win %` |
+| [`resultMapping`](#resultmapping) | `{ 1: 'win', 0: 'loss' }` |
+| [`calculatedColumns`](#calculatedcolumns) | `{ 'rounds': 'Games', 'wins': 'Wins', 'losses': 'Losses' }` |
 
 Watch the [NBA demo](https://targetprocess.github.io/replayTable/#nba).
 
@@ -175,9 +175,9 @@ Watch the [NBA demo](https://targetprocess.github.io/replayTable/#nba).
 
 | Parameter | Value |
 |-----------|-------|
-| [`roundName`](#round-name) | `Race` |
-| [`itemName`](#item-name) | `Driver` |
-| [`startRoundName`](#start-round-name) | `Start →` |
+| [`roundName`](#roundname) | `Race` |
+| [`itemName`](#itemname) | `Driver` |
+| [`startRoundName`](#startroundname) | `Start →` |
 
 Watch the [2015-2016 season demo](https://targetprocess.github.io/replayTable/#f1).
 
@@ -187,12 +187,12 @@ This is for the [intellectual game](https://en.wikipedia.org/wiki/What%3F_Where%
 
 | Parameter | Value |
 |-----------|-------|
-| [`seasonName`](#season-name) | `Турнир` |
-| [`roundName`](#round-name) | `Вопрос` |
-| [`itemName`](#item-name) | `Команда` |
-| [`totalName`](#total-name) | `Взято` |
-| [`tieBreaking`](#tie-breaking) | `range` |
-| [`resultMapping`](#result-mapping) | `{ 1: 'win' }` |
+| [`seasonName`](#seasonname) | `Турнир` |
+| [`roundName`](#roundname) | `Вопрос` |
+| [`itemName`](#itemname) | `Команда` |
+| [`totalName`](#totalname) | `Взято` |
+| [`tieBreaking`](#tiebreaking) | `range` |
+| [`resultMapping`](#resultmapping) | `{ 1: 'win' }` |
 
 Watch the [2016 World Championship demo](https://targetprocess.github.io/replayTable/#chgk).
 
@@ -205,31 +205,31 @@ Replay Table can be easily customized via `div` `data-` attributes. You can spec
 It is possible to use this options together with a preset: in this case they will override preset's settings.
 
 * [Terms](#terms)
-  * [seasonName](#season-name)
-  * [roundName](#round-name)
-  * [startRoundName](#start-round-name)
-  * [positionName](#position-name)
-  * [itemName](#item-name)
-  * [totalName](#total-name)
+  * [seasonName](#seasonname)
+  * [roundName](#roundname)
+  * [startRoundName](#startroundname)
+  * [positionName](#positionname)
+  * [itemName](#itemname)
+  * [totalName](#totalname)
 * [Data](#data)
-  * [inputType](#input-type)
-  * [itemsToShow](#items-to-show)
-  * [totalValue](#total-value)
-  * [resultMapping](#result-mapping)
-  * [extraColumnsNumber](#extra-columns-number)
-  * [calculatedColumns](#calculated-columns)
-  * [roundsNames](#rounds-names)
+  * [inputType](#inputtype)
+  * [itemsToShow](#itemstoshow)
+  * [totalValue](#totalvalue)
+  * [resultMapping](#resultmapping)
+  * [extraColumnsNumber](#extracolumnsnumber)
+  * [calculatedColumns](#calculatedcolumns)
+  * [roundsNames](#roundsnames)
 * [Playback](#playback)
-  * [startFromRound](#start-from-round)
-  * [animationDuration](#animation-duration)
-  * [showChangeDuringAnimation](#show-change-during-animation)
+  * [startFromRound](#startfromround)
+  * [animationDuration](#animationduration)
+  * [showChangeDuringAnimation](#showchangeduringanimation)
 * [Appearance](#appereance)
-  * [showProgressBar](#show-progress-bar)
-  * [showSeasonRoundSwitch](#show-season-round-switch)
-  * [focusedItems](#focused-items)
+  * [showProgressBar](#showprogressbar)
+  * [showSeasonRoundSwitch](#showseasonroundswitch)
+  * [focusedItems](#focuseditems)
 * [Other](#other)
-  * [tieBreaking](#tie-breaking)
-  * [tableName](#table-name)
+  * [tieBreaking](#tiebreaking)
+  * [tableName](#tablename)
 
 
 ## Terms
@@ -306,7 +306,7 @@ Maps a change in points to a `win`, `draw` or `loss`. Makes sense for the [`poin
 ### `extraColumnsNumber`
 | Div attribute | Accepted type | Default value | Examples | Compatible input types |
 |---------------|---------------|---------------|----------|------------------------|
-| `data-extra-columns-number` |  `Number` | `0` | `1`, `2` | `[pointsTable](#points-table)`
+| `data-extra-columns-number` |  `Number` | `0` | `1`, `2` | [`pointsTable`](#points-table)
 
 Number of [extra columns)[#extra-columns] with info about items located between items and results.
 
