@@ -92,6 +92,20 @@ export const config = {
         validate: (value) => !value || (Array.isArray(value) && value.every(item => isString(item) || !Number.isNaN(item)))
     },
 
+    //tieBreaking!
+
+    positionWhenTied: {
+        default: 'previous round',
+        validate: value => ['previous round', 'highest', 'range'].includes(value),
+        goesToTransform: true
+    },
+
+    tableName: {
+        default: undefined,
+        parse: input => input === "undefined" ? undefined : input,
+        validate: value => isString(value)
+    },
+
 
     //Playback
 
@@ -122,7 +136,7 @@ export const config = {
         validate: value => typeof value === 'boolean'
     },
 
-    showSeasonRoundSwitch: {
+    showModeSwitch: {
         default: true,
         parse: input => input === "true",
         validate: value => typeof value === 'boolean'
@@ -132,21 +146,6 @@ export const config = {
         default: [],
         parse: input => input.split(','),
         validate: value => Array.isArray(value) && value.every(item => isString(item))
-    },
-
-
-    //Other
-
-    tieBreaking: {
-        default: 'no ties',
-        validate: value => ['no ties', 'highest', 'range'].includes(value),
-        goesToTransform: true
-    },
-
-    tableName: {
-        default: undefined,
-        parse: input => input === "undefined" ? undefined : input,
-        validate: value => isString(value)
     }
 };
 
@@ -179,7 +178,7 @@ export const presets = {
         roundName: 'Вопрос',
         itemName: 'Команда',
         totalName: 'Взято',
-        tieBreaking: 'range',
+        positionWhenTied: 'range',
         resultMapping: {
             1: 'win'
         }

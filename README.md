@@ -112,7 +112,7 @@ We recommend you to also use comma as separator and UTF-8 as encoding.
 ### Position
 | Required | Examples | Customization |
 |-------------------|-------------------|-------------------|
-| Yes |  `1, 2, 3, 4...`<br/>`1, 2, 2, 4,...` | [`positionName`](#positionname)<br/>[`tieBreaking`](#tiebreaking)|
+| Yes |  `1, 2, 3, 4...`<br/>`1, 2, 2, 4,...` | [`positionName`](#positionname)<br/>[`positionWhenTied`](#positionwhentied)|
 
 ### Item
 | Required | Examples | Customization |
@@ -131,7 +131,7 @@ Columns with static info about items.
 ### Calculated Columns
 | Required | Examples | Customization |
 |-------------------|-------------------|-------------------|
-| No |  `rounds`, `wins`, `losses` | [`calculatedColumns`](#calculatedcolumns) |
+| No |  `rounds`, `wins`, `losses` | [`calculatedColumns`](#calculatedcolumns)<br/>[`resultMapping`](#resultmapping) |
 
 Predefined calculated columns with stats.
 
@@ -140,7 +140,7 @@ Predefined calculated columns with stats.
 |-------------------|-------------------|-------------------|
 | Yes |  `81, 71, 70,...`<br/>`.890, .817, .671,...` | [`totalName`](#totalname)<br/>[`totalValue`](#totalvalue)<br/>[`resultMapping`](#resultmapping) |
 
-Table is sorted using this column. When totals are equal position is determined by [`tieBreaking`](#tiebreaking) parameter.
+Table is sorted using this column. When totals are equal position is determined by [`positionWhenTied`](#positionWhenTied) parameter.
 
 ### Change
 | Required | Examples | Customization |
@@ -191,7 +191,7 @@ This is for the [intellectual game](https://en.wikipedia.org/wiki/What%3F_Where%
 | [`roundName`](#roundname) | `Вопрос` |
 | [`itemName`](#itemname) | `Команда` |
 | [`totalName`](#totalname) | `Взято` |
-| [`tieBreaking`](#tiebreaking) | `range` |
+| [`positionWhenTied`](#positionWhenTied) | `range` |
 | [`resultMapping`](#resultmapping) | `{ 1: 'win' }` |
 
 Watch the [2016 World Championship demo](https://targetprocess.github.io/replayTable/#chgk).
@@ -202,7 +202,7 @@ Feel free to [suggest](#contact) more presets.
 ## Parameters
 Replay Table can be easily customized via `div` `data-` attributes. You can specify your terms, adjust the animation duration, hide unnecessary elements and do other lovely things.
 
-It is possible to use this options together with a preset: in this case they will override preset's settings.
+It is possible to use this options together with a [preset](#presets): in this case they will override preset's settings.
 
 * [Terms](#terms)
   * [seasonName](#seasonname)
@@ -219,17 +219,16 @@ It is possible to use this options together with a preset: in this case they wil
   * [extraColumnsNumber](#extracolumnsnumber)
   * [calculatedColumns](#calculatedcolumns)
   * [roundsNames](#roundsnames)
+  * [positionWhenTied](#positionWhenTied)
+  * [tableName](#tablename)
 * [Playback](#playback)
   * [startFromRound](#startfromround)
   * [animationDuration](#animationduration)
   * [showChangeDuringAnimation](#showchangeduringanimation)
 * [Appearance](#appereance)
   * [showProgressBar](#showprogressbar)
-  * [showSeasonRoundSwitch](#showseasonroundswitch)
+  * [showModeSwitch](#showseasonroundswitch)
   * [focusedItems](#focuseditems)
-* [Other](#other)
-  * [tieBreaking](#tiebreaking)
-  * [tableName](#tablename)
 
 
 ## Terms
@@ -317,6 +316,26 @@ Number of [extra columns)[#extra-columns] with info about items located between 
 
 When set to undefined tries to get names from data source. If fails uses rounds' numbers.
 
+### `positionWhenTied`
+| Div attribute | Available options | Default value |
+|---------------|-------------------|---------------|
+| `data-position-when-tied` |  `previous round`, `highest`, `range` | `previous round` |
+
+Determines position when totals are equal.
+
+| Option | Positions |
+|--------|-----------|
+| `previous round` | `1, 2, 3, 4,...` |
+| `highest` | `1, 2, 2, 4,...` |
+| `range` | `1, 2-3, 2-3, 4,...` |
+
+### `tableName`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-table-name` |  `String` | `undefined` | `Premier League`, `NBA`, `F1` |
+
+Name is required when you have several Replay Tables on one page.
+
 
 ## Playback
 
@@ -349,38 +368,19 @@ If checked shows change in total (+3, +1, ...) during the animation. This ss use
 |---------------|---------------|---------------|----------|
 | `data-show-progress-bar` |  `Boolean` | `true` | `true`, `false` |
 
-### `showSeasonRoundSwitch`
+### `showModeSwitch`
 | Div attribute | Accepted type | Default value | Examples |
 |---------------|---------------|---------------|----------|
-| `data-season-round-switch` |  `Boolean` | `true` | `true`, `false` |
+| `data-show-mode-switch` |  `Boolean` | `true` | `true`, `false` |
+
+Shows or hides the season/round switch.
 
 ### `focusedItems`
 | Div attribute | Accepted type | Default value | Examples |
 |---------------|---------------|---------------|----------|
 | `data-focused-items` |  `Comma-separated string` |  | `Liverpool, Everton` |
 
-
-## Other
-
-### `tieBreaking`
-| Div attribute | Available options | Default value |
-|---------------|-------------------|---------------|
-| `data-tie-breaking` |  `no ties`, `highest`, `range` | `no ties` |
-
-Determines position when totals are equal.
-
-| Option | Positions |
-|--------|-----------|
-| `no ties` | `1, 2, 3, 4,...` |
-| `highest` | `1, 2, 2, 4,...` |
-| `range` | `1, 2-3, 2-3, 4,...` |
-
-### `tableName`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-table-name` |  `String` | `undefined` | `Premier League`, `NBA`, `F1` |
-
-Name is required when you have several Replay Tables on one page.
+Highlights specific items.
 
 
 ## Contact

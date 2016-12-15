@@ -81,7 +81,7 @@ function transformChangesTable(jsonTable, params) {
     }
 
     const resultsSorted = results.map(round => new Map(stableSort([...round.entries()], (a,b) => b[1].total - a[1].total)));
-    addPositions(resultsSorted, params['tieBreaking']);
+    addPositions(resultsSorted, params['positionWhenTied']);
 
     return {
         status: 'success',

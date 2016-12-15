@@ -154,7 +154,7 @@ class TableContainer extends Component {
 
                 <div className="replay-table-controls">
 
-                    {!this.props.showSeasonRoundSwitch ? null :
+                    {!this.props.showModeSwitch ? null :
                     <div className="replay-table-check">
 
                         <input type="radio"
