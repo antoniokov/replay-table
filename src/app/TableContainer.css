@@ -307,62 +307,123 @@ input[type="range"]:focus {
     100% {background-color: transparent;}
 }
 
-@keyframes continuous-100 {
+@keyframes green-100 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,1);}
     100% {background-color: transparent;}
 }
 
-@keyframes continuous-90 {
+@keyframes green-90 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.9);}
     100% {background-color: transparent;}
 }
 
-@keyframes continuous-80 {
+@keyframes green-80 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.8);}
     100% {background-color: transparent;}
 }
 
-@keyframes continuous-70 {
+@keyframes green-70 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.7);}
     100% {background-color: transparent;}
 }
 
-@keyframes continuous-60 {
+@keyframes green-60 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.6);}
     100% {background-color: transparent;}
 }
 
-@keyframes continuous-50 {
+@keyframes green-50 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.5);}
     100% {background-color: transparent;}
 }
 
-@keyframes continuous-40 {
+@keyframes green-40 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.4);}
     100% {background-color: transparent;}
 }
 
-@keyframes continuous-30 {
+@keyframes green-30 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.3);}
     100% {background-color: transparent;}
 }
 
-@keyframes continuous-20 {
+@keyframes green-20 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.2);}
     100% {background-color: transparent;}
 }
 
-@keyframes continuous-10 {
+@keyframes green-10 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.1);}
+    100% {background-color: transparent;}
+}
+
+
+@keyframes red-100 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(179,82,82,1);}
+    100% {background-color: transparent;}
+}
+
+@keyframes red-90 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(179,82,82,0.9);}
+    100% {background-color: transparent;}
+}
+
+@keyframes red-80 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(179,82,82,0.8);}
+    100% {background-color: transparent;}
+}
+
+@keyframes red-70 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(179,82,82,0.7);}
+    100% {background-color: transparent;}
+}
+
+@keyframes red-60 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(179,82,82,0.6);}
+    100% {background-color: transparent;}
+}
+
+@keyframes red-50 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(179,82,82,0.5);}
+    100% {background-color: transparent;}
+}
+
+@keyframes red-40 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(179,82,82,0.4);}
+    100% {background-color: transparent;}
+}
+
+@keyframes red-30 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(179,82,82,0.3);}
+    100% {background-color: transparent;}
+}
+
+@keyframes red-20 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(179,82,82,0.2);}
+    100% {background-color: transparent;}
+}
+
+@keyframes red-10 {
+    0% {background-color: transparent;}
+    50% {background-color: rgba(179,82,82,0.1);}
     100% {background-color: transparent;}
 }

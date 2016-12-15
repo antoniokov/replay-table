@@ -1,5 +1,6 @@
-export default function addPositions (results, positionWhenTied = 'previous round') {
-    results.forEach(round => [...round.entries()].forEach(([item, result], i) => {
+export default function calculatePositions (round, positionWhenTied = 'previous round') {
+    const newRound = new Map(round);
+    [...newRound.entries()].forEach(([item, result], i) => {
         if(positionWhenTied === 'previous round') {
             result.position = i + 1;
             return;
@@ -17,5 +18,7 @@ export default function addPositions (results, positionWhenTied = 'previous roun
                 result.position = itemsHigher + 1;
             }
         }
-    }));
+    });
+
+    return newRound;
 }

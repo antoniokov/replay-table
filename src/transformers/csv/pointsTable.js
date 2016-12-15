@@ -2,7 +2,7 @@ import transpose from '../../auxiliary/transpose';
 import stableSort from '../../auxiliary/stableSort';
 import pluralizeResult from '../auxiliary/pluralizeResult';
 import calculateTotal from '../auxiliary/calculateTotal';
-import addPositions from '../auxiliary/addPositions';
+import addPositions from '../auxiliary/calculatePositions';
 
 
 function addExtras (results, extraColumnsNames, extraColumns) {
@@ -60,11 +60,8 @@ function transformChangesTable(jsonTable, params) {
                 stats[pluralizeResult(result)]++;
             }
 
-            stats.total = calculateTotal(params['totalValue'], stats);;
-
-            if (!params['itemsToShow'] || params['itemsToShow'].includes(name)) {
-                roundResults.set(name, Object.assign({}, stats));
-            }
+            stats.total = calculateTotal(params['totalValue'], stats);
+            roundResults.set(name, Object.assign({}, stats));
         });
 
         return roundResults;
@@ -80,15 +77,12 @@ function transformChangesTable(jsonTable, params) {
         addExtras(results, extraColumnsNames, extraColumns);
     }
 
-    const resultsSorted = results.map(round => new Map(stableSort([...round.entries()], (a,b) => b[1].total - a[1].total)));
-    addPositions(resultsSorted, params['positionWhenTied']);
-
     return {
         status: 'success',
         itemName: itemName,
         extraColumnsNames: extraColumnsNames || [],
         roundsNames: roundsNames,
-        results: resultsSorted
+        results: results
     };
 }
 

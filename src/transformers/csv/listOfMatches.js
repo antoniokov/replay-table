@@ -2,7 +2,7 @@ import flipObject from '../../auxiliary/flipObject';
 import stableSort from '../../auxiliary/stableSort';
 import pluralizeResult from '../auxiliary/pluralizeResult';
 import calculateTotal from '../auxiliary/calculateTotal';
-import addPositions from '../auxiliary/addPositions';
+import addPositions from '../auxiliary/calculatePositions';
 
 
 function getResult(score, opponentScore) {
@@ -23,7 +23,8 @@ function transformMatchesList(jsonList, params) {
     const itemsNames = [...new Set([...matches.map(match => match[1]), ...matches.map(match => match[3])])];
 
     const itemsStats = new Map();
-    itemsNames.forEach(name => itemsStats.set(name, { change: null, total: 0, rounds: 0, wins: 0, losses: 0, draws: 0 }));
+    const initialStats = { change: null, total: 0, rounds: 0, wins: 0, losses: 0, draws: 0 };
+    itemsNames.forEach(name => itemsStats.set(name, Object.assign({}, initialStats)));
 
     const results = roundsNames.map(round => {
         const roundResults = new Map();
@@ -48,32 +49,31 @@ function transformMatchesList(jsonList, params) {
                     stats.change = resultChange[item.result];
                     stats.total = calculateTotal(params['totalValue'], stats);
 
-                    if (!params['itemsToShow'] || params['itemsToShow'].includes(item.name)) {
-                        roundResults.set(item.name, Object.assign({}, stats));
-                    }
+                    roundResults.set(item.name, Object.assign({}, stats));
                 });
             });
         itemsNames.filter(name => !roundResults.has(name))
             .forEach(name => {
-                if (!params['itemsToShow'] || params['itemsToShow'].includes(name)) {
-                    const stats = itemsStats.get(name);
-                    stats.change = null;
-                    stats.total = calculateTotal(params['totalValue'], stats);
-                    roundResults.set(name, Object.assign({}, stats));
-                }
+                const stats = itemsStats.get(name);
+                stats.change = null;
+                stats.total = calculateTotal(params['totalValue'], stats);
+                roundResults.set(name, Object.assign({}, stats));
             });
 
         return roundResults;
     });
 
-    const resultsSorted = results.map(round => new Map(stableSort([...round.entries()], (a,b) => b[1].total - a[1].total)));
-    addPositions(resultsSorted, params['positionWhenTied']);
+    if (params['startRoundName']) {
+        const startRoundResults = new Map(itemsNames.map(item => [item, Object.assign({}, initialStats)]));
+        results.unshift(startRoundResults);
+        roundsNames.unshift(params['startRoundName']);
+    }
 
     return {
         status: 'success',
         roundsNames: roundsNames,
         extraColumnsNames: [],
-        results: resultsSorted
+        results: results
     };
 }
 

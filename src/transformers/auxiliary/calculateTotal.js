@@ -3,7 +3,7 @@ export default function (totalValue, stats) {
             case 'cumulative':
                 return stats.total + stats.change || 0;
             case 'win %':
-                return stats.rounds ? (stats.wins / stats.rounds).toFixed(3) : (0).toFixed(3);
+                return stats.rounds > 0 ? (stats.wins / stats.rounds) : 0;
             default:
                 return stats.total + stats.change || 0;
         }

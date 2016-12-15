@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FlipMove from 'react-flip-move';
+import getPrintableNumber from '../auxiliary/getPrintableNumber';
 import './TableContainer.css';
 
 
@@ -100,11 +101,13 @@ class TableContainer extends Component {
 
         if (!animationNeeded) {
             if (customStyleNeeded) {
-                styleObject.backgroundColor = `rgba(105,189,36,${changeIntensity/100})`;
+                const color = change >= 0 ? '94,179,26' : '179,82,82';
+                styleObject.backgroundColor = `rgba(${color},${changeIntensity/100})`;
             }
         } else {
             if (customAnimationNeeded) {
-                styleObject.animation = `continuous-${changeIntensity} ${this.props.animationDuration}ms`
+                const color = change >= 0 ? 'green' : 'red';
+                styleObject.animation = `${color}-${changeIntensity} ${this.props.animationDuration}ms`
             } else {
                 styleObject.animation = `${resultClass} ${this.props.animationDuration}ms`;
             }
@@ -126,24 +129,21 @@ class TableContainer extends Component {
         return classes.join(' ');
     }
 
-    getTotalText (total, change, areRoundsConsecutive) {
+    getTotalText (result, change, areRoundsConsecutive) {
         if (this.state.currentRound === 0) {
-            return total;
+            return result.total;
         }
 
         const shouldAnimateChange =  this.state.isMoving && (this.props.showChangeDuringAnimation || !areRoundsConsecutive);
-        if (this.state.show === 'round' || shouldAnimateChange) {
-            let changeString;
-            if (change === null) {
-                changeString = '';
-            } else if (Math.abs(change) > 0 && Math.abs(change) < 1) {
-                changeString = change.toFixed(3).toString().replace('0.', '.');
-            } else {
-                changeString = change.toString()
-            }
-            return change > 0 ? `+${changeString}` : changeString;
+        if (shouldAnimateChange) {
+            return getPrintableNumber(change);
         } else {
-            return total > 0 && total < 1 ? total.toString().replace('0.', '.') : total;
+            switch (this.state.show) {
+                case 'round':
+                    return getPrintableNumber(result.change, true);
+                case 'season':
+                    return getPrintableNumber(result.total);
+            }
         }
     }
 
@@ -235,6 +235,7 @@ class TableContainer extends Component {
                         typeName='tbody' >
 
                         {[...this.props.results[this.state.currentRound].entries()]
+                            .filter(([item, result]) => !this.props['itemsToShow'] || this.props['itemsToShow'].includes(item))
                             .map(([item, result]) => {
                                 const areRoundsConsecutive = this.state.previousRound === undefined || Math.abs(this.state.previousRound - this.state.currentRound) === 1;
                                 const change = areRoundsConsecutive
@@ -255,7 +256,7 @@ class TableContainer extends Component {
                                         {this.props.extraColumnsNames.map(name =>
                                             <td key={name} className="extras">{result.extras[name]}</td>
                                         )}
-                                        <td className="total">{this.getTotalText.bind(this)(result.total, change, areRoundsConsecutive)}</td>
+                                        <td className="total">{this.getTotalText.bind(this)(result, change, areRoundsConsecutive)}</td>
                                     </tr>
                                 );
                             })}
