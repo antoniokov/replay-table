@@ -1,8 +1,6 @@
 import transpose from '../../auxiliary/transpose';
-import stableSort from '../../auxiliary/stableSort';
 import pluralizeResult from '../auxiliary/pluralizeResult';
 import calculateTotal from '../auxiliary/calculateTotal';
-import addPositions from '../auxiliary/calculatePositions';
 
 
 function addExtras (results, extraColumnsNames, extraColumns) {

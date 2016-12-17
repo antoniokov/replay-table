@@ -12,6 +12,9 @@ Transforms a csv file with season results into interactive standings:
 * [Formula One](https://targetprocess.github.io/replayTable/#f1)
 
 ## Quickstart
+
+Prepare a [csv file](#input) with season results or download one from our [gallery](https://targetprocess.github.io/replayTable#examples).
+
 Put a `div` with `replayTable` class on your page and supply a link to your csv file using `data-csv` attribute.
 ```
 <div class="replayTable"
@@ -33,7 +36,6 @@ Finally, include the stylesheet inside the `head` tag:
 </head>
 ```
 
-There are ready to embed Replay Tables in our [gallery](https://targetprocess.github.io/replayTable/#examples-section) or you can make your own.
 
 
 ## Customization

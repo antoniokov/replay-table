@@ -1,9 +1,6 @@
 import flipObject from '../../auxiliary/flipObject';
-import stableSort from '../../auxiliary/stableSort';
 import pluralizeResult from '../auxiliary/pluralizeResult';
 import calculateTotal from '../auxiliary/calculateTotal';
-import addPositions from '../auxiliary/calculatePositions';
-
 
 function getResult(score, opponentScore) {
     if (score > opponentScore) {
