@@ -1,13 +1,17 @@
 {
-  "main.css": "static/css/main.ca9ce3f8.css",
-  "main.css.map": "static/css/main.ca9ce3f8.css.map",
-  "main.js": "static/js/main.9fb9b58c.js",
-  "main.js.map": "static/js/main.9fb9b58c.js.map",
+  "main.css": "static/css/main.eee071fa.css",
+  "main.css.map": "static/css/main.eee071fa.css.map",
+  "main.js": "static/js/main.c9b92faf.js",
+  "main.js.map": "static/js/main.c9b92faf.js.map",
   "static\\media\\Roboto-Regular.eot": "static/media/Roboto-Regular.a28928ed.eot",
   "static\\media\\Roboto-Regular.svg": "static/media/Roboto-Regular.a3944ae2.svg",
   "static\\media\\Roboto-Regular.ttf": "static/media/Roboto-Regular.ac3f799d.ttf",
   "static\\media\\Roboto-Regular.woff": "static/media/Roboto-Regular.2100602c.woff",
   "static\\media\\link.svg": "static/media/link.697472ae.svg",
-  "static\\media\\logo2.png": "static/media/logo2.56e4c4b4.png",
-  "static\\media\\replay.png": "static/media/replay.822e2c75.png"
+  "static\\media\\logo.png": "static/media/logo.678b4a92.png",
+  "static\\media\\replay.png": "static/media/replay.822e2c75.png",
+  "static\\media\\roboto-bold.eot": "static/media/roboto-bold.e3d5d660.eot",
+  "static\\media\\roboto-bold.svg": "static/media/roboto-bold.68da160a.svg",
+  "static\\media\\roboto-bold.ttf": "static/media/roboto-bold.d8c3f814.ttf",
+  "static\\media\\roboto-bold.woff": "static/media/roboto-bold.d39dc1b5.woff"
 }
