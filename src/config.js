@@ -161,9 +161,9 @@ export const presets = {
             0: 'loss'
         },
         calculatedColumns: {
-            'rounds': 'Games',
-            'wins': 'Wins',
-            'losses': 'Losses'
+            'rounds': 'G',
+            'wins': 'W',
+            'losses': 'L'
         }
     },
 
