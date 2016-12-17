@@ -323,19 +323,17 @@ a:hover{
     opacity: 0.6;
 }
 
-.examples h3 a.view-more{
-    width: auto;
-    height: auto;
+.examples  a.category{
+    margin-bottom: 1.5rem;
     white-space: nowrap;
     background: none;
     display: inline-block;
     vertical-align: bottom;
-    margin-left: 1rem;
     font-size: 1.1rem;
+    font-family: 'RobotoBold', 'Roboto';
     text-transform: uppercase;
-    color: rgba(0,0,0,0.7);
+    color: #e61578;
 }
-.examples h3 a.view-more:hover{
-    color: rgba(0,0,0,1);
-    border-bottom-color: rgba(0,0,0,0.75);
+.examples  a.category:hover{
+    border-bottom-color: #e61578;
 }
