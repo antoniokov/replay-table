@@ -224,7 +224,10 @@ class TableContainer extends Component {
                     <tr>
                         <th className="position">{this.props.positionName}</th>
                         <th className="item">{this.props.itemName}</th>
-                        {Object.values(this.props['calculatedColumns']).map(name => <th key={name} className="calculated">{name}</th>)}
+                        {Object.keys(this.props['calculatedColumns']).map(key => {
+                            const name = this.props['calculatedColumns'][key];
+                            return <th key={name} className="calculated">{name}</th>;
+                        })}
                         {this.props['extraColumnsNames'].map(name => <th className="extra" key={name}>{name}</th>)}
                         <th className="total">{this.props.totalName}</th>
                     </tr>

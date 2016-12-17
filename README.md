@@ -22,13 +22,13 @@ Transforms a csv file with season results into interactive standings:
     </div>
     ```
 3. Include Replay tables script and stylesheet:
-```
-        <head>
-            ...
-            <script type="text/javascript" src="//cdn.jsdelivr.net/replay-table/latest/replay-table.min.js"></script>
-            <link rel="stylesheet" type="text/css" link href="cdn.jsdelivr.net/replay-table/latest/replay-table.css">
-        </head>
-```
+    ```
+    <head>
+        ...
+        <script type="text/javascript" src="//cdn.jsdelivr.net/replay-table/latest/replay-table.min.js"></script>
+        <link rel="stylesheet" type="text/css" link href="cdn.jsdelivr.net/replay-table/latest/replay-table.css">
+    </head>
+    ```
 
 That was easy :)
 
