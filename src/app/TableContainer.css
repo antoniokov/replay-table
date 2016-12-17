@@ -225,7 +225,7 @@
 
 }
 .r-table td{
-    padding: 0.6rem 0;
+    padding: 0.6rem 0.5rem;
 }
 .r-table th{
     font-weight: bold;

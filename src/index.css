@@ -60,7 +60,14 @@ h2{
     margin-bottom: 5rem;
     color: #5c328a;
 }
-
+a{
+    color: #2daae2;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+}
+a:hover{
+    border-bottom-color: #2daae2;
+}
 
 
 
@@ -199,11 +206,11 @@ h2{
 }
 .examples .side:first-of-type{
     padding-right: 6rem;
-    width: 40%;
+    width: 50%;
 }
 .examples .side:last-of-type{
     padding-left: 6rem;
-    width: 60%;
+    width: 50%;
 }
 .examples code{
     display: block;
