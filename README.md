@@ -16,20 +16,21 @@ Transforms a csv file with season results into interactive standings:
 1. Prepare a [csv file](#input) with season results or download one from our [gallery](https://targetprocess.github.io/replayTable#examples).
 
 2. Put a `div` with `replayTable` class on your page and supply a link to the csv file using `data-csv` attribute:
-```
-<div class="replayTable"
-     data-csv="/path/to/file.csv">
-</div>
-```
+        ```
+        <div class="replayTable"
+             data-csv="/path/to/file.csv">
+        </div>
+        ```
 3. Include Replay tables script and stylesheet:
-```
-<head>
-    ...
-    <script type="text/javascript" src="//cdn.jsdelivr.net/replay-table/latest/replay-table.min.js"></script>
-    <link rel="stylesheet" type="text/css" link href="cdn.jsdelivr.net/replay-table/latest/replay-table.css">
-</head>
-```
+        ```
+        <head>
+            ...
+            <script type="text/javascript" src="//cdn.jsdelivr.net/replay-table/latest/replay-table.min.js"></script>
+            <link rel="stylesheet" type="text/css" link href="cdn.jsdelivr.net/replay-table/latest/replay-table.css">
+        </head>
+        ```
 
+That was easy :)
 
 Also feel free to embed ready-to-use Replay Tables from our [gallery](https://targetprocess.github.io/replayTable/#examples-section).
 
