@@ -16,12 +16,14 @@ Transforms a csv file with season results into interactive standings:
 1. Prepare a [csv file](#input) with season results or download one from our [gallery](https://targetprocess.github.io/replayTable#examples).
 
 2. Put a `div` with `replayTable` class on your page and supply a link to the csv file using `data-csv` attribute:
+
     ```
     <div class="replayTable"
          data-csv="/path/to/file.csv">
     </div>
     ```
 3. Include Replay tables script and stylesheet:
+
     ```
     <head>
         ...
