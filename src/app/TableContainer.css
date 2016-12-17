@@ -10,6 +10,7 @@
 .replay-table-wrap{
     margin-bottom: 8rem;
     float: left;
+    min-width: 30rem;
 }
 .replay-table-wrap .replay-table-sub-head{
     font-size: 1.6rem;
@@ -20,6 +21,7 @@
 
 .replay-table-controls{
     margin-bottom: 2rem;
+
 }
 .replay-table-controls:after{
     content: '';
@@ -150,7 +152,6 @@
 .replay-table-wrap .replay-table-check{
     position: relative;
     float: right;
-    margin-left: 1rem;
     border: 0.2rem solid #e9e9e9;
     background: #fdfdfd;
     -webkit-border-radius: 0.4rem;
