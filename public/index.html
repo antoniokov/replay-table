@@ -54,37 +54,28 @@
 
                 <p>
                     <span class="step-num">1</span>
-                    Put a <span class="code-word">div</span> with <span class="code-word">replayTable</span> class on your page and supply a link to your csv file using <span class="code-word">data-csv</span> attribute.
+                    Prepare a <a href="https://github.com/TargetProcess/replayTable#input">csv file</a> with season results or download one from our <a href="https://targetprocess.github.io/replayTable/#examples">gallery</a>.
+                </p>
+
+                <br/>
+                
+                <p>
+                    <span class="step-num">2</span>
+                    Put a <span class="code-word">div</span> with <span class="code-word">replayTable</span> class on your page and supply a link to the csv file using <span class="code-word">data-csv</span> attribute:
                 </p>
 
                 <code>
 
                     &#60;div class="replayTable"<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;data-csv="/csv/football/england/premier-league/2015-2016.csv"&#62; <br/>
-
-                    &#60;/div&#62;
-
-                </code>
-
-
-                <p>
-                    <span class="step-num">2</span>
-                    Include the script near the end of the <span class="code-word">body</span> tag:
-                </p>
-
-                <code>
-
-                    &#60;body&#62;<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;... <br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&#60;script type="text/javascript" src="https://s3-us-west-2.amazonaws.com/replay-table/cdn/replayTable.js"&#62;&#60;/script&#62;
+                    &nbsp;&nbsp;&nbsp;&nbsp;data-csv="/path/to/file.csv"&#62;
                     <br/>
-                    &#60;/body&#62;
+                    &#60;/div&#62;
 
                 </code>
 
                 <p>
                     <span class="step-num">3</span>
-                    Finally, include the stylesheet inside the <span class="code-word">head</span> tag:
+                    Finally, Include Replay tables script and stylesheet:
                 </p>
 
 
@@ -92,8 +83,8 @@
 
                     &#60;head&#62;<br/>
                     &nbsp;&nbsp;&nbsp;&nbsp;... <br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&#60;link rel="stylesheet" type="text/css" link href="https://s3-us-west-2.amazonaws.com/replay-table/cdn/replayTable.css""&#62;
-                    <br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&#60;script type="text/javascript" src="//cdn.jsdelivr.net/replay-table/latest/replay-table.min.js"&#62;&#60;/script&#62;  <br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&#60;link rel="stylesheet" type="text/css" link href="cdn.jsdelivr.net/replay-table/latest/replay-table.css"&#62;  <br/>
                     &#60;/head&#62;
 
                 </code>
