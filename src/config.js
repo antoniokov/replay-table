@@ -86,6 +86,7 @@ export const config = {
         validate: obj => validateObject(obj, key => ['rounds', 'wins', 'losses', 'draws'].includes(key), value => isString(value))
     },
 
+    useRoundsNumbers: {
         default: false,
         parse: input => input === 'true',
         validate: value => typeof value === 'boolean',

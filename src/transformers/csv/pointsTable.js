@@ -15,6 +15,7 @@ function transformChangesTable(jsonTable, params) {
 
     const itemName = jsonTable[0][0];
     const extraColumnsNames = jsonTable[0].slice(1, offset);
+    const roundsNames = getRoundsNames(params['useRoundsNames'] ? null : jsonTable[0].slice(offset), jsonTable[1].length);
 
     const transposed = transpose(jsonTable.slice(1));
     const itemsNames = transposed[0];
