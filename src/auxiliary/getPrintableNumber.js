@@ -1,9 +1,6 @@
 export default function (number, isChange = false, precision = 3) {
-    if (number === null) {
+    if (number === null || typeof number !== 'number') {
         return '';
-    }
-    if (typeof number !== 'number') {
-        console.log(number);
     }
 
     let result;

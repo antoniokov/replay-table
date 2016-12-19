@@ -1,4 +1,5 @@
 import transpose from '../../auxiliary/transpose';
+import getRoundsNames from '../auxiliary/getRoundsNames';
 import pluralizeResult from '../auxiliary/pluralizeResult';
 import calculateTotal from '../auxiliary/calculateTotal';
 
@@ -10,33 +11,16 @@ function addExtras (results, extraColumnsNames, extraColumns) {
 }
 
 function transformChangesTable(jsonTable, params) {
-    let itemName, extraColumnsNames, roundsNames;
-    if (!params['extraColumnsNumber']) {
-        [itemName, ...roundsNames] = jsonTable[0];
-    } else {
-        itemName = jsonTable[0][0];
-        extraColumnsNames = jsonTable[0].slice(1, params['extraColumnsNumber'] + 1);
-        roundsNames = jsonTable[0].slice(params['extraColumnsNumber'] + 1);
-    }
+    const offset = (params['extraColumnsNumber'] || 0) + 1;
 
-    if (roundsNames) {
-        if(roundsNames.every(roundName => !isNaN(roundName))) {
-            roundsNames.forEach(roundName => Number.parseInt(roundName, 10));
-        }
-    } else {
-        roundsNames = [...new Array(jsonTable[1].length).keys()];
-    }
+    const itemName = jsonTable[0][0];
+    const extraColumnsNames = jsonTable[0].slice(1, offset);
 
-    let itemsNames, extraColumns = [], changes;
     const transposed = transpose(jsonTable.slice(1));
-    if (!params['extraColumnsNumber']) {
-        [itemsNames, ...changes] =  transposed;
-    } else {
-        itemsNames = transposed[0];
-        extraColumns = transposed.slice(1, params['extraColumnsNumber'] + 1)
-            .map(column => new Map(itemsNames.map((item, i) => [item, column[i]])));
-        changes = transposed.slice(params['extraColumnsNumber'] + 1);
-    }
+    const itemsNames = transposed[0];
+    const extraColumns =  transposed.slice(1, offset)
+        .map(column => new Map(itemsNames.map((item, i) => [item, column[i]])));
+    const changes = transposed.slice(offset);
 
     const itemsStats = new Map();
     const initialStats = { change: null, total: 0, rounds: 0, wins: 0, losses: 0, draws: 0 };

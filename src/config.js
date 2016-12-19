@@ -86,10 +86,10 @@ export const config = {
         validate: obj => validateObject(obj, key => ['rounds', 'wins', 'losses', 'draws'].includes(key), value => isString(value))
     },
 
-    roundsNames: {
-        default: undefined,
-        parse: input => input === "undefined" ? undefined : input.split(','),
-        validate: (value) => !value || (Array.isArray(value) && value.every(item => isString(item) || !Number.isNaN(item)))
+        default: false,
+        parse: input => input === 'true',
+        validate: value => typeof value === 'boolean',
+        goesToTransform: true
     },
 
     //tieBreaking!

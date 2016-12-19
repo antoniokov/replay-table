@@ -219,7 +219,7 @@ It is possible to use this options together with a [preset](#presets): in this c
   * [resultMapping](#resultmapping)
   * [extraColumnsNumber](#extracolumnsnumber)
   * [calculatedColumns](#calculatedcolumns)
-  * [roundsNames](#roundsnames)
+  * [useRoundsNumbers](#useroundsnumbers)
   * [positionWhenTied](#positionWhenTied)
   * [tableName](#tablename)
 * [Playback](#playback)
@@ -310,12 +310,14 @@ Maps a change in points to a `win`, `draw` or `loss`. Makes sense for the [`poin
 
 Number of [extra columns)[#extra-columns] with info about items located between items and results.
 
-### `roundsNames`
+### `useRoundsNumbers`
 | Div attribute | Accepted type | Default value | Examples |
 |---------------|---------------|---------------|----------|
-| `data-rounds-names` |  `Comma-separated string` or `undefined` | `undefined` | `Australia, Bahrain, China...` |
+| `data-use-rounds-numbers` |  `Boolean` | `false` | `true` |
 
-When set to undefined tries to get names from data source. If fails uses rounds' numbers.
+If set to `true` ignores rounds' names and uses numbers.
+
+It is useful when you have [list Of matches](#list-of-matches) where rows are dates but you don't care that teams didn't play their Nth game simultaneously.
 
 ### `positionWhenTied`
 | Div attribute | Available options | Default value |

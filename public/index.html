@@ -41,8 +41,10 @@
            <div class="main-demo">
 
                <div class="replayTable"
-                    data-table-name="Demo"
-                    data-csv="https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv">
+                    data-csv="https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv"
+                    data-input-type="listOfMatches"
+                    data-use-rounds-numbers="true"
+                    data-table-name="Demo">
                </div>
 
            </div>
@@ -54,7 +56,7 @@
 
                 <p>
                     <span class="step-num">1</span>
-                    Prepare a <a href="https://github.com/TargetProcess/replayTable#input">csv file</a> with season results or download one from our <a href="https://targetprocess.github.io/replayTable/#examples">gallery</a>.
+                    Prepare a <a target="_blank" href="https://github.com/TargetProcess/replayTable#input">csv file</a> with season results or download one from our <a href="https://targetprocess.github.io/replayTable/#examples">examples</a>.
                 </p>
 
                 <br/>
@@ -75,7 +77,7 @@
 
                 <p>
                     <span class="step-num">3</span>
-                    Finally, Include Replay tables script and stylesheet:
+                    Finally, include Replay Table script and stylesheet:
                 </p>
 
 
@@ -91,7 +93,7 @@
 
 
                 <p>
-                    You can find more info here: <a href="https://github.com/TargetProcess/replayTable">https://github.com/TargetProcess/replayTable</a>
+                    The table is highly customizable via <span class="code-word">data-</span> attributes. Check out our <a target="_blank" href="https://github.com/TargetProcess/replayTable#customization">docs</a>.
                 </p>
 
             </div>
@@ -104,7 +106,7 @@
     <div class="examples" id="examples">
 
         <h2>Examples</h2>
-
+        <!--
 
 
         <div class="contents">
@@ -120,27 +122,31 @@
                 <li class="contents-item"><a href="#chgk">Что? Где? Когда?</a></li>
             </ul>
         </div>
+        -->
 
 
 
 
-        <a class="category" href="#">football</a>
+        <!--<a class="category" href="#">football</a>-->
         <h3><a href="#premier-league" id="premier-league" name="premier-league"></a>Premier League 2015/16</h3>
 
         <div class="two-side-content">
             <div class="side">
                 <div class="replayTable"
                      data-csv="https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv"
-                     data-table-name="Premier League"
-                >
+                     data-input-type="listOfMatches"
+                     data-use-rounds-numbers="true"
+                     data-table-name="Premier League">
                 </div>
             </div>
             <div class="side">
                 <code>
 
                     &#60;div class="replayTable"<br/>
-                    &nbsp;data-csv="https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv"&#62;<br/>
-                    &nbsp;data-table-name="Premier League"&#62;<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#input">data-csv</a>="https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv"<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#tablename">data-table-name</a>="Premier League"<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#inputtype">data-input-type</a>="listOfMatches"<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#useroundsnumbers">data-use-rounds-numbers</a>="true"<br/>
                     &#60;/div&#62;
 
                 </code>
@@ -149,7 +155,7 @@
         </div>
 
 
-        <a class="category" href="#">Formula One</a>
+        <!--<a class="category" href="#">Formula One</a>-->
         <h3><a href="#f1" id="f1" name="f1"></a>Formula One 2015/16</h3>
 
         <div class="two-side-content">
@@ -166,10 +172,10 @@
                 <code>
 
                     &#60;div class="replayTable"&#62;<br/>
-                    &nbsp;data-csv="https://s3-us-west-2.amazonaws.com/replay-table/csv/f1/drivers/2015-2016.csv"<br/>
-                    &nbsp;data-table-name="F1"<br/>
-                    &nbsp;data-preset="F1"<br/>
-                    &nbsp;data-extra-columns-number="1"&#62;<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#input">data-csv</a>="https://s3-us-west-2.amazonaws.com/replay-table/csv/f1/drivers/2015-2016.csv"<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#tablename">data-table-name</a>="F1"<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#presets">data-preset</a>="F1"<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#extracolumnsnumber">data-extra-columns-number</a>="1"&#62;<br/>
                     &#60;/div&#62;
 
                 </code>
@@ -178,7 +184,7 @@
         </div>
 
 
-        <a class="category" href="#">NBA</a>
+        <!--<a class="category" href="#">NBA</a>-->
         <h3><a href="#nba" id="nba" name="nba"></a>NBA Regular Season 2015/16, Western Conference</h3>
 
         <div class="two-side-content">
@@ -196,11 +202,11 @@
                 <code>
 
                     &#60;div class="replayTable"&#62;<br/>
-                    &nbsp;data-csv="https://s3-us-west-2.amazonaws.com/replay-table/csv/basketball/nba/regular/2015-2016.csv"<br/>
-                    &nbsp;data-table-name="NBA"<br/>
-                    &nbsp;data-preset="WinsLosses"<br/>
-                    &nbsp;data-start-round-name="Start"<br/>
-                    &nbsp;data-items-to-show="Golden State Warriors,San Antonio Spurs,Oklahoma City Thunder,Los Angeles Clippers,Portland Trail Blazers,Dallas Mavericks,Memphis Grizzlies,Houston Rockets,Utah Jazz,Sacramento Kings,Denver Nuggets,New Orleans Pelicans,Minnesota Timberwolves,Phoenix Suns,Los Angeles Lakers"&#62;<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#input">data-csv</a>="https://s3-us-west-2.amazonaws.com/replay-table/csv/basketball/nba/regular/2015-2016.csv"<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#tablename">data-table-name</a>="NBA"<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#presets">data-preset</a>="WinsLosses"<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#startroundname">data-start-round-name</a>="Start"<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#itemstoshow">data-items-to-show</a>="Golden State Warriors,San Antonio Spurs,Oklahoma City Thunder,Los Angeles Clippers,Portland Trail Blazers,Dallas Mavericks,Memphis Grizzlies,Houston Rockets,Utah Jazz,Sacramento Kings,Denver Nuggets,New Orleans Pelicans,Minnesota Timberwolves,Phoenix Suns,Los Angeles Lakers"&#62;<br/>
                     &#60;/div&#62;
 
                 </code>
@@ -210,13 +216,13 @@
 
 
 
-        <a class="category" href="#">Что? Где? Когда?</a>
+        <!--<a class="category" href="#">Что? Где? Когда?</a>-->
         <h3><a href="#chgk" id="chgk" name="chgk"></a>Чемпионат мира по игре «Что? Где? Когда?», 2016</h3>
 
         <div class="two-side-content">
             <div class="side">
                 <div class="replayTable"
-                     data-csv="https://s3-us-west-2.amazonaws.com/replay-table/csv/%D1%87%D0%B3%D0%BA/%D1%87%D0%B5%D0%BC%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D1%82+%D0%BC%D0%B8%D1%80%D0%B0/2016.csv"
+                     data-csv="https://s3-us-west-2.amazonaws.com/replay-table/csv/chgk/world-championship/2016.csv"
                      data-table-name="ЧМ ЧГК"
                      data-preset="ЧГК"
                      data-extra-columns-number="1"
@@ -227,14 +233,13 @@
                 <code>
 
                     &#60;div class="replayTable"&#62;<br/>
-                    &nbsp;data-csv="https://s3-us-west-2.amazonaws.com/replay-table/csv/ %D1%87%D0%B3%D0%BA/%D1%87%D0%B5%D0%BC%D0%BF %D0%B8%D0%BE%D0%BD%D0%B0%D1%82+%D0%BC%D0%B8%D1%80%D0%B0/2016.csv"<br/>
-                    &nbsp;data-table-name="ЧМ ЧГК"<br/>
-                    &nbsp; data-preset="ЧГК"<br/>
-                    &nbsp;data-extra-columns-number="1"&#62;<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#tablename">data-table-name</a>="ЧМ ЧГК"<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#presets">data-preset</a>="ЧГК"<br/>
+                    &nbsp;<a target="_blank" href="https://github.com/TargetProcess/replayTable#extracolumnsnumber">data-extra-columns-number</a>="1"&#62;<br/>
                     &#60;/div&#62;
 
                 </code>
-                <a href="https://s3-us-west-2.amazonaws.com/replay-table/csv/%D1%87%D0%B3%D0%BA/%D1%87%D0%B5%D0%BC%D0%BF%D0%B8%D0%BE%D0%BD%D0%B0%D1%82+%D0%BC%D0%B8%D1%80%D0%B0/2016.csv">Download CSV</a>
+                <a href="https://s3-us-west-2.amazonaws.com/replay-table/csv/chgk/world-championship/2016.csv">Download CSV</a>
             </div>
         </div>
 
