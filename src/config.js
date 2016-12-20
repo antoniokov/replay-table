@@ -171,7 +171,10 @@ export const presets = {
     "F1": {
         roundName: 'Race',
         itemName: 'Driver',
-        startRoundName: 'Start →'
+        startRoundName: 'Start →',
+        resultMapping: {
+            25: 'win'
+        }
     },
 
     "ЧГК": {

@@ -179,6 +179,7 @@ Watch the [NBA demo](https://targetprocess.github.io/replayTable/#nba).
 | [`roundName`](#roundname) | `Race` |
 | [`itemName`](#itemname) | `Driver` |
 | [`startRoundName`](#startroundname) | `Start →` |
+| [`resultMapping`](#resultmapping) | `{ 25: win}` |
 
 Watch the [2015-2016 season demo](https://targetprocess.github.io/replayTable/#f1).
 

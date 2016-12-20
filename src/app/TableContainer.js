@@ -7,21 +7,42 @@ import './TableContainer.css';
 class TableContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = {
+        const changes = this.getChanges.bind(this)(null, this.props.startFromRound);
+        this.state = Object.assign({
             currentRound: this.props.startFromRound,
+            previousRound: null,
+            areRoundsConsecutive: true,
             isPlaying: false,
             focusedItems: this.props.focusedItems ? new Set([...this.props.focusedItems]) : new Set(),
             show: 'season'
-        };
+        }, changes);
+    }
+
+    getChanges (previousRound, currentRound) {
+        return [...this.props.results[currentRound].entries()].reduce((currentStats, [item, result]) => {
+            const change = previousRound === null
+                ? result.change
+                : result.total - this.props.results[previousRound].get(item).total;
+
+            return {
+                maxAbsChange: Math.max(Math.abs(change), currentStats.maxAbsChange),
+                maxAbsResultChange: Math.max(Math.abs(result.change), currentStats.maxAbsResultChange),
+                allChangesMapped: currentStats.allChangesMapped && this.props.resultMapping[result.change]
+            }
+        }, { maxAbsChange: 0, maxAbsResultChange: 0, allChangesMapped: true });
     }
 
     goToRound (roundNumber) {
         this.setState({ isMoving: false }, () => {
-            return new Promise(resolve => this.setState({
+            const changes = this.getChanges.bind(this)(this.state.currentRound, roundNumber);
+            return new Promise(resolve => this.setState(Object.assign({
                 previousRound: this.state.currentRound,
                 currentRound: roundNumber,
+                areRoundsConsecutive: Math.abs(this.state.currentRound - roundNumber) === 1,
                 isMoving: true
-            }, () => setTimeout(() => this.setState({ isMoving: false }, resolve), this.props.animationDuration)));
+            }, changes), () => {
+                return setTimeout(() => this.setState({ isMoving: false }, resolve), this.props.animationDuration);
+            }));
         });
     }
 
@@ -80,33 +101,28 @@ class TableContainer extends Component {
         this.setState({ focusedItems: newFocusedItems });
     }
 
-    getRowStyle (result, change, areRoundsConsecutive) {
+    getRowStyle (result, change) {
         const styleObject = {};
         const resultClass = this.props.resultMapping[result.change];
 
-        const customStyleNeeded = this.state.show === 'round' && !resultClass;
+        const customStyleNeeded = this.state.show === 'round' && !this.state.allChangesMapped;
         const animationNeeded = this.state.isMoving && this.state.currentRound > 0;
-        const customAnimationNeeded = animationNeeded && (!areRoundsConsecutive || !resultClass);
-
-        let changeIntensity;
-        if (customStyleNeeded || customAnimationNeeded) {
-            const maxAbsChange = [...this.props.results[this.state.currentRound].entries()].reduce((maxChange, [it, res]) => {
-                const ch = this.state.previousRound === undefined
-                    ? res.change
-                    : res.total - this.props.results[this.state.previousRound].get(it).total;
-                return Math.abs(ch) > maxChange ? Math.abs(ch) : maxChange
-            }, 0);
-            changeIntensity = 10*Math.round(10*Math.abs(change)/maxAbsChange);
-        }
+        const customAnimationNeeded = animationNeeded && (!this.state.areRoundsConsecutive || !this.state.allChangesMapped);
 
         if (!animationNeeded) {
             if (customStyleNeeded) {
-                const color = change >= 0 ? '94,179,26' : '179,82,82';
-                styleObject.backgroundColor = `rgba(${color},${changeIntensity/100})`;
+                const color = result.change >= 0 ? '94,179,26' : '179,82,82';
+                const changeIntensity = result.change
+                    ? Math.max(Math.round(10*Math.abs(result.change)/this.state.maxAbsResultChange)/10, 0.1)
+                    : 0;
+                styleObject.backgroundColor = `rgba(${color},${changeIntensity})`;
             }
         } else {
             if (customAnimationNeeded) {
                 const color = change >= 0 ? 'green' : 'red';
+                const changeIntensity = change
+                    ? Math.max(10*Math.round(10*Math.abs(change)/this.state.maxAbsChange), 0.1)
+                    : 0;
                 styleObject.animation = `${color}-${changeIntensity} ${this.props.animationDuration}ms`
             } else {
                 styleObject.animation = `${resultClass} ${this.props.animationDuration}ms`;
@@ -129,14 +145,14 @@ class TableContainer extends Component {
         return classes.join(' ');
     }
 
-    getTotalText (result, change, areRoundsConsecutive) {
+    getTotalText (result, change) {
         if (this.state.currentRound === 0) {
             return result.total;
         }
 
-        const shouldAnimateChange =  this.state.isMoving && (this.props.showChangeDuringAnimation || !areRoundsConsecutive);
+        const shouldAnimateChange =  this.state.isMoving && (this.props.showChangeDuringAnimation || !this.state.areRoundsConsecutive);
         if (shouldAnimateChange) {
-            return getPrintableNumber(change);
+            return getPrintableNumber(change, true);
         } else {
             switch (this.state.show) {
                 case 'round':
@@ -238,16 +254,14 @@ class TableContainer extends Component {
                         typeName='tbody' >
 
                         {[...this.props.results[this.state.currentRound].entries()]
-                            .filter(([item, result]) => !this.props['itemsToShow'] || this.props['itemsToShow'].includes(item))
                             .map(([item, result]) => {
-                                const areRoundsConsecutive = this.state.previousRound === undefined || Math.abs(this.state.previousRound - this.state.currentRound) === 1;
-                                const change = areRoundsConsecutive
+                                const change = this.state.areRoundsConsecutive
                                     ? result.change
                                     : result.total - this.props.results[this.state.previousRound].get(item).total;
 
                                 return (
                                     <tr key={item}
-                                        style={this.getRowStyle.bind(this)(result, change, areRoundsConsecutive)}
+                                        style={this.getRowStyle.bind(this)(result, change)}
                                         className={this.getRowClasses.bind(this)(item, result)}
                                         onClick={() => this.highlightRow(item)}>
 
@@ -259,7 +273,7 @@ class TableContainer extends Component {
                                         {this.props.extraColumnsNames.map(name =>
                                             <td key={name} className="extras">{result.extras[name]}</td>
                                         )}
-                                        <td className="total">{this.getTotalText.bind(this)(result, change, areRoundsConsecutive)}</td>
+                                        <td className="total">{this.getTotalText.bind(this)(result, change)}</td>
                                     </tr>
                                 );
                             })}
