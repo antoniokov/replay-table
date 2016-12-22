@@ -113,7 +113,7 @@
     width: 1.6rem;
     height: 2rem;
     border: none;
-    background: url("../img/replay.png") no-repeat 0 0 / cover;
+    background: url("https://s3-us-west-2.amazonaws.com/replay-table/images/replay.png") no-repeat 0 0 / cover;
     opacity: 0.5;
     margin-right: 1.5rem
 }
