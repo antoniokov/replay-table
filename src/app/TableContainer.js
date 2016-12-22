@@ -27,7 +27,7 @@ class TableContainer extends Component {
             return {
                 maxAbsChange: Math.max(Math.abs(change), currentStats.maxAbsChange),
                 maxAbsResultChange: Math.max(Math.abs(result.change), currentStats.maxAbsResultChange),
-                allChangesMapped: currentStats.allChangesMapped && this.props.resultMapping[result.change]
+                allChangesMapped: currentStats.allChangesMapped && (this.props.resultMapping[result.change] || result.change === null)
             }
         }, { maxAbsChange: 0, maxAbsResultChange: 0, allChangesMapped: true });
     }
