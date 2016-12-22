@@ -28,7 +28,7 @@ Transforms a csv file with season results into interactive standings:
     <head>
         ...
         <script type="text/javascript" src="//cdn.jsdelivr.net/replay-table/latest/replay-table.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="cdn.jsdelivr.net/replay-table/latest/replay-table.css">
+        <link rel="stylesheet" type="text/css" link href="cdn.jsdelivr.net/replay-table/latest/replay-table.css">
     </head>
     ```
 
