@@ -49,6 +49,7 @@ body {
     margin: 0;
     padding: 5rem 10%;
     font-size: 1.4rem;
+    min-width: 980px;
     font-family: 'helvetica', 'arial', sans-serif;
 }
 
