@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="../favicon.png">
-    <title>Premier League Replay</title>
+    <title>F1 Replay</title>
 
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/replay-table/latest/replay-table.css">
@@ -28,21 +28,13 @@
   </head>
   <body>
 
-
-    <div class="two-side-content">
-        <div class="side">
-            <div class="replayTable"
-                 data-csv="https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv"
-                 data-input-type="listOfMatches"
-                 data-item-name="Team"
-                 data-use-rounds-numbers="true"
-                 data-table-name="Premier League">
-            </div>
-            <script type="text/javascript" src="https://cdn.jsdelivr.net/replay-table/latest/replay-table.min.js"></script>
-        </div>
-        <div class="side">
-        </div>
+    <div class="replayTable"
+         data-csv="https://s3-us-west-2.amazonaws.com/replay-table/csv/f1/drivers/2015-2016.csv"
+         data-table-name="F1"
+         data-preset="F1"
+         data-extra-columns-number="1">
     </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/replay-table/latest/replay-table.min.js"></script>
 
   </body>
 </html>

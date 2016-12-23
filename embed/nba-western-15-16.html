@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="../favicon.png">
+    <title>NBA Replay</title>
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/replay-table/latest/replay-table.css">
+
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-88563330-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+      <style>
+          body {
+              padding: 0px;
+              margin: 0px;
+          }
+      </style>
+  </head>
+  <body>
+
+    <div class="replayTable"
+         data-csv="https://s3-us-west-2.amazonaws.com/replay-table/csv/basketball/nba/regular/2015-2016.csv"
+         data-table-name="NBA"
+         data-preset="WinsLosses"
+         data-start-round-name="Start"
+         data-items-to-show="Golden State Warriors,San Antonio Spurs,Oklahoma City Thunder,Los Angeles Clippers,Portland Trail Blazers,Dallas Mavericks,Memphis Grizzlies,Houston Rockets,Utah Jazz,Sacramento Kings,Denver Nuggets,New Orleans Pelicans,Minnesota Timberwolves,Phoenix Suns,Los Angeles Lakers">
+    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/replay-table/latest/replay-table.min.js"></script>
+
+  </body>
+</html>
