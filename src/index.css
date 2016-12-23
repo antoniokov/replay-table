@@ -61,12 +61,12 @@ h2{
     margin-bottom: 5rem;
     color: #5c328a;
 }
-a{
+p a{
     color: #2daae2;
     text-decoration: none;
     border-bottom: 1px solid transparent;
 }
-a:hover{
+p a:hover{
     border-bottom-color: #2daae2;
 }
 
@@ -295,6 +295,26 @@ a:hover{
     padding-left: 6rem;
     width: 50%;
 }
+
+.examples .side p{
+    margin: 0 0 3rem 0;
+}
+.examples h4.side-head{
+    font-size: 1.6rem;
+    font-family: 'Roboto';
+    margin-bottom: 2rem;
+}
+
+.examples textarea{
+    border: 1px solid #bababa;
+    border-radius: 0.4rem;
+    padding: 3rem 4rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    height: 5rem;
+    resize: none;
+}
+
 .examples code{
     display: block;
     padding: 3rem 4rem;

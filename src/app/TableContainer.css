@@ -135,7 +135,9 @@
     top: -7px;
 }
 
-.replay-table-wrap .replay:hover:before,
+.replay-table-wrap .replay:hover:before{
+    border-right-color: #a7a7a7;
+}
 .replay-table-wrap .replay:hover{
     border-color: #a7a7a7;
     /*opacity: 0.7;*/
