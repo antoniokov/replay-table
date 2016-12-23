@@ -49,7 +49,7 @@ body {
     margin: 0;
     padding: 5rem 10%;
     font-size: 1.4rem;
-    min-width: 980px;
+    min-width: 1200px;
     font-family: 'helvetica', 'arial', sans-serif;
 }
 
@@ -286,6 +286,7 @@ p a:hover{
 .examples .side{
     /*float: left;*/
     display: table-cell;
+    vertical-align: top;
 }
 .examples .side:first-of-type{
     padding-right: 6rem;
@@ -307,9 +308,9 @@ p a:hover{
 
 .examples textarea{
     border: 1px solid #bababa;
-    border-radius: 0.4rem;
-    padding: 3rem 4rem;
-    font-size: 1.4rem;
+    border-radius: .4rem;
+    padding: 2rem 4rem 1rem;
+    font-size: 1.2rem;
     line-height: 2rem;
     height: 5rem;
     resize: none;
@@ -317,9 +318,9 @@ p a:hover{
 
 .examples code{
     display: block;
-    padding: 3rem 4rem;
+    padding: 2rem 4rem;
     background:  rgba(92,50,138,0.05);
-    margin-bottom: 4rem;
+    margin-bottom: 1.5rem;
     font-size: 1.6rem;
     line-height: 1.6;
     height: calc(100% - 5rem);
