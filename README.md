@@ -194,7 +194,7 @@ This is for the [intellectual game](https://en.wikipedia.org/wiki/What%3F_Where%
 | [`itemName`](#itemname) | `Команда` |
 | [`totalName`](#totalname) | `Взято` |
 | [`positionWhenTied`](#positionWhenTied) | `range` |
-| [`resultMapping`](#resultmapping) | `{ 1: 'win' }` |
+| [`resultMapping`](#resultmapping) | `{ 1: 'win', 0: ' ' }` |
 
 Watch the [2016 World Championship demo](https://targetprocess.github.io/replayTable/#chgk).
 

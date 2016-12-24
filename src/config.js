@@ -184,7 +184,8 @@ export const presets = {
         totalName: 'Взято',
         positionWhenTied: 'range',
         resultMapping: {
-            1: 'win'
+            1: 'win',
+            0: ' '
         }
     }
 };
