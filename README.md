@@ -300,16 +300,23 @@ Sometimes you don't want to include all items that appear in results in Replay t
 ### `resultMapping`
 | Div attribute | Accepted type | Default value | Examples |
 |---------------|---------------|---------------|----------|
-| `data-result-mapping` |  `Object` with points as keys and result as value | `{ 3: 'win', 1: 'draw', 0: 'loss' }` | `{ 1: 'win', 0: 'loss' }` |
+| `data-result-mapping` |  `Object` with points as keys and result as values | `{ 3: 'win', 1: 'draw', 0: 'loss' }` | `{ 1: 'win', 0: 'loss' }` |
 
 Maps a change in points to a `win`, `draw` or `loss`. Makes sense for the [`pointsTable`](#[points-table) input type.
 
 ### `extraColumnsNumber`
-| Div attribute | Accepted type | Default value | Examples | Compatible input types |
+| Div attribute | Available options | Default value | Examples | Compatible input types |
 |---------------|---------------|---------------|----------|------------------------|
 | `data-extra-columns-number` |  `Number` | `0` | `1`, `2` | [`pointsTable`](#points-table)
 
-Number of [extra columns)[#extra-columns] with info about items located between items and results.
+Number of [extra columns](#extra-columns) with info about items located between items and results.
+
+### `calculatedColumns`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-calculated-columns` |  `Object` with metrics as keys and terms as values | `{}` | `{ 'rounds': 'G', 'wins': 'W', 'losses': 'L' }` |
+
+Calculates additional stats about items' perfomance. Available metrics are `rounds`, `wins`, `draws` and `losses`.
 
 ### `useRoundsNumbers`
 | Div attribute | Accepted type | Default value | Examples |
