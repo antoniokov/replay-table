@@ -46,7 +46,7 @@ class App extends Component {
               if (config[key].validate(value)) {
                   configObject[key] = value;
               } else {
-                  console.log(`Sorry, we cannot accept ${props[key]} as ${key}. Moving on with the default value which is ${configObject[key]}`);
+                  console.log(`Sorry, we cannot accept ${props[key]} as ${key}. Moving on with the default value which is ${JSON.stringify(configObject[key])}`);
               }
           });
 

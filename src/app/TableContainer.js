@@ -228,7 +228,10 @@ class TableContainer extends Component {
 
                     {!this.props.showProgressBar ? null :
                     <div className="replay-table-progress-wrap">
-                         <progress className="replay-table-progress" value={this.state.currentRound} max={this.props.roundsNames.length - 1} />
+                         <progress
+                             className="replay-table-progress"
+                             value={this.state.currentRound}
+                             max={this.props.roundsTotalNumber || this.props.roundsNames.length - 1} />
                     </div>
                     }
 

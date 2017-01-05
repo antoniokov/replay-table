@@ -221,6 +221,7 @@ It is possible to use this options together with a [preset](#presets): in this c
   * [extraColumnsNumber](#extracolumnsnumber)
   * [calculatedColumns](#calculatedcolumns)
   * [useRoundsNumbers](#useroundsnumbers)
+  * [roundsTotalNumber](#roundstotalnumber)
   * [positionWhenTied](#positionWhenTied)
   * [tableName](#tablename)
 * [Playback](#playback)
@@ -326,6 +327,15 @@ Calculates additional stats about items' perfomance. Available metrics are `roun
 If set to `true` ignores rounds' names and uses numbers.
 
 It is useful when you have [list Of matches](#list-of-matches) where rows are dates but you don't care that teams didn't play their Nth game simultaneously.
+
+### `roundsTotalNumber`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-rounds-total-number` |  `Number` | `undefined` | `38`, `40` |
+
+Helps to determine the correct value of the progress bar if season is not over yet.
+
+When set to `undefined` counts the number of rounds with at least one result.
 
 ### `positionWhenTied`
 | Div attribute | Available options | Default value |

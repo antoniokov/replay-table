@@ -67,6 +67,17 @@ function transformMatchesList(jsonList, params) {
         return rowResults;
     });
 
+
+    itemsNames.forEach(name => {
+        const stats = itemsCurrentStats.get(name);
+        for (let round = stats.rounds; round < roundsResults.length; round++) {
+            const newStats = Object.assign({}, stats);
+            newStats.rounds = round;
+            newStats.change = null;
+            roundsResults[round].set(name, Object.assign({}, newStats));
+        }
+    });
+
     const results = params['useRoundsNumbers'] ? roundsResults : rowsResults;
 
     if (params['startRoundName']) {

@@ -83,7 +83,10 @@ export const config = {
     calculatedColumns: {
         default: {},
         parse: input => parseObject(input),
-        validate: obj => validateObject(obj, key => ['rounds', 'wins', 'losses', 'draws'].includes(key), value => isString(value))
+        validate: obj => {
+            console.log(obj);
+            return validateObject(obj, key => ['rounds', 'wins', 'losses', 'draws'].includes(key), value => isString(value))
+        }
     },
 
     useRoundsNumbers: {
@@ -91,6 +94,12 @@ export const config = {
         parse: input => input === 'true',
         validate: value => typeof value === 'boolean',
         goesToTransform: true
+    },
+
+    roundsTotalNumber: {
+        default: undefined,
+        parse: input => Number.parseInt(input, 10),
+        validate: value => value === undefined || !Number.isNaN(value),
     },
 
     //tieBreaking!
