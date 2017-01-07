@@ -12,6 +12,7 @@ class TableContainer extends Component {
             currentRound: this.props.startFromRound,
             previousRound: null,
             isPlaying: false,
+            isMoving: false,
             focusedItems: this.props.focusedItems ? new Set([...this.props.focusedItems]) : new Set(),
             mode: 'season'
         }, changes);
@@ -41,22 +42,6 @@ class TableContainer extends Component {
         });
     }
 
-    handlePlayButton () {
-        if (this.state.isPlaying) {
-            this.setState({ isPlaying: false });
-        } else {
-            this.setState({ isPlaying: true, mode: 'season' }, () => {
-                if (this.state.currentRound === this.props.lastRound) {
-                    const timeout = this.props.showChangeDuringAnimation ? this.props.animationDuration*2 : this.props.animationDuration;
-                    Promise.resolve(this.goToRound(0))
-                        .then(() => setTimeout(this.play.bind(this), timeout))
-                } else {
-                    this.play.bind(this)()
-                }
-            });
-        }
-    }
-
     play () {
         if (this.state.currentRound >= this.props.lastRound) {
             this.setState({ isPlaying: false });
@@ -78,6 +63,32 @@ class TableContainer extends Component {
             newFocusedItems.add(item);
         }
         this.setState({ focusedItems: newFocusedItems });
+    }
+
+    handlePlayButton () {
+        if (this.state.isPlaying) {
+            this.setState({ isPlaying: false });
+        } else {
+            this.setState({ isPlaying: true, mode: 'season' }, () => {
+                if (this.state.currentRound === this.props.lastRound) {
+                    const timeout = this.props.showChangeDuringAnimation ? this.props.animationDuration*2 : this.props.animationDuration;
+                    Promise.resolve(this.goToRound(0))
+                        .then(() => setTimeout(this.play.bind(this), timeout))
+                } else {
+                    this.play.bind(this)()
+                }
+            });
+        }
+    }
+
+    handleSelect (option) {
+        switch (this.state.mode) {
+            case 'item':
+                this.setState({ currentItem: option });
+                break;
+            default:
+                this.goToRound(Number.parseInt(option, 10));
+        }
     }
 
     renderTable () {
@@ -116,6 +127,7 @@ class TableContainer extends Component {
 
                     goToRound={this.goToRound.bind(this)}
                     handlePlayButton={this.handlePlayButton.bind(this)}
+                    handleSelect={this.handleSelect.bind(this)}
                     isPlaying={this.state.isPlaying}
 
                     mode={this.state.mode}

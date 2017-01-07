@@ -51,7 +51,7 @@ function ControlPanel (props) {
 
                 <select
                     className="replay-table-select"
-                    onChange={event => props.goToRound(Number.parseInt(event.target.value, 10))}
+                    onChange={event => props.handleSelect(event.target.value)}
                     value={props.currentRound} >
                     
                     {props.roundsNames.map((name, i) =>

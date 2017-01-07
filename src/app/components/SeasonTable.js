@@ -29,11 +29,7 @@ function getRowStyle (isMoving, styleParams, result, change, maxAbsChange, round
     return styleObject;
 }
 
-function getTotalText (currentRound, mode, shouldAnimateChange, change, roundChange, total) {
-    if (currentRound === 0) {
-        return getPrintableNumber(total);
-    }
-
+function getTotalText (mode, shouldAnimateChange, change, roundChange, total) {
     if (shouldAnimateChange) {
         return getPrintableNumber(change, true);
     } else {
@@ -53,7 +49,7 @@ function SeasonTable (props) {
     const styleParams = {
         customStyleNeeded: props.mode === 'round' && !allResultsMapped,
         customAnimationNeeded: props.isMoving && (!props.areRoundsConsecutive || !allResultsMapped),
-        shouldAnimateChange:  props.isMoving && (props.showChangeDuringAnimation || props.areRoundsConsecutive),
+        shouldAnimateChange:  props.isMoving && (props.showChangeDuringAnimation || !props.areRoundsConsecutive),
         animationDuration: props.animationDuration
     };
 
@@ -103,8 +99,8 @@ function SeasonTable (props) {
                                 {props.extraColumnsNames.map(name =>
                                     <td key={name} className="extras">{result.extras[name]}</td>
                                 )}
-                                <td className="total">{getTotalText(props.currentRound, props.mode,
-                                    styleParams.shouldAnimateChange, props.changes.get(item), result.change, result.total)}</td>
+                                <td className="total">{getTotalText(props.mode, styleParams.shouldAnimateChange,
+                                    props.changes.get(item), result.change, result.total)}</td>
                             </tr>
                         );
                     })}

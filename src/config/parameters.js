@@ -18,8 +18,8 @@ export const parameters = {
         validate: value => isString(value)
     },
 
-    matchName: {
-        default: 'Match',
+    matchesName: {
+        default: 'Matches',
         validate: value => isString(value)
     },
 
@@ -125,7 +125,7 @@ export const parameters = {
     modes: {
         default: undefined,
         parse: input => input.split(','),
-        validate: value => Array.isArray(value) && value.length > 0 && value.every(item => ['season', 'round', 'match', 'item'].includes(item))
+        validate: value => Array.isArray(value) && value.length > 0 && value.every(item => ['season', 'round', 'matches', 'item'].includes(item))
     },
 
     startFromRound: {
