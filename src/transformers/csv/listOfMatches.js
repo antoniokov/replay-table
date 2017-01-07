@@ -1,17 +1,29 @@
 import flipObject from '../../auxiliary/flipObject';
+import flipMatchResults from '../auxiliary/flipMatchResults';
+import getResultName from '../auxiliary/getResultName';
+import pluralizeResultName from '../auxiliary/pluralizeResultName';
+import getPrintableNumber from '../../auxiliary/getPrintableNumber';
 import getRoundsNames from '../auxiliary/getRoundsNames';
-import pluralizeResult from '../auxiliary/pluralizeResult';
 import calculateTotal from '../auxiliary/calculateTotal';
 
-function getResult(score, opponentScore) {
-    if (score > opponentScore) {
-        return 'win';
-    } else if (score < opponentScore) {
-        return 'loss'
-    } else if (score === opponentScore) {
-        return 'draw'
-    }
-}
+
+const initialStats = {
+    change: null,
+    result: null,
+    total: 0,
+
+    rounds: 0,
+    wins: 0,
+    losses: 0,
+    draws: 0,
+
+    goalsFor: 0,
+    goalsAgainst: 0,
+    goalsDifference: 0,
+
+    match: null
+};
+
 
 function transformMatchesList(jsonList, params) {
     const resultChange = flipObject(params['resultMapping']);
@@ -21,7 +33,6 @@ function transformMatchesList(jsonList, params) {
     const itemsNames = [...new Set([...matches.map(match => match[1]), ...matches.map(match => match[3])])];
 
     const itemsCurrentStats = new Map();
-    const initialStats = { change: null, total: 0, rounds: 0, wins: 0, losses: 0, draws: 0 };
     itemsNames.forEach(name => itemsCurrentStats.set(name, Object.assign({}, initialStats)));
 
     const roundsResults = [];
@@ -29,31 +40,37 @@ function transformMatchesList(jsonList, params) {
         const rowResults = new Map();
         matches.filter(match => match[0] === round)
             .forEach(match => {
-                const homeItem = {
+                const homeTeamResult = {
                     name: match[1],
-                    score: Number.parseInt(match[2], 10)
-                };
-                const awayItem = {
-                    name: match[3],
-                    score: Number.parseInt(match[4], 10)
+                    match: {
+                        location: 'home',
+                        score: Number.parseInt(match[2], 10),
+                        opponent: match[3],
+                        opponentScore: Number.parseInt(match[4], 10)
+                    }
                 };
 
-                homeItem.result = getResult(homeItem.score, awayItem.score);
-                awayItem.result = getResult(awayItem.score, homeItem.score);
+                [homeTeamResult, flipMatchResults(homeTeamResult)].forEach(teamResult => {
+                    const stats = itemsCurrentStats.get(teamResult.name);
 
-                [homeItem, awayItem].forEach(item => {
-                    const stats = itemsCurrentStats.get(item.name);
                     stats.rounds++;
-                    stats[pluralizeResult(item.result)]++;
-                    stats.change = resultChange[item.result];
+                    stats.result = getResultName(teamResult.match.score, teamResult.match.opponentScore);
+                    stats[pluralizeResultName(stats.result)]++;
+                    stats.change = resultChange[stats.result];
                     stats.total = calculateTotal(params['totalValue'], stats);
+
+                    stats.goalsFor += teamResult.match.score;
+                    stats.goalsAgainst += teamResult.match.opponentScore;
+                    stats.goalsDifference = getPrintableNumber(stats.goalsFor - stats.goalsAgainst, true);
+
+                    stats.match = teamResult.match;
+
+                    rowResults.set(teamResult.name, Object.assign({}, stats));
 
                     if (stats.rounds - 1 >= roundsResults.length) {
                         roundsResults.push(new Map());
                     }
-
-                    rowResults.set(item.name, Object.assign({}, stats));
-                    roundsResults[stats.rounds - 1].set(item.name, Object.assign({}, stats));
+                    roundsResults[stats.rounds - 1].set(teamResult.name, Object.assign({}, stats));
                 });
             });
         itemsNames.filter(name => !rowResults.has(name))

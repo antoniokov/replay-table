@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { parse } from 'babyparse'
-import { config, presets } from './config';
+import { parameters } from './config/parameters';
+import { presets } from './config/presets';
 import toCamelCase from './auxiliary/toCamelCase'
 import { transform } from './transformers/transform';
 import TableContainer from './app/TableContainer';
@@ -24,7 +25,7 @@ class App extends Component {
 
   getConfig (props) {
       const configObject = {};
-      Object.keys(config).forEach(key => configObject[key] = config[key].default);
+      Object.keys(parameters).forEach(key => configObject[key] = parameters[key].default);
 
       if (props.preset) {
           if (presets.hasOwnProperty(props.preset)) {
@@ -35,15 +36,15 @@ class App extends Component {
       }
 
       Object.keys(props)
-          .filter(key => !['csv', 'preset', 'style', 'config'].includes(key))
+          .filter(key => !['csv', 'preset', 'style', 'parameters'].includes(key))
           .map(key => toCamelCase(key))
           .forEach(key => {
-              if (!config.hasOwnProperty(key)) {
+              if (!parameters.hasOwnProperty(key)) {
                   return console.log(`Sorry, there is no ${key} parameter available. Ignoring it and moving on.`);
               }
 
-              const value = config[key].hasOwnProperty('parse') ? config[key].parse(props[key]) : props[key];
-              if (config[key].validate(value)) {
+              const value = parameters[key].hasOwnProperty('parse') ? parameters[key].parse(props[key]) : props[key];
+              if (parameters[key].validate(value)) {
                   configObject[key] = value;
               } else {
                   console.log(`Sorry, we cannot accept ${props[key]} as ${key}. Moving on with the default value which is ${JSON.stringify(configObject[key])}`);
@@ -93,8 +94,8 @@ class App extends Component {
                   return;
               }
 
-              const params = Object.keys(config)
-                  .filter(key => config[key].goesToTransform)
+              const params = Object.keys(parameters)
+                  .filter(key => parameters[key].goesToTransform)
                   .reduce((obj, key) => Object.assign(obj, { [key]: this.state[key] }), {});
 
               const transformedResult = transform(this.state['inputType'], result.data, params );

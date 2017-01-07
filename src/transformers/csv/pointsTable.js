@@ -1,7 +1,19 @@
 import transpose from '../../auxiliary/transpose';
 import getRoundsNames from '../auxiliary/getRoundsNames';
-import pluralizeResult from '../auxiliary/pluralizeResult';
+import pluralizeResultName from '../auxiliary/pluralizeResultName';
 import calculateTotal from '../auxiliary/calculateTotal';
+
+
+const initialStats = {
+    change: null,
+    result: null,
+    total: 0,
+
+    rounds: 0,
+    wins: 0,
+    losses: 0,
+    draws: 0
+};
 
 
 function addExtras (results, extraColumnsNames, extraColumns) {
@@ -24,7 +36,6 @@ function transformChangesTable(jsonTable, params) {
     const changes = transposed.slice(offset);
 
     const itemsStats = new Map();
-    const initialStats = { change: null, total: 0, rounds: 0, wins: 0, losses: 0, draws: 0 };
     itemsNames.forEach(name => itemsStats.set(name, Object.assign({}, initialStats)));
 
     const results = changes.map(resultRow => {
@@ -40,7 +51,7 @@ function transformChangesTable(jsonTable, params) {
 
             const result = params['resultMapping'][stats.change];
             if (result) {
-                stats[pluralizeResult(result)]++;
+                stats[pluralizeResultName(result)]++;
             }
 
             stats.total = calculateTotal(params['totalValue'], stats);

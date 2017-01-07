@@ -1,11 +1,11 @@
-import { transformers } from './transformers/transform';
-import isString from './auxiliary/isString';
-import parseObject from './auxiliary/parseObject';
-import validateObject from './auxiliary/validateObject';
+import { transformers } from '../transformers/transform';
+import isString from '../auxiliary/isString';
+import parseObject from '../auxiliary/parseObject';
+import validateObject from '../auxiliary/validateObject';
 
 
 //https://github.com/TargetProcess/replayTable#parameters
-export const config = {
+export const parameters = {
     //Terms
 
     seasonName: {
@@ -14,7 +14,7 @@ export const config = {
     },
 
     roundName: {
-        default: 'Game',
+        default: 'Round',
         validate: value => isString(value)
     },
 
@@ -83,10 +83,8 @@ export const config = {
     calculatedColumns: {
         default: {},
         parse: input => parseObject(input),
-        validate: obj => {
-            console.log(obj);
-            return validateObject(obj, key => ['rounds', 'wins', 'losses', 'draws'].includes(key), value => isString(value))
-        }
+        validate: obj => validateObject(obj, key => ['rounds', 'wins', 'losses', 'draws',
+                'goalsFor', 'goalsAgainst', 'goalsDifference'].includes(key), value => isString(value))
     },
 
     useRoundsNumbers: {
@@ -156,45 +154,5 @@ export const config = {
         default: [],
         parse: input => input.split(','),
         validate: value => Array.isArray(value) && value.every(item => isString(item))
-    }
-};
-
-//https://github.com/TargetProcess/replayTable#presets
-export const presets = {
-    "WinsLosses": {
-        inputType: 'listOfMatches',
-        itemName: 'Team',
-        totalName: 'Win %',
-        totalValue: 'win %',
-        resultMapping: {
-            1: 'win',
-            0: 'loss'
-        },
-        calculatedColumns: {
-            'rounds': 'G',
-            'wins': 'W',
-            'losses': 'L'
-        }
-    },
-
-    "F1": {
-        roundName: 'Race',
-        itemName: 'Driver',
-        startRoundName: 'Start →',
-        resultMapping: {
-            25: 'win'
-        }
-    },
-
-    "ЧГК": {
-        seasonName: 'Турнир',
-        roundName: 'Вопрос',
-        itemName: 'Команда',
-        totalName: 'Взято',
-        positionWhenTied: 'range',
-        resultMapping: {
-            1: 'win',
-            0: ' '
-        }
     }
 };
