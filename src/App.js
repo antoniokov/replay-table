@@ -53,11 +53,8 @@ class App extends Component {
           });
 
       const inputModes = inputs[configObject['inputType']]['modes'];
-      if (configObject['modes']) {
-          configObject['modes'] = configObject['modes'].filter(mode => inputModes.includes(mode));
-      } else {
-          configObject['modes'] = inputModes;
-      }
+      const modes = configObject['modes'] ? configObject['modes'].filter(mode => inputModes.includes(mode)) : inputModes;
+      configObject['modes'] = modes.map(mode => ({ value: mode, label: configObject[mode + 'Name'] }));
 
       return configObject;
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FlipMove from 'react-flip-move';
 import getPrintableNumber from '../auxiliary/getPrintableNumber';
+import ControlPanel from './components/ControlPanel';
 import './TableContainer.css';
 
 
@@ -27,7 +28,7 @@ class TableContainer extends Component {
             return {
                 maxAbsChange: Math.max(Math.abs(change), currentStats.maxAbsChange),
                 maxAbsResultChange: Math.max(Math.abs(result.change), currentStats.maxAbsResultChange),
-                allChangesMapped: currentStats.allChangesMapped && (result.result || result.change === null)
+                allChangesMapped: currentStats.allChangesMapped && (!!result.result || result.change === null)
             }
         }, { maxAbsChange: 0, maxAbsResultChange: 0, allChangesMapped: true });
     }
@@ -46,19 +47,6 @@ class TableContainer extends Component {
         });
     }
 
-    play () {
-        if (this.state.currentRound >= this.props.lastRound) {
-            this.setState({ isPlaying: false });
-            return;
-        }
-
-        if (this.state.isPlaying) {
-            const timeout = this.props.showChangeDuringAnimation ? this.props.animationDuration*2 : this.props.animationDuration;
-            Promise.resolve(this.goToRound(this.state.currentRound + 1))
-                .then(() => setTimeout(this.play.bind(this), timeout));
-        }
-    }
-
     handlePlayButton () {
         if (this.state.isPlaying) {
             this.setState({ isPlaying: false });
@@ -75,21 +63,19 @@ class TableContainer extends Component {
         }
     }
 
-    handlePreviousButton () {
-        if(this.state.currentRound > 0) {
-            this.goToRound(this.state.currentRound - 1)
+    play () {
+        if (this.state.currentRound >= this.props.lastRound) {
+            this.setState({ isPlaying: false });
+            return;
+        }
+
+        if (this.state.isPlaying) {
+            const timeout = this.props.showChangeDuringAnimation ? this.props.animationDuration*2 : this.props.animationDuration;
+            Promise.resolve(this.goToRound(this.state.currentRound + 1))
+                .then(() => setTimeout(this.play.bind(this), timeout));
         }
     }
 
-    handleNextButton () {
-        if(this.state.currentRound < this.props.lastRound) {
-            this.goToRound(this.state.currentRound + 1);
-        }
-    }
-
-    handleSelect (e) {
-        this.goToRound(Number.parseInt(e.target.value, 10));
-    }
 
     highlightRow (item) {
         const newFocusedItems = this.state.focusedItems;
@@ -167,72 +153,22 @@ class TableContainer extends Component {
     render() {
         return (
             <div className="replay-table-wrap">
+                <ControlPanel
+                    currentRound={this.state.currentRound}
+                    lastRound={this.props.lastRound}
+                    roundsNames={this.props.roundsNames}
+                    roundsTotalNumber={this.props.roundsTotalNumber}
 
-                <div className="replay-table-controls">
+                    goToRound={this.goToRound.bind(this)}
+                    handlePlayButton={this.handlePlayButton.bind(this)}
+                    isPlaying={this.state.isPlaying}
 
-                    {this.props.modes.length <= 1 ? null :
-                    <div className="replay-table-check">
-                        {this.props.modes.map(mode => {
-                            return(
-                                <div key={mode} className="replay-table-mode-option">
-                                    <input type="radio"
-                                           id={`${this.props.tableName || ''}-${mode}-radio`}
-                                           name={`${this.props.tableName || ''}-mode-switch`}
-                                           value={mode}
-                                           checked={this.state.mode === mode}
-                                           onChange={() => this.setState({mode: mode})}/>
+                    mode={this.state.mode}
+                    modes={this.props.modes}
+                    switchMode={mode => this.setState({ mode: mode })}
 
-                                    <label htmlFor={`${this.props.tableName || ''}-${mode}-radio`}>
-                                        {this.props[mode + 'Name']}
-                                    </label>
-                                </div>
-                            );
-                        })}
-
-                    </div>
-                    }
-
-
-                    <div className="replay-table-controls-left">
-
-                        <div className="replay-table-start-control">
-                            <div
-                                className={this.state.isPlaying
-                            ? 'pause'
-                            : this.state.currentRound === this.props.lastRound ? 'replay' : 'play'}
-                                onClick={this.handlePlayButton.bind(this)} />
-                        </div>
-
-                        <div
-                            className={`previous ${this.state.currentRound === 0? 'disabled' : ''}`}
-                            onClick={this.handlePreviousButton.bind(this)}>
-                            &lt;
-                        </div>
-
-                        <div
-                            className={`next ${this.state.currentRound === this.props.lastRound? 'disabled' : ''}`}
-                            onClick={this.handleNextButton.bind(this)}>
-                            &gt;
-                        </div>
-
-                        <select className="replay-table-select" onChange={this.handleSelect.bind(this)} value={this.state.currentRound}>
-                            {this.props.roundsNames.map((name, i) =>
-                                <option key={i} value={i}>{name}</option>)}
-                        </select>
-
-                    </div>
-
-                    {!this.props.showProgressBar ? null :
-                    <div className="replay-table-progress-wrap">
-                         <progress
-                             className="replay-table-progress"
-                             value={this.state.currentRound}
-                             max={this.props.roundsTotalNumber || this.props.roundsNames.length - 1} />
-                    </div>
-                    }
-
-
-                </div>
+                    tableName={this.props.tableName}
+                    showProgressBar={this.props.showProgressBar} />
 
                 <table className="r-table">
                     <thead>
