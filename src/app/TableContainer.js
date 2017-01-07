@@ -14,7 +14,7 @@ class TableContainer extends Component {
             areRoundsConsecutive: true,
             isPlaying: false,
             focusedItems: this.props.focusedItems ? new Set([...this.props.focusedItems]) : new Set(),
-            show: 'season'
+            mode: 'season'
         }, changes);
     }
 
@@ -27,7 +27,7 @@ class TableContainer extends Component {
             return {
                 maxAbsChange: Math.max(Math.abs(change), currentStats.maxAbsChange),
                 maxAbsResultChange: Math.max(Math.abs(result.change), currentStats.maxAbsResultChange),
-                allChangesMapped: currentStats.allChangesMapped && (this.props.resultMapping[result.change] || result.change === null)
+                allChangesMapped: currentStats.allChangesMapped && (result.result || result.change === null)
             }
         }, { maxAbsChange: 0, maxAbsResultChange: 0, allChangesMapped: true });
     }
@@ -63,7 +63,7 @@ class TableContainer extends Component {
         if (this.state.isPlaying) {
             this.setState({ isPlaying: false });
         } else {
-            this.setState({ isPlaying: true, show: 'season' }, () => {
+            this.setState({ isPlaying: true, mode: 'season' }, () => {
                 if (this.state.currentRound === this.props.lastRound) {
                     const timeout = this.props.showChangeDuringAnimation ? this.props.animationDuration*2 : this.props.animationDuration;
                     Promise.resolve(this.goToRound(0))
@@ -103,9 +103,9 @@ class TableContainer extends Component {
 
     getRowStyle (result, change) {
         const styleObject = {};
-        const resultClass = this.props.resultMapping[result.change];
+        const resultClass = result.result;
 
-        const customStyleNeeded = this.state.show === 'round' && !this.state.allChangesMapped;
+        const customStyleNeeded = this.state.mode === 'round' && !this.state.allChangesMapped;
         const animationNeeded = this.state.isMoving && this.state.currentRound > 0;
         const customAnimationNeeded = animationNeeded && (!this.state.areRoundsConsecutive || !this.state.allChangesMapped);
 
@@ -134,8 +134,8 @@ class TableContainer extends Component {
 
     getRowClasses (item, result) {
         const classes = ['row'];
-        if (this.state.show === 'round' && this.props.resultMapping[result.change]) {
-            classes.push(this.props.resultMapping[result.change]);
+        if (this.state.mode === 'round' && result.result) {
+            classes.push(result.result);
         }
 
         if (this.state.focusedItems.size === 0 || this.state.focusedItems.has(item)) {
@@ -154,7 +154,7 @@ class TableContainer extends Component {
         if (shouldAnimateChange) {
             return getPrintableNumber(change, true);
         } else {
-            switch (this.state.show) {
+            switch (this.state.mode) {
                 case 'round':
                     return getPrintableNumber(result.change, true);
                 case 'season':
@@ -170,28 +170,24 @@ class TableContainer extends Component {
 
                 <div className="replay-table-controls">
 
-                    {!this.props.showModeSwitch ? null :
+                    {this.props.modes.length <= 1 ? null :
                     <div className="replay-table-check">
+                        {this.props.modes.map(mode => {
+                            return(
+                                <div key={mode} className="replay-table-mode-option">
+                                    <input type="radio"
+                                           id={`${this.props.tableName || ''}-${mode}-radio`}
+                                           name={`${this.props.tableName || ''}-mode-switch`}
+                                           value={mode}
+                                           checked={this.state.mode === mode}
+                                           onChange={() => this.setState({mode: mode})}/>
 
-                        <input type="radio"
-                               id={`${this.props.tableName || ''}-season-radio`}
-                               name={`${this.props.tableName || ''}seasonRoundSwitch`}
-                               value="season"
-                               checked={this.state.show === 'season'}
-                               onChange={() => this.setState({ show: 'season' })} />
-                        <label  htmlFor={`${this.props.tableName || ''}-season-radio`}>
-                            {this.props.seasonName}
-                        </label>
-
-                        <input type="radio"
-                               id={`${this.props.tableName || ''}-round-radio`}
-                               name={`${this.props.tableName || ''}seasonRoundSwitch`}
-                               value="round"
-                               checked={this.state.show === 'round'}
-                               onChange={() => this.setState({ show: 'round' })} />
-                        <label  htmlFor={`${this.props.tableName || ''}-round-radio`}>
-                            {this.props.roundName}
-                        </label>
+                                    <label htmlFor={`${this.props.tableName || ''}-${mode}-radio`}>
+                                        {this.props[mode + 'Name']}
+                                    </label>
+                                </div>
+                            );
+                        })}
 
                     </div>
                     }

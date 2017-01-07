@@ -49,9 +49,9 @@ function transformChangesTable(jsonTable, params) {
                 stats.rounds++;
             }
 
-            const result = params['resultMapping'][stats.change];
-            if (result) {
-                stats[pluralizeResultName(result)]++;
+            stats.result = params['resultMapping'][stats.change];
+            if (stats.result) {
+                stats[pluralizeResultName(stats.result)]++;
             }
 
             stats.total = calculateTotal(params['totalValue'], stats);

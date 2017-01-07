@@ -3,6 +3,7 @@ import 'whatwg-fetch';
 import { parse } from 'babyparse'
 import { parameters } from './config/parameters';
 import { presets } from './config/presets';
+import { inputs } from './config/inputs';
 import toCamelCase from './auxiliary/toCamelCase'
 import { transform } from './transformers/transform';
 import TableContainer from './app/TableContainer';
@@ -50,6 +51,13 @@ class App extends Component {
                   console.log(`Sorry, we cannot accept ${props[key]} as ${key}. Moving on with the default value which is ${JSON.stringify(configObject[key])}`);
               }
           });
+
+      const inputModes = inputs[configObject['inputType']]['modes'];
+      if (configObject['modes']) {
+          configObject['modes'] = configObject['modes'].filter(mode => inputModes.includes(mode));
+      } else {
+          configObject['modes'] = inputModes;
+      }
 
       return configObject;
   }

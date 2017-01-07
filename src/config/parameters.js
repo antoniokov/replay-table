@@ -18,10 +18,15 @@ export const parameters = {
         validate: value => isString(value)
     },
 
+    matchName: {
+        default: 'Match',
+        validate: value => isString(value)
+    },
+
     startRoundName: {
         default: '0',
         parse: input => input === "undefined" ? undefined : input,
-        validate: value => isString(value),
+        validate: value => !value || isString(value),
         goesToTransform: true
     },
 
@@ -31,7 +36,7 @@ export const parameters = {
     },
 
     itemName: {
-        default: undefined,
+        default: 'Team',
         parse: input => input === "undefined" ? undefined : input,
         validate: value => !value || isString(value)
     },
@@ -117,6 +122,12 @@ export const parameters = {
 
     //Playback
 
+    modes: {
+        default: undefined,
+        parse: input => input.split(','),
+        validate: value => Array.isArray(value) && value.length > 0 && value.every(item => ['season', 'round', 'match', 'item'].includes(item))
+    },
+
     startFromRound: {
         default: undefined,
         parse: input => input === "undefined" ? undefined : Number.parseInt(input, 10),
@@ -139,12 +150,6 @@ export const parameters = {
     //Appearance
 
     showProgressBar: {
-        default: true,
-        parse: input => input === "true",
-        validate: value => typeof value === 'boolean'
-    },
-
-    showModeSwitch: {
         default: true,
         parse: input => input === "true",
         validate: value => typeof value === 'boolean'
