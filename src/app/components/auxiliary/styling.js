@@ -22,3 +22,10 @@ export function getRowAnimation (change, maxAbsChange, animationDuration, isFadi
     const intensity = 100*calculateColorIntensity(change, maxAbsChange);
     return `replay-table-${color}${isFading ? '-fading' : ''}-${intensity} ${animationDuration}ms`;
 }
+
+export function getClassesString (classCandidates) {
+    return classCandidates
+        .filter(element => element.condition)
+        .map(element => element.class)
+        .join(' ');
+}

@@ -163,7 +163,7 @@ class TableContainer extends Component {
                                 positionName={this.props.positionName}
                                 totalName={this.props.totalName}
 
-                                results={this.props.resultsTable.map(round => [round.meta.name, round.results.get(currentItem)]).slice(1)}
+                                results={this.props.resultsTable.map(round => [round.meta, round.results.get(currentItem)]).slice(1)}
                                 selectRound={this.selectRound.bind(this)}/>
                         );
                 }

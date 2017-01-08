@@ -1,7 +1,7 @@
 import React from 'react';
 import FlipMove from 'react-flip-move';
 import getPrintableNumber from '../../auxiliary/getPrintableNumber';
-import { getRowColor, getRowAnimation } from './auxiliary/rowStyling';
+import { getRowColor, getRowAnimation, getClassesString } from './auxiliary/styling';
 
 
 function getTotalText (mode, shouldAnimateChange, change, roundChange, total) {
@@ -66,15 +66,10 @@ function SeasonTable (props) {
                             }
                         }
 
-                        const rowClasses = classCandidates
-                            .filter(element => element.condition)
-                            .map(element => element.class)
-                            .join(' ');
-
                         return (
                             <tr key={item}
                                 style={rowStyle}
-                                className={`row ${rowClasses}`}
+                                className={`row ${getClassesString(classCandidates)}`}
                                 onClick={() => props.selectItem(item)}>
 
                                 <td className="position">{result.position}</td>
