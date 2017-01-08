@@ -1,7 +1,7 @@
 import React from 'react';
 import FlipMove from 'react-flip-move';
 import getPrintableNumber from '../../auxiliary/getPrintableNumber';
-import getRowCustomStyle from './auxiliary/getRowCustomStyle';
+import { getRowColor, getRowAnimation } from './auxiliary/rowStyling';
 
 
 function getTotalText (mode, shouldAnimateChange, change, roundChange, total) {
@@ -44,31 +44,32 @@ function SeasonTable (props) {
                 {[...props.round.results.entries()]
                     .map(([item, result]) => {
                         const classCandidates = [
-                            { condition: props.mode === 'changes', class: result.result || '' },
                             { condition: props.isFocused(item), class: 'focus'}
                         ];
-                        const rowClasses = classCandidates
-                            .filter(element => element.condition)
-                            .map(element => element.class)
-                            .join(' ');
 
                         const rowStyle = {};
 
                         if (props.isMoving) {
                             if (props.round.meta.areAllResultsMapped && props.areRoundsConsecutive) {
-                                rowStyle.animation = `${result} ${props.animationDuration}ms`;
+                                rowStyle.animation = `replay-table-${result.result} ${props.animationDuration}ms`;
                             } else {
-                                const customStyle = getRowCustomStyle(props.changes.get(item), props.maxAbsChange, props.animationDuration);
-                                rowStyle.animation = customStyle.animation;
+                                const isFading = props.mode === 'season' || !props.areRoundsConsecutive;
+                                const change = props.areRoundsConsecutive ? result.change : props.changes.get(item);
+                                rowStyle.animation = getRowAnimation(change, props.maxAbsChange,
+                                    props.animationDuration, isFading);
                             }
-                        } else {
+                        } else if (props.mode === 'changes') {
                             if (props.round.meta.areAllResultsMapped) {
                                 classCandidates.push({ condition: true, class: result.result });
                             } else {
-                                const customStyle = getRowCustomStyle(result.change, props.round.meta.maxAbsChange, null);
-                                rowStyle.backgroundColor = customStyle.backgroundColor;
+                                rowStyle.backgroundColor = getRowColor(result.change, props.round.meta.maxAbsChange);
                             }
                         }
+
+                        const rowClasses = classCandidates
+                            .filter(element => element.condition)
+                            .map(element => element.class)
+                            .join(' ');
 
                         return (
                             <tr key={item}

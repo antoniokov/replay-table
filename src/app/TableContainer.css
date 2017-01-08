@@ -299,153 +299,258 @@ input[type="range"]:focus {
     /*border-bottom: 1px dashed lightgrey;*/
 /*}*/
 
-.win {
+.r-table .win {
     background-color: rgba(170,255,102,0.3);
 }
 
-.draw {
+.r-table .draw {
     background-color: rgba(0,0,0,0.05);
 }
 
-.loss {
+.r-table .loss {
     background-color: rgba(255,158,158,0.3);
 }
 
-@keyframes win {
+@keyframes replay-table-win {
     0% {background-color: transparent;}
     50% {background-color: rgba(170,255,102,0.3);}
     100% {background-color: transparent;}
 }
 
-@keyframes draw {
+@keyframes replay-table-draw {
     0% {background-color: transparent;}
     50% {background-color: rgba(0,0,0,0.05);}
     100% {background-color: transparent;}
 }
 
-@keyframes loss {
+@keyframes replay-table-loss {
     0% {background-color: transparent;}
     50% {background-color: rgba(255,158,158,0.3);}
     100% {background-color: transparent;}
 }
 
-@keyframes green-100 {
+
+
+@keyframes replay-table-green-fading-100 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,1);}
     100% {background-color: transparent;}
 }
 
-@keyframes green-90 {
+@keyframes replay-table-green-fading-90 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.9);}
     100% {background-color: transparent;}
 }
 
-@keyframes green-80 {
+@keyframes replay-table-green-fading-80 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.8);}
     100% {background-color: transparent;}
 }
 
-@keyframes green-70 {
+@keyframes replay-table-green-fading-70 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.7);}
     100% {background-color: transparent;}
 }
 
-@keyframes green-60 {
+@keyframes replay-table-green-fading-60 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.6);}
     100% {background-color: transparent;}
 }
 
-@keyframes green-50 {
+@keyframes replay-table-green-fading-50 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.5);}
     100% {background-color: transparent;}
 }
 
-@keyframes green-40 {
+@keyframes replay-table-green-fading-40 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.4);}
     100% {background-color: transparent;}
 }
 
-@keyframes green-30 {
+@keyframes replay-table-green-fading-30 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.3);}
     100% {background-color: transparent;}
 }
 
-@keyframes green-20 {
+@keyframes replay-table-green-fading-20 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.2);}
     100% {background-color: transparent;}
 }
 
-@keyframes green-10 {
+@keyframes replay-table-green-fading-10 {
     0% {background-color: transparent;}
     50% {background-color: rgba(94,179,26,0.1);}
     100% {background-color: transparent;}
 }
 
 
-@keyframes red-100 {
+@keyframes replay-table-green-100 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(94,179,26,1);}
+}
+
+@keyframes replay-table-green-90 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(94,179,26,0.9);}
+}
+
+@keyframes replay-table-green-80 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(94,179,26,0.8);}
+}
+
+@keyframes replay-table-green-70 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(94,179,26,0.7);}
+}
+
+@keyframes replay-table-green-60 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(94,179,26,0.6);}
+}
+
+@keyframes replay-table-green-50 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(94,179,26,0.5);}
+}
+
+@keyframes replay-table-green-40 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(94,179,26,0.4);}
+}
+
+@keyframes replay-table-green-30 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(94,179,26,0.3);}
+}
+
+@keyframes replay-table-green-20 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(94,179,26,0.2);}
+}
+
+@keyframes replay-table-green-10 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(94,179,26,0.1);}
+}
+
+
+
+@keyframes replay-table-red-fading-100 {
     0% {background-color: transparent;}
     50% {background-color: rgba(179,82,82,1);}
     100% {background-color: transparent;}
 }
 
-@keyframes red-90 {
+@keyframes replay-table-red-fading-90 {
     0% {background-color: transparent;}
     50% {background-color: rgba(179,82,82,0.9);}
     100% {background-color: transparent;}
 }
 
-@keyframes red-80 {
+@keyframes replay-table-red-fading-80 {
     0% {background-color: transparent;}
     50% {background-color: rgba(179,82,82,0.8);}
     100% {background-color: transparent;}
 }
 
-@keyframes red-70 {
+@keyframes replay-table-red-fading-70 {
     0% {background-color: transparent;}
     50% {background-color: rgba(179,82,82,0.7);}
     100% {background-color: transparent;}
 }
 
-@keyframes red-60 {
+@keyframes replay-table-red-fading-60 {
     0% {background-color: transparent;}
     50% {background-color: rgba(179,82,82,0.6);}
     100% {background-color: transparent;}
 }
 
-@keyframes red-50 {
+@keyframes replay-table-red-fading-50 {
     0% {background-color: transparent;}
     50% {background-color: rgba(179,82,82,0.5);}
     100% {background-color: transparent;}
 }
 
-@keyframes red-40 {
+@keyframes replay-table-red-fading-40 {
     0% {background-color: transparent;}
     50% {background-color: rgba(179,82,82,0.4);}
     100% {background-color: transparent;}
 }
 
-@keyframes red-30 {
+@keyframes replay-table-red-fading-30 {
     0% {background-color: transparent;}
     50% {background-color: rgba(179,82,82,0.3);}
     100% {background-color: transparent;}
 }
 
-@keyframes red-20 {
+@keyframes replay-table-red-fading-20 {
     0% {background-color: transparent;}
     50% {background-color: rgba(179,82,82,0.2);}
     100% {background-color: transparent;}
 }
 
-@keyframes red-10 {
+@keyframes replay-table-red-fading-10 {
     0% {background-color: transparent;}
     50% {background-color: rgba(179,82,82,0.1);}
     100% {background-color: transparent;}
+}
+
+
+@keyframes replay-table-red-100 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(179,82,82,1);}
+}
+
+@keyframes replay-table-red-90 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(179,82,82,0.9);}
+}
+
+@keyframes replay-table-red-80 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(179,82,82,0.8);}
+}
+
+@keyframes replay-table-red-70 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(179,82,82,0.7);}
+}
+
+@keyframes replay-table-red-60 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(179,82,82,0.6);}
+}
+
+@keyframes replay-table-red-50 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(179,82,82,0.5);}
+}
+
+@keyframes replay-table-red-40 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(179,82,82,0.4);}
+}
+
+@keyframes replay-table-red-30 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(179,82,82,0.3);}
+}
+
+@keyframes replay-table-red-20 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(179,82,82,0.2);}
+}
+
+@keyframes replay-table-red-10 {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(179,82,82,0.1);}
 }

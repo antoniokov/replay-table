@@ -22,7 +22,7 @@ function getMatch (item, match, locationFirst) {
 
 function Matches (props) {
     return (
-        <table className="replay-table-matches">
+        <table className="r-table">
             <tbody>
                 {props.results.map(([item, result], i) => {
                     if (!result.match) {
