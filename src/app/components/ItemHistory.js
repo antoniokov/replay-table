@@ -8,7 +8,7 @@ function ItemHistory (props) {
             <thead>
                 <tr>
                     <th>{props.roundName}</th>
-                    <th>Change</th>
+                    <th>&Delta;</th>
                     <th>{props.totalName}</th>
                     <th>{props.positionName}</th>
                 </tr>

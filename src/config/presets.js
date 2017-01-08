@@ -27,6 +27,7 @@ export const presets = {
 
     "ЧГК": {
         seasonName: 'Турнир',
+        roundName: 'Вопрос',
         changesName: 'Вопрос',
         itemName: 'Команда',
         totalName: 'Взято',

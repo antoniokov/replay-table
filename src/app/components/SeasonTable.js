@@ -1,33 +1,8 @@
 import React from 'react';
 import FlipMove from 'react-flip-move';
 import getPrintableNumber from '../../auxiliary/getPrintableNumber';
+import getRowCustomStyle from './auxiliary/getRowCustomStyle';
 
-
-function getRowStyle (isMoving, styleParams, result, change, maxAbsChange, roundChange, maxAbsRoundChange) {
-    const styleObject = {};
-
-    if (!isMoving) {
-        if (styleParams.customStyleNeeded) {
-            const color = roundChange >= 0 ? '94,179,26' : '179,82,82';
-            const changeIntensity = roundChange
-                ? Math.max(Math.round(10*Math.abs(roundChange)/maxAbsRoundChange)/10, 0.1)
-                : 0;
-            styleObject.backgroundColor = `rgba(${color},${changeIntensity})`;
-        }
-    } else {
-        if (styleParams.customAnimationNeeded) {
-            const color = change >= 0 ? 'green' : 'red';
-            const changeIntensity = change
-                ? Math.max(10*Math.round(10*Math.abs(change)/maxAbsChange), 0.1)
-                : 0;
-            styleObject.animation = `${color}-${changeIntensity} ${styleParams.animationDuration}ms`
-        } else {
-            styleObject.animation = `${result} ${styleParams.animationDuration}ms`;
-        }
-    }
-
-    return styleObject;
-}
 
 function getTotalText (mode, shouldAnimateChange, change, roundChange, total) {
     if (shouldAnimateChange) {
@@ -43,12 +18,8 @@ function getTotalText (mode, shouldAnimateChange, change, roundChange, total) {
 }
 
 function SeasonTable (props) {
-    const styleParams = {
-        customStyleNeeded: props.mode === 'changes' && !props.round.meta.areAllResultsMapped,
-        customAnimationNeeded: props.isMoving && (!props.areRoundsConsecutive || !props.round.meta.areAllResultsMapped),
-        shouldAnimateChange:  props.isMoving && (props.showChangeDuringAnimation || !props.areRoundsConsecutive),
-        animationDuration: props.animationDuration
-    };
+    const shouldAnimateChange = props.isMoving && (props.showChangeDuringAnimation || !props.areRoundsConsecutive);
+
 
     return (
         <table className="r-table">
@@ -81,10 +52,27 @@ function SeasonTable (props) {
                             .map(element => element.class)
                             .join(' ');
 
+                        const rowStyle = {};
+
+                        if (props.isMoving) {
+                            if (props.round.meta.areAllResultsMapped && props.areRoundsConsecutive) {
+                                rowStyle.animation = `${result} ${props.animationDuration}ms`;
+                            } else {
+                                const customStyle = getRowCustomStyle(props.changes.get(item), props.maxAbsChange, props.animationDuration);
+                                rowStyle.animation = customStyle.animation;
+                            }
+                        } else {
+                            if (props.round.meta.areAllResultsMapped) {
+                                classCandidates.push({ condition: true, class: result.result });
+                            } else {
+                                const customStyle = getRowCustomStyle(result.change, props.round.meta.maxAbsChange, null);
+                                rowStyle.backgroundColor = customStyle.backgroundColor;
+                            }
+                        }
+
                         return (
                             <tr key={item}
-                                style={getRowStyle(props.isMoving, styleParams, result.result, props.changes.get(item),
-                                    props.maxAbsChange, result.change, props.round.meta.maxAbsChange) }
+                                style={rowStyle}
                                 className={`row ${rowClasses}`}
                                 onClick={() => props.selectItem(item)}>
 
@@ -96,7 +84,7 @@ function SeasonTable (props) {
                                 {props.extraColumnsNames.map(name =>
                                     <td key={name} className="extras">{result.extras[name]}</td>
                                 )}
-                                <td className="total">{getTotalText(props.mode, styleParams.shouldAnimateChange,
+                                <td className="total">{getTotalText(props.mode, shouldAnimateChange,
                                     props.changes.get(item), result.change, result.total)}</td>
                             </tr>
                         );
