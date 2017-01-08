@@ -13,13 +13,13 @@ export const parameters = {
         validate: value => isString(value)
     },
 
-    roundName: {
-        default: 'Round',
+    changesName: {
+        default: 'Changes',
         validate: value => isString(value)
     },
 
-    matchesName: {
-        default: 'Matches',
+    roundName: {
+        default: 'Round',
         validate: value => isString(value)
     },
 

@@ -3,7 +3,6 @@ import flipMatchResults from '../auxiliary/flipMatchResults';
 import getResultName from '../auxiliary/getResultName';
 import pluralizeResultName from '../auxiliary/pluralizeResultName';
 import getPrintableNumber from '../../auxiliary/getPrintableNumber';
-import getRoundsNames from '../auxiliary/getRoundsNames';
 import calculateTotal from '../auxiliary/calculateTotal';
 
 
@@ -78,6 +77,7 @@ function transformMatchesList(jsonList, params) {
                 const stats = itemsCurrentStats.get(name);
                 stats.change = null;
                 stats.total = calculateTotal(params['totalValue'], stats);
+                stats.match = null;
                 rowResults.set(name, Object.assign({}, stats));
             });
 
@@ -91,25 +91,28 @@ function transformMatchesList(jsonList, params) {
             const newStats = Object.assign({}, stats);
             newStats.rounds = round;
             newStats.change = null;
+            newStats.match = null;
             roundsResults[round].set(name, Object.assign({}, newStats));
         }
     });
 
-    const results = params['useRoundsNumbers'] ? roundsResults : rowsResults;
+    const resultsTable = params['useRoundsNumbers'] ? roundsResults : rowsResults;
 
     if (params['startRoundName']) {
         const startRoundResults = new Map(itemsNames.map(item => [item, Object.assign({}, initialStats)]));
-        results.unshift(startRoundResults);
+        resultsTable.unshift(startRoundResults);
         rowsNames.unshift(params['startRoundName']);
     }
 
-    const roundsNames = params['useRoundsNumbers'] ? getRoundsNames(null, results.length) : getRoundsNames(rowsNames);
+    const roundsNames = params['useRoundsNumbers']
+        ? [...new Array(resultsTable.length).keys()].map(number => number.toString())
+        : rowsNames;
 
     return {
         status: 'success',
         roundsNames: roundsNames,
         extraColumnsNames: [],
-        results: results
+        resultsTable: resultsTable
     };
 }
 

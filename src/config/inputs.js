@@ -1,11 +1,12 @@
 export const inputs = {
     listOfMatches: {
         type: 'csv',
-        modes: ['season', 'matches', 'item']
+        modes: ['season', 'round', 'item'],
+        roundMode: 'matches'
     },
 
     pointsTable: {
         type: 'csv',
-        modes: ['season', 'round']
+        modes: ['season', 'changes', 'item']
     }
 };

@@ -55,6 +55,7 @@ class App extends Component {
       const inputModes = inputs[configObject['inputType']]['modes'];
       const modes = configObject['modes'] ? configObject['modes'].filter(mode => inputModes.includes(mode)) : inputModes;
       configObject['modes'] = modes.map(mode => ({ value: mode, label: configObject[mode + 'Name'] }));
+      configObject.roundMode = inputs[configObject['inputType']].roundMode;
 
       return configObject;
   }
@@ -116,9 +117,9 @@ class App extends Component {
                   .filter(param => !this.state[param] && transformedResult[param])
                   .forEach(param => this.setState({ [param]: transformedResult[param]}));
 
-              const lastRound = transformedResult['results'].reduce((maxRoundNumber, round, i) => {
-                  return [...round.values()].some(result => result.change !== null) && i > maxRoundNumber ? i : maxRoundNumber;
-              }, 0);
+              const lastRound = transformedResult.resultsTable
+                  .filter(round => [...round.results.values()].some(result => result.change !== null))
+                  .reduce((maxIndex, round) => Math.max(round.meta.index, maxIndex), 0);
               this.setState({ lastRound: lastRound });
 
               if (!this.state['startFromRound']) {
@@ -127,7 +128,7 @@ class App extends Component {
 
               this.setState({
                   status: 'success',
-                  results: transformedResult.results
+                  resultsTable: transformedResult.resultsTable
               });
           })
           .catch(error => {

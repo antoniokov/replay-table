@@ -34,7 +34,7 @@ function getTotalText (mode, shouldAnimateChange, change, roundChange, total) {
         return getPrintableNumber(change, true);
     } else {
         switch (mode) {
-            case 'round':
+            case 'changes':
                 return getPrintableNumber(roundChange, true);
             case 'season':
                 return getPrintableNumber(total);
@@ -43,12 +43,9 @@ function getTotalText (mode, shouldAnimateChange, change, roundChange, total) {
 }
 
 function SeasonTable (props) {
-    const allResultsMapped = [...props.results.entries()].every(([item, result]) => !!result.result);
-    const maxAbsRoundChange = Math.max(...[...props.results.entries()].map(([item, result]) => Math.abs(result.change)));
-
     const styleParams = {
-        customStyleNeeded: props.mode === 'round' && !allResultsMapped,
-        customAnimationNeeded: props.isMoving && (!props.areRoundsConsecutive || !allResultsMapped),
+        customStyleNeeded: props.mode === 'changes' && !props.round.meta.areAllResultsMapped,
+        customAnimationNeeded: props.isMoving && (!props.areRoundsConsecutive || !props.round.meta.areAllResultsMapped),
         shouldAnimateChange:  props.isMoving && (props.showChangeDuringAnimation || !props.areRoundsConsecutive),
         animationDuration: props.animationDuration
     };
@@ -73,10 +70,10 @@ function SeasonTable (props) {
                 duration={props.animationDuration/2}
                 typeName='tbody' >
 
-                {[...props.results.entries()]
+                {[...props.round.results.entries()]
                     .map(([item, result]) => {
                         const classCandidates = [
-                            { condition: props.mode === 'round', class: result.result || '' },
+                            { condition: props.mode === 'changes', class: result.result || '' },
                             { condition: props.isFocused(item), class: 'focus'}
                         ];
                         const rowClasses = classCandidates
@@ -87,9 +84,9 @@ function SeasonTable (props) {
                         return (
                             <tr key={item}
                                 style={getRowStyle(props.isMoving, styleParams, result.result, props.changes.get(item),
-                                    props.maxAbsChange, result.change, maxAbsRoundChange) }
-                                className={rowClasses}
-                                onClick={() => props.switchFocus(item)}>
+                                    props.maxAbsChange, result.change, props.round.meta.maxAbsChange) }
+                                className={`row ${rowClasses}`}
+                                onClick={() => props.selectItem(item)}>
 
                                 <td className="position">{result.position}</td>
                                 <td className="item">{item}</td>

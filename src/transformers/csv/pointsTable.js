@@ -1,5 +1,4 @@
 import transpose from '../../auxiliary/transpose';
-import getRoundsNames from '../auxiliary/getRoundsNames';
 import pluralizeResultName from '../auxiliary/pluralizeResultName';
 import calculateTotal from '../auxiliary/calculateTotal';
 
@@ -27,7 +26,10 @@ function transformChangesTable(jsonTable, params) {
 
     const itemName = jsonTable[0][0];
     const extraColumnsNames = jsonTable[0].slice(1, offset);
-    const roundsNames = getRoundsNames(params['useRoundsNames'] ? null : jsonTable[0].slice(offset), jsonTable[1].length);
+    const rawRoundsNames = jsonTable[0].slice(offset);
+    const roundsNames = params['useRoundsNames'] || !rawRoundsNames
+        ? [...new Array(jsonTable[1].length).keys()].map(number => number.toString())
+        : rawRoundsNames;
 
     const transposed = transpose(jsonTable.slice(1));
     const itemsNames = transposed[0];
@@ -38,7 +40,7 @@ function transformChangesTable(jsonTable, params) {
     const itemsStats = new Map();
     itemsNames.forEach(name => itemsStats.set(name, Object.assign({}, initialStats)));
 
-    const results = changes.map(resultRow => {
+    const resultsTable = changes.map(resultRow => {
         const roundResults = new Map();
         resultRow.forEach((changeString, itemNumber) => {
             const name = itemsNames[itemNumber];
@@ -63,12 +65,12 @@ function transformChangesTable(jsonTable, params) {
 
     if (params['startRoundName']) {
         const startRoundResults = new Map(itemsNames.map(item => [item, Object.assign({}, initialStats)]));
-        results.unshift(startRoundResults);
+        resultsTable.unshift(startRoundResults);
         roundsNames.unshift(params['startRoundName']);
     }
 
     if (params['extraColumnsNumber']) {
-        addExtras(results, extraColumnsNames, extraColumns);
+        addExtras(resultsTable, extraColumnsNames, extraColumns);
     }
 
     return {
@@ -76,7 +78,7 @@ function transformChangesTable(jsonTable, params) {
         itemName: itemName,
         extraColumnsNames: extraColumnsNames || [],
         roundsNames: roundsNames,
-        results: results
+        resultsTable: resultsTable
     };
 }
 

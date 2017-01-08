@@ -16,6 +16,7 @@ export default function (opponentResults) {
             break;
     }
 
+    results.match.opponent = opponentResults.name;
     results.match.score = opponentResults.match.opponentScore;
     results.match.opponentScore = opponentResults.match.score;
 

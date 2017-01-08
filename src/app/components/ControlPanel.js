@@ -2,6 +2,7 @@ import React from 'react';
 
 
 function ControlPanel (props) {
+    const selectedOptionIndex = props.options.indexOf(props.selectedOption);
     return (
         <div className="replay-table-controls">
 
@@ -14,7 +15,7 @@ function ControlPanel (props) {
                                        id={`${props.tableName || ''}-${mode.value}-radio`}
                                        name={`${props.tableName || ''}-mode-switch`}
                                        value={mode.value}
-                                       checked={props.mode === mode.value}
+                                       checked={mode.value === props.selectedMode}
                                        onChange={() => props.switchMode(mode.value)} />
 
                                 <label htmlFor={`${props.tableName || ''}-${mode.value}-radio`}>
@@ -31,31 +32,33 @@ function ControlPanel (props) {
 
                 <div className="replay-table-start-control">
                     <div
-                        className={props.isPlaying
-                            ? 'pause'
-                            : props.currentRound === props.lastRound ? 'replay' : 'play'}
-                        onClick={props.handlePlayButton} />
+                        className={props.playButtonIcon}
+                        onClick={props.play} />
                 </div>
 
                 <div
-                    className={`previous ${props.currentRound === 0? 'disabled' : ''}`}
-                    onClick={() => props.currentRound > 0 ? props.goToRound(props.currentRound - 1) : null}>
+                    className={`previous ${selectedOptionIndex === 0 ? 'disabled' : ''}`}
+                    onClick={() => selectedOptionIndex > 0
+                        ? props.selectOption(props.options[selectedOptionIndex - 1])
+                        : null}>
                     &lt;
                 </div>
 
                 <div
-                    className={`next ${props.currentRound === props.lastRound? 'disabled' : ''}`}
-                    onClick={() => props.currentRound < props.lastRound ? props.goToRound(props.currentRound + 1) : null}>
+                    className={`next ${selectedOptionIndex === props.options.length - 1 ? 'disabled' : ''}`}
+                    onClick={() => selectedOptionIndex < props.options.length - 1
+                        ? props.selectOption(props.options[selectedOptionIndex + 1])
+                        : null}>
                     &gt;
                 </div>
 
                 <select
                     className="replay-table-select"
-                    onChange={event => props.handleSelect(event.target.value)}
-                    value={props.currentRound} >
+                    onChange={event => props.selectOption(event.target.value)}
+                    value={props.selectedOption} >
                     
-                    {props.roundsNames.map((name, i) =>
-                        <option key={i} value={i}>{name}</option>)}
+                    {props.options.map(option =>
+                        <option key={option} value={option}>{option}</option>)}
                 </select>
 
             </div>
@@ -64,8 +67,8 @@ function ControlPanel (props) {
                 <div className="replay-table-progress-wrap">
                     <progress
                         className="replay-table-progress"
-                        value={props.currentRound}
-                        max={props.roundsTotalNumber || props.roundsNames.length - 1} />
+                        value={props.progressBarValue}
+                        max={props.progressBarMaxValue} />
                 </div>
             }
         </div>
