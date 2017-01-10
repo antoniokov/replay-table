@@ -17,7 +17,7 @@ class TableContainer extends Component {
             isMoving: false,
             selectedItem: null,
             focusedItems: this.props.focusedItems ? new Set([...this.props.focusedItems]) : new Set(),
-            mode: 'season'
+            mode: this.props.modes[0]
         }, changes);
     }
 
@@ -152,7 +152,7 @@ class TableContainer extends Component {
                                 results={this.props.resultsTable
                                     .map(round => [currentItem, round.results.get(currentItem)])
                                     .filter(([item, result]) => result.match !== null)}
-                                locationFirst="home"
+                                locationFirst={this.props.locationFirst}
                                 selectItem={this.selectItem.bind(this)}
                                 selectRound={this.selectRound.bind(this)}/>
                         );

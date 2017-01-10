@@ -113,6 +113,11 @@ export const parameters = {
         goesToTransform: true
     },
 
+    locationFirst: {
+        default: 'home',
+        validate: value => ['home', 'away'].includes(value)
+    },
+
     tableName: {
         default: undefined,
         parse: input => input === "undefined" ? undefined : input,
