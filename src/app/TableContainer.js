@@ -17,7 +17,7 @@ class TableContainer extends Component {
             isMoving: false,
             selectedItem: null,
             focusedItems: this.props.focusedItems ? new Set([...this.props.focusedItems]) : new Set(),
-            mode: this.props.modes[0]
+            mode: this.props.modes[0].value
         }, changes);
     }
 
