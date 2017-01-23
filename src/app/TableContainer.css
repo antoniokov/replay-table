@@ -305,7 +305,7 @@ html{
 .replayTable .r-table td.replay-table-score{
     text-align: center;
 }
-.replayTable .r-table .item:hover,
+.replayTable .r-table td.item:hover,
 .replayTable .r-table td.replay-table-team:hover{
     text-decoration: underline;
 }
