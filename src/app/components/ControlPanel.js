@@ -10,7 +10,7 @@ function ControlPanel (props) {
                 <div className="replay-table-check">
                     {props.modes.slice().reverse().map(mode => {
                         return(
-                            <div key={mode.value} className="replay-table-check">
+                            <div key={mode.value} className="replay-table-check-item">
                                 <input type="radio"
                                        id={`${props.tableName || ''}-${mode.value}-radio`}
                                        name={`${props.tableName || ''}-mode-switch`}
