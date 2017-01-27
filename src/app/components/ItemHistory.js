@@ -8,6 +8,7 @@ function ItemHistory (props) {
         <table className="r-table replay-table-item-history">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>{props.roundName}</th>
                     <th>&Delta;</th>
                     <th>{props.totalName}</th>
@@ -31,6 +32,7 @@ function ItemHistory (props) {
                             className={`replay-table-row ${getClassesString(classCandidates)}`}
                             onClick={() => props.selectRound(i+1)} >
 
+                            <td>{i}</td>
                             <td>{roundMeta.name}</td>
                             <td>{getPrintableNumber(result.change, true)}</td>
                             <td>{result.total}</td>
