@@ -23,6 +23,14 @@ function getMatch (item, match, locationFirst) {
 function Matches (props) {
     return (
         <table className="r-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Team</th>
+                    <th>vs.</th>
+                    <th>Team</th>
+                </tr>
+            </thead>
             <tbody>
                 {props.results.map(([item, result], i) => {
                     if (!result.match) {
