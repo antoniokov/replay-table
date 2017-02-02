@@ -284,6 +284,7 @@ html{
     font-weight: bold;
     font-size: 1.6rem;
     padding: 1rem 0;
+    text-align: center;
     border-bottom: 1px double rgba(0,0,0,0.05);
 }
 .replayTable .r-table tr th:last-child,
@@ -291,16 +292,24 @@ html{
     width: 6rem;
     text-align: center;
 }
+
 .replayTable .r-table .calculated{
     text-align: center;
     padding: 0.6rem 0.7rem;
 }
+
 .replayTable .r-table td.replay-table-team:first-child,
 .replayTable .r-table td.replay-table-team:last-child,
 .replayTable .r-table td.replay-table-team{
     width: 20rem;
     text-align: center;
     cursor: pointer;
+}
+.replayTable .r-table td.replay-table-team{
+    text-align: right;
+}
+.replayTable .r-table td.replay-table-team:last-child{
+    text-align: left;
 }
 .replayTable .r-table td.replay-table-score{
     text-align: center;
@@ -326,9 +335,11 @@ html{
     padding-right: 1rem;
     padding-left: 1rem;
 }
+.replayTable .r-table .replay-table-position,
 .replayTable .r-table .position {
     text-align: center;
-    width: 6rem;
+    padding: 0.6rem 0.5rem;
+    /*width: 6rem;*/
 }
 
 .replayTable .r-table .row.focus {
