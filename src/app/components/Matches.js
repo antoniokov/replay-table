@@ -22,39 +22,31 @@ function getMatch (item, match, locationFirst) {
 
 function Matches (props) {
     return (
-        <table className="r-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Team</th>
-                    <th>vs.</th>
-                    <th>Team</th>
-                </tr>
-            </thead>
+        <table className="r-table matches">
             <tbody>
                 {props.results.map(([item, result], i) => {
                     if (!result.match) {
                         return (
                             <tr key={props.firstColumn[i] || item} className={`replay-table-row`}>
-                                <td className="replay-table-position">{props.firstColumn[i]}</td>
-                                <td className="replay-table-team">{item}</td>
-                                <td className="replay-table-score">{}</td>
-                                <td className="replay-table-team">{}</td>
+                                <td className="position">{props.firstColumn[i]}</td>
+                                <td className="team">{item}</td>
+                                <td className="score">{}</td>
+                                <td className="team">{}</td>
                             </tr>
                         );
                     } else {
                         const match = getMatch(item, result.match, props.locationFirst);
                         return (
                             <tr key={props.firstColumn[i] || item} className={`replay-table-row ${result.result}`}>
-                                <td className="replay-table-position"
+                                <td className="position"
                                     onClick={props.selectRound ? () => props.selectRound(i+1) : null}>
                                     {props.firstColumn[i]}
                                 </td>
-                                <td className="replay-table-team" onClick={() => props.selectItem(match.firstTeam)}>
+                                <td className="team" onClick={() => props.selectItem(match.firstTeam)}>
                                     {match.firstTeam}
                                 </td>
-                                <td className="replay-table-score">{`${match.firstScore} - ${match.secondScore}`}</td>
-                                <td className="replay-table-team" onClick={() => props.selectItem(match.secondTeam)}>
+                                <td className="score">{`${match.firstScore} - ${match.secondScore}`}</td>
+                                <td className="team" onClick={() => props.selectItem(match.secondTeam)}>
                                     {match.secondTeam}
                                 </td>
                             </tr>

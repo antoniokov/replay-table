@@ -22,7 +22,7 @@ function SeasonTable (props) {
 
 
     return (
-        <table className="r-table">
+        <table className="r-table season">
             <thead>
             <tr>
                 <th className="position">{props.positionName}</th>
@@ -78,7 +78,7 @@ function SeasonTable (props) {
                                     <td key={key} className="calculated">{result[key]}</td>
                                 )}
                                 {props.extraColumnsNames.map(name =>
-                                    <td key={name} className="extras">{result.extras[name]}</td>
+                                    <td key={name} className="extra">{result.extras[name]}</td>
                                 )}
                                 <td className="total">{getTotalText(props.mode, shouldAnimateChange,
                                     props.changes.get(item), result.change, result.total)}</td>

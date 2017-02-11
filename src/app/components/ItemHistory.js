@@ -5,14 +5,13 @@ import { getRowColor, getClassesString } from './auxiliary/styling';
 
 function ItemHistory (props) {
     return (
-        <table className="r-table replay-table-item-history">
+        <table className="r-table item-history">
             <thead>
                 <tr>
-                    <th>#</th>
-                    <th>{props.roundName}</th>
-                    <th>&Delta;</th>
-                    <th>{props.totalName}</th>
-                    <th>{props.positionName}</th>
+                    <th className="round">{props.roundName}</th>
+                    <th className="change">Change</th>
+                    <th className="total">{props.totalName}</th>
+                    <th className="position">{props.positionName}</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,11 +31,10 @@ function ItemHistory (props) {
                             className={`replay-table-row ${getClassesString(classCandidates)}`}
                             onClick={() => props.selectRound(i+1)} >
 
-                            <td>{i}</td>
-                            <td>{roundMeta.name}</td>
-                            <td>{getPrintableNumber(result.change, true)}</td>
-                            <td>{result.total}</td>
-                            <td>{result.position}</td>
+                            <td className="round">{roundMeta.name}</td>
+                            <td className="change">{getPrintableNumber(result.change, true)}</td>
+                            <td className="total">{result.total}</td>
+                            <td className="position">{result.position}</td>
                         </tr>
                     )
                 })}
