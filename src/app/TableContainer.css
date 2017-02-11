@@ -313,6 +313,7 @@ html{
 
 .replayTable  .r-table .position,
 .replayTable  .r-table .total,
+.replayTable  .r-table.item-history .change,
 .replayTable  .r-table .calculated{
     white-space: nowrap;
     width: 2rem;
