@@ -7,13 +7,13 @@ Transforms a csv file with season results into interactive standings:
 
 ## Live Demos
 
-* [Premier League](https://targetprocess.github.io/replayTable/#premier-league)
-* [NBA](https://targetprocess.github.io/replayTable/#nba)
-* [Formula One](https://targetprocess.github.io/replayTable/#f1)
+* [Premier League](https://replaytable.com/#english-premier-league)
+* [NBA](https://replaytable.com/#nba-western)
+* [Formula One](https://replaytable.com/#formula-one-drivers)
 
 ## Quickstart
 
-1. Prepare a [csv file](#input) with season results or download one from our [gallery](https://targetprocess.github.io/replayTable#examples).
+1. Prepare a [csv file](#input) with season results or download one from our [gallery](https://replaytable.com/#examples).
 
 2. Put a `div` with `replayTable` class on your page and supply a link to the csv file using `data-csv` attribute:
 
@@ -34,7 +34,7 @@ Transforms a csv file with season results into interactive standings:
 
 That was easy :)
 
-Also feel free to embed ready-to-use Replay Tables from our [gallery](https://targetprocess.github.io/replayTable/#examples-section).
+Also feel free to embed ready-to-use Replay Tables from our [gallery](https://replayTable.com/#examples).
 
 
 ## Customization
@@ -78,7 +78,7 @@ The English Premier League example:
 | Arsenal | 0 | 3 | 1 | ... | 3 |
 | ... | ... | .... | ... | ... | ... |
 
-Watch the [live demo](https://targetprocess.github.io/replayTable/#premier-league).
+Watch the [live demo](https://replaytable.com/#english-premier-league).
 
 Feel free to download this example as a [csv](https://s3-us-west-2.amazonaws.com/replay-table/csv/football/england/premier-league/2015-2016.csv).
 We recommend you to also use comma as separator and UTF-8 as encoding.
@@ -102,7 +102,7 @@ The NBA example:
 | Tue Oct 27 2015 | Golden State Warriors | 111 | New Orleans Pelicans | 95 |
 | ... | ... | ... | ... | ... |
 
-Watch the [live demo](https://targetprocess.github.io/replayTable/#nba).
+Watch the [live demo](https://replaytable.com/#nba-western).
 
 Feel free to download this example as a [csv](https://s3-us-west-2.amazonaws.com/replay-table/csv/basketball/nba/regular/2015-2016.csv).
 We recommend you to also use comma as separator and UTF-8 as encoding.
@@ -170,7 +170,7 @@ This preset is built for major professional sport leagues in US and Canada.
 | [`resultMapping`](#resultmapping) | `{ 1: 'win', 0: 'loss' }` |
 | [`calculatedColumns`](#calculatedcolumns) | `{ 'rounds': 'Games', 'wins': 'Wins', 'losses': 'Losses' }` |
 
-Watch the [NBA demo](https://targetprocess.github.io/replayTable/#nba).
+Watch the [NBA demo](https://replaytable.com/#nba-western).
 
 ### `F1`
 
@@ -181,7 +181,7 @@ Watch the [NBA demo](https://targetprocess.github.io/replayTable/#nba).
 | [`startRoundName`](#startroundname) | `Start →` |
 | [`resultMapping`](#resultmapping) | `{ 25: win}` |
 
-Watch the [2015-2016 season demo](https://targetprocess.github.io/replayTable/#f1).
+Watch the [2016 season demo](https://replaytable.com/#formula-one-drivers).
 
 ### `ЧГК`
 
@@ -196,7 +196,7 @@ This is for the [intellectual game](https://en.wikipedia.org/wiki/What%3F_Where%
 | [`positionWhenTied`](#positionWhenTied) | `range` |
 | [`resultMapping`](#resultmapping) | `{ 1: 'win', 0: ' ' }` |
 
-Watch the [2016 World Championship demo](https://targetprocess.github.io/replayTable/#chgk).
+Watch the [2016 World Championship demo](https://replaytable.com/examples/chgk/2015-2016/#world-championship).
 
 
 Feel free to [suggest](#contact) more presets.
