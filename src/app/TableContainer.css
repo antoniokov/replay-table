@@ -184,7 +184,7 @@ html{
 
 
 .replay-table-wrap .replay-table-select{
-    min-width: 4rem;
+    width: 20rem;
     height: 2.8rem;
     background: #fff;
     font-size: 1.6rem;
