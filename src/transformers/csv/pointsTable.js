@@ -31,7 +31,7 @@ function transformChangesTable(jsonTable, params) {
         ? [...new Array(jsonTable[1].length).keys()].map(number => number.toString())
         : rawRoundsNames;
 
-    const transposed = transpose(jsonTable.slice(1));
+    const transposed = transpose(jsonTable.slice(1).filter(row => row[0]));
     const itemsNames = transposed[0];
     const extraColumns =  transposed.slice(1, offset)
         .map(column => new Map(itemsNames.map((item, i) => [item, column[i]])));

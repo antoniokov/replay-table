@@ -27,7 +27,7 @@ const initialStats = {
 function transformMatchesList(jsonList, params) {
     const resultChange = flipObject(params['resultMapping']);
 
-    const [headers, ...matches] = jsonList;
+    const [headers, ...matches] = jsonList.filter(row => row && row.length >= 5);
     const rowsNames = [...new Set(matches.map(match => match[0]))];
     const itemsNames = [...new Set([...matches.map(match => match[1]), ...matches.map(match => match[3])])];
 
