@@ -184,7 +184,7 @@ html{
 
 
 .replay-table-wrap .replay-table-select{
-    width: 20rem;
+    width: 15rem;
     height: 2.8rem;
     background: #fff;
     font-size: 1.6rem;
@@ -303,11 +303,22 @@ html{
     text-align: left;
 }
 .replayTable  .r-table .score,
+.replayTable  .r-table .calculated,
 .replayTable  .r-table.season .total,
 .replayTable  .r-table.item-history .change,
 .replayTable  .r-table.item-history .total,
 .replayTable  .r-table.item-history .position{
     text-align: center;
+}
+
+.replayTable  .r-table .position,
+.replayTable  .r-table .total,
+.replayTable  .r-table .calculated{
+    white-space: nowrap;
+    width: 2rem;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 
