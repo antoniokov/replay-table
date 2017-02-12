@@ -4,15 +4,24 @@ import inputs from './inputs';
 import toCamelCase from '../auxiliary/toCamelCase';
 
 
-//Think of proper chaining
-const config = {
-    obj: {},
-    setDefaults: function () {
+export default class Config {
+    constructor (userConfig) {
+        this.userConfig = userConfig;
+
+        this.setDefaults()
+            .setPreset()
+            .setParameters()
+            .setModes()
+            .setTerms();
+    }
+
+    setDefaults () {
         this.obj = Object.keys(parameters)
             .reduce((obj, param) => Object.assign(obj, { [param]: parameters[param].default }), {});
         return this;
-    },
-    setPreset: function () {
+    }
+
+    setPreset () {
         const preset = this.userConfig.preset;
 
         if (!preset) {
@@ -26,8 +35,9 @@ const config = {
 
         this.obj = Object.assign(this.obj, presets[preset]);
         return this;
-    },
-    setParameters: function () {
+    }
+
+    setParameters () {
         Object.keys(this.userConfig)
             .filter(param => !['csv', 'preset', 'style', 'parameters', 'modes'].includes(param))
             .map(param => toCamelCase(param))
@@ -47,8 +57,11 @@ const config = {
             });
 
         return this;
-    },
-    setModes: function () {
+    }
+
+    setModes () {
+        this.obj.roundMode = inputs[this.obj.inputType].roundMode;
+
         if (!this.userConfig.modes) {
             this.obj.modes = inputs[this.obj.inputType].modes;
             return this;
@@ -63,26 +76,30 @@ const config = {
         }
 
         this.obj.modes = modes.filter(mode => inputs[this.obj.inputType].modes.includes(mode));
-        this.obj.roundMode = inputs[this.obj.inputType].roundMode;
 
         return this;
-    },
-    setTerms: function () {
-        const terms = Object.keys(this.obj).filter(param => param.endsWith('Name'));
-        this.obj.terms = terms.reduce((obj, term) => Object.assign(obj, { [term]: this.obj[term] }), {});
+    }
+
+    setTerms () {
+        const terms = Object.keys(this.obj).filter(param => param.endsWith('Name') && !['tableName'].includes(param));
+        this.obj.terms = terms.reduce((obj, term) => Object.assign(obj, { [term.slice(0, -4)]: this.obj[term] }), {});
         terms.forEach(term => delete this.obj[term]);
 
         return this;
-    },
-    updateFromData: function () {
-        if (!this.obj.terms.itemName) {
-            this.obj.terms.itemName = this.data.itemName;
+    }
+
+    updateWithData (data) {
+        this.obj.resultsTable = data.resultsTable;
+
+        if (!this.obj.terms.item) {
+            this.obj.terms.item = data.itemName;
         }
 
         ['roundsNames', 'extraColumnsNames', 'extraColumns']
-            .forEach(param => this.obj[param] = this.obj[param] || this.data[param]);
+            .filter(param => !this.obj[param])
+            .forEach(param => this.obj[param] = data[param]);
 
-        this.obj.lastRound = this.data.resultsTable
+        this.obj.lastRound = data.resultsTable
             .filter(round => [...round.results.values()].some(result => result.change !== null))
             .reduce((maxIndex, round) => Math.max(round.meta.index, maxIndex), 0);
 
@@ -90,20 +107,8 @@ const config = {
 
         return this;
     }
-};
 
-export function getConfig (userConfig) {
-    config.userConfig = userConfig;
-    return config
-        .setDefaults()
-        .setPreset()
-        .setParameters()
-        .setModes()
-        .setTerms()
-        .obj;
-}
-
-export function updateConfigFromData (config, data) {
-    config.data = data;
-    return config.updateFromData().obj;
+    toObject () {
+        return this.obj;
+    }
 }
