@@ -1,5 +1,5 @@
 //https://github.com/TargetProcess/replayTable#presets
-export const presets = {
+export default {
     "WinsLosses": {
         inputType: 'listOfMatches',
         itemName: 'Team',

@@ -1,4 +1,4 @@
-export const inputs = {
+export default {
     listOfMatches: {
         type: 'csv',
         modes: ['season', 'round', 'item'],

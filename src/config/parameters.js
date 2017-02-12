@@ -5,21 +5,24 @@ import validateObject from '../auxiliary/validateObject';
 
 
 //https://github.com/TargetProcess/replayTable#parameters
-export const parameters = {
+export default {
     //Terms
 
     seasonName: {
         default: 'Season',
+        parse: input => input,
         validate: value => isString(value)
     },
 
     changesName: {
         default: 'Changes',
+        parse: input => input,
         validate: value => isString(value)
     },
 
     roundName: {
         default: 'Round',
+        parse: input => input,
         validate: value => isString(value)
     },
 
@@ -32,6 +35,7 @@ export const parameters = {
 
     positionName: {
         default: '#',
+        parse: input => input,
         validate: value => isString(value)
     },
 
@@ -43,6 +47,7 @@ export const parameters = {
 
     totalName: {
         default: 'Points',
+        parse: input => input,
         validate: value => isString(value)
     },
 
@@ -51,6 +56,7 @@ export const parameters = {
 
     inputType: {
         default: 'pointsTable',
+        parse: input => input,
         validate: value => transformers.hasOwnProperty(value)
     },
 
@@ -63,6 +69,7 @@ export const parameters = {
 
     totalValue: {
         default: 'cumulative',
+        parse: input => input,
         validate: value => ['cumulative', 'win %'].includes(value),
         goesToTransform: true
     },
@@ -109,12 +116,14 @@ export const parameters = {
 
     positionWhenTied: {
         default: 'previous round',
+        parse: input => input,
         validate: value => ['previous round', 'highest', 'range'].includes(value),
         goesToTransform: true
     },
 
     locationFirst: {
         default: 'home',
+        parse: input => input,
         validate: value => ['home', 'away'].includes(value)
     },
 
@@ -130,7 +139,8 @@ export const parameters = {
     modes: {
         default: undefined,
         parse: input => input.split(','),
-        validate: value => Array.isArray(value) && value.length > 0 && value.every(item => ['season', 'round', 'matches', 'item'].includes(item))
+        validate: value => Array.isArray(value) && value.length > 0 &&
+            value.every(item => ['season', 'round', 'matches', 'item'].includes(item))
     },
 
     startFromRound: {

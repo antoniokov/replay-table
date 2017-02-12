@@ -5,6 +5,6 @@ import App from './App';
 
 const replayTables = Array.from(document.getElementsByClassName('replayTable'));
 replayTables.forEach(table => ReactDOM.render(
-    <App {...(table.dataset)} />,
+    <App userConfig={table.dataset} />,
     table
 ));
