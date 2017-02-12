@@ -25,15 +25,15 @@ function SeasonTable (props) {
         <table className="r-table season">
             <thead>
             <tr>
-                <th className="position">{props.positionName}</th>
-                <th className="item">{props.itemName}</th>
+                <th className="position">{props.terms.position}</th>
+                <th className="item">{props.terms.item}</th>
                 {Object.keys(props.calculatedColumns).map(key => {
                     return <th key={props.calculatedColumns[key]} className="calculated">{props.calculatedColumns[key]}</th>;
                 })}
                 {props.extraColumnsNames.map(name => {
                     return <th className="extra" key={name}>{name}</th>;
                 })}
-                <th className="total">{props.totalName}</th>
+                <th className="total">{props.terms.total}</th>
             </tr>
             </thead>
             <FlipMove

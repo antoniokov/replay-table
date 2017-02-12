@@ -9,7 +9,7 @@ import './TableContainer.css';
 class TableContainer extends Component {
     constructor(props) {
         super(props);
-        const changes = this.getChanges.bind(this)(null, this.props.startFromRound);
+        const changes = this.getChanges.bind(this)(null, props.startFromRound);
         this.state = Object.assign({
             currentRound: this.props.startFromRound,
             previousRound: null,
@@ -17,7 +17,7 @@ class TableContainer extends Component {
             isMoving: false,
             selectedItem: null,
             focusedItems: this.props.focusedItems ? new Set([...this.props.focusedItems]) : new Set(),
-            mode: this.props.modes[0].value
+            mode: this.props.modes[0]
         }, changes);
     }
 
@@ -27,6 +27,7 @@ class TableContainer extends Component {
                 ? result.change
                 : result.total - this.props.resultsTable[previousRound].results.get(item).total]
         }));
+
 
         return {
             changes: changes,
@@ -86,7 +87,7 @@ class TableContainer extends Component {
     selectRound (round) {
         this.setState({
             currentRound: round,
-            mode: this.props.modes.map(mode => mode.value).includes('round') ? 'round' : 'season'
+            mode: this.props.modes.includes('round') ? 'round' : 'changes'
         });
     }
 
@@ -115,6 +116,7 @@ class TableContainer extends Component {
                 selectedOption={selectedOption}
                 selectOption={selectOption}
 
+                terms={this.props.terms}
                 modes={this.props.modes}
                 selectedMode={this.state.mode}
                 switchMode={mode => this.setState({ mode: mode })}
@@ -159,10 +161,7 @@ class TableContainer extends Component {
                     default:
                         return (
                             <ItemHistory
-                                roundName={this.props.roundName}
-                                positionName={this.props.positionName}
-                                totalName={this.props.totalName}
-
+                                terms={this.props.terms}
                                 results={this.props.resultsTable.map(round => [round.meta, round.results.get(currentItem)]).slice(1)}
                                 selectRound={this.selectRound.bind(this)}/>
                         );
@@ -170,9 +169,7 @@ class TableContainer extends Component {
             default:
                 return (
                     <SeasonTable
-                        positionName={this.props.positionName}
-                        itemName={this.props.itemName}
-                        totalName={this.props.totalName}
+                        terms={this.props.terms}
 
                         calculatedColumns={this.props.calculatedColumns}
                         extraColumnsNames={this.props.extraColumnsNames}

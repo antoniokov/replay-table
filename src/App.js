@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { parse } from 'babyparse';
-import { getConfig, updateConfigFromData} from './config/config';
+import Config from './config/Config';
 import { transform } from './transformers/transform';
 import TableContainer from './app/TableContainer';
 
@@ -20,7 +20,7 @@ class App extends Component {
 
       this.state = {
           status: 'loading',
-          config: getConfig(props.userConfig)
+          config: new Config(props.userConfig)
       };
   }
 
@@ -64,7 +64,8 @@ class App extends Component {
                   return;
               }
 
-              const transformedResult = transform(this.state['inputType'], result.data, this.state.config);
+              const configObject = this.state.config.toObject();
+              const transformedResult = transform(configObject.inputType, result.data, configObject);
 
               if (transformedResult.status === 'error') {
                   this.setState({
@@ -76,8 +77,7 @@ class App extends Component {
 
               this.setState({
                   status: 'success',
-                  config: updateConfigFromData(this.state.config, transformedResult),
-                  resultsTable: transformedResult.resultsTable
+                  config: this.state.config.updateWithData(transformedResult)
               });
           })
           .catch(error => {
@@ -93,9 +93,9 @@ class App extends Component {
           case 'loading':
               return <p>Loading...</p>;
           case 'error':
-              return <p>An error occured. {this.state.errorMessage}</p>;
+              return <p>Gosh! An error occured. {this.state.errorMessage}</p>;
           default:
-              return <TableContainer {...(this.state.config)} />;
+              return <TableContainer {...(this.state.config.toObject())} />;
       }
   }
 }

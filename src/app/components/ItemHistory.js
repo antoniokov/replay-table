@@ -8,10 +8,10 @@ function ItemHistory (props) {
         <table className="r-table item-history">
             <thead>
                 <tr>
-                    <th className="round">{props.roundName}</th>
+                    <th className="round">{props.terms.round}</th>
                     <th className="change">Change</th>
-                    <th className="total">{props.totalName}</th>
-                    <th className="position">{props.positionName}</th>
+                    <th className="total">{props.terms.total}</th>
+                    <th className="position">{props.terms.position}</th>
                 </tr>
             </thead>
             <tbody>
