@@ -29,7 +29,7 @@ function Matches (props) {
                         return (
                             <tr key={props.firstColumn[i] || item} className={`replay-table-row`}>
                                 <td className="position">{props.firstColumn[i]}</td>
-                                <td className="team">{item}</td>
+                                <td className="team" onClick={() => props.selectItem(item)}>{item}</td>
                                 <td className="score">{}</td>
                                 <td className="team">{}</td>
                             </tr>

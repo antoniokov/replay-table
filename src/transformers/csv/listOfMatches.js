@@ -96,15 +96,15 @@ function transformMatchesList(jsonList, params) {
         }
     });
 
-    const resultsTable = params['useRoundsNumbers'] ? roundsResults : rowsResults;
+    const resultsTable = params.useRoundsNumbers ? roundsResults : rowsResults;
 
-    if (params['startRoundName']) {
+    if (params.terms.startRound) {
         const startRoundResults = new Map(itemsNames.map(item => [item, Object.assign({}, initialStats)]));
         resultsTable.unshift(startRoundResults);
-        rowsNames.unshift(params['startRoundName']);
+        rowsNames.unshift(params.terms.startRound);
     }
 
-    const roundsNames = params['useRoundsNumbers']
+    const roundsNames = params.useRoundsNumbers
         ? [...new Array(resultsTable.length).keys()].map(number => number.toString())
         : rowsNames;
 

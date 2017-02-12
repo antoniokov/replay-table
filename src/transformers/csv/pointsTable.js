@@ -63,10 +63,10 @@ function transformChangesTable(jsonTable, params) {
         return roundResults;
     });
 
-    if (params['startRoundName']) {
+    if (params.terms.startRound) {
         const startRoundResults = new Map(itemsNames.map(item => [item, Object.assign({}, initialStats)]));
         resultsTable.unshift(startRoundResults);
-        roundsNames.unshift(params['startRoundName']);
+        roundsNames.unshift(params.terms.startRound);
     }
 
     if (params['extraColumnsNumber']) {

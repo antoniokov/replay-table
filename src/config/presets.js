@@ -2,8 +2,9 @@
 export default {
     "WinsLosses": {
         inputType: 'listOfMatches',
-        itemName: 'Team',
-        totalName: 'Win %',
+        terms: {
+            'total': 'Win %'
+        },
         totalValue: 'win %',
         resultMapping: {
             1: 'win',
@@ -17,20 +18,26 @@ export default {
     },
 
     "F1": {
-        roundName: 'Race',
-        itemName: 'Driver',
-        startRoundName: 'Start →',
+        terms: {
+            'round': 'Race',
+            'item': 'Driver',
+            'startRound': 'Start →'
+        },
         resultMapping: {
             25: 'win'
         }
     },
 
     "ЧГК": {
-        seasonName: 'Турнир',
-        roundName: 'Вопрос',
-        changesName: 'Вопрос',
-        itemName: 'Команда',
-        totalName: 'Взято',
+        terms: {
+            'season': 'Турнир',
+            'round': 'Вопрос',
+            'changes': 'Вопрос',
+            'position': 'Место',
+            'item': 'Команда',
+            'total': 'Взято',
+            'change': 'Вопрос'
+        },
         positionWhenTied: 'range',
         resultMapping: {
             1: 'win',

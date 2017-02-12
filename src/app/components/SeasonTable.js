@@ -20,7 +20,6 @@ function getTotalText (mode, shouldAnimateChange, change, roundChange, total) {
 function SeasonTable (props) {
     const shouldAnimateChange = props.isMoving && (props.showChangeDuringAnimation || !props.areRoundsConsecutive);
 
-
     return (
         <table className="r-table season">
             <thead>
@@ -69,11 +68,10 @@ function SeasonTable (props) {
                         return (
                             <tr key={item}
                                 style={rowStyle}
-                                className={`row ${getClassesString(classCandidates)}`}
-                                onClick={() => props.selectItem(item)}>
+                                className={`row ${getClassesString(classCandidates)}`} >
 
                                 <td className="position">{result.position}</td>
-                                <td className="item">{item}</td>
+                                <td className="item" onClick={() => props.selectItem(item)}>{item}</td>
                                 {Object.keys(props.calculatedColumns).map(key =>
                                     <td key={key} className="calculated">{result[key]}</td>
                                 )}

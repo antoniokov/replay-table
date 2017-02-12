@@ -9,7 +9,7 @@ function ItemHistory (props) {
             <thead>
                 <tr>
                     <th className="round">{props.terms.round}</th>
-                    <th className="change">Change</th>
+                    <th className="change">{props.terms.change}</th>
                     <th className="total">{props.terms.total}</th>
                     <th className="position">{props.terms.position}</th>
                 </tr>
