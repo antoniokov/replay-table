@@ -98,10 +98,10 @@ function transformMatchesList(jsonList, params) {
 
     const resultsTable = params.useRoundsNumbers ? roundsResults : rowsResults;
 
-    if (params.terms.startRound) {
+    if (params.addStartRound) {
         const startRoundResults = new Map(itemsNames.map(item => [item, Object.assign({}, initialStats)]));
         resultsTable.unshift(startRoundResults);
-        rowsNames.unshift(params.terms.startRound);
+        rowsNames.unshift(params.addStartRound);
     }
 
     const roundsNames = params.useRoundsNumbers

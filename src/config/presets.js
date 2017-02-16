@@ -18,17 +18,19 @@ export default {
     },
 
     "F1": {
+        inputType: 'pointsTable',
         terms: {
             'round': 'Race',
-            'item': 'Driver',
-            'startRound': 'Start →'
+            'item': 'Driver'
         },
+        addStartRound: 'Start →',
         resultMapping: {
             25: 'win'
         }
     },
 
     "ЧГК": {
+        inputType: 'pointsTable',
         terms: {
             'season': 'Турнир',
             'round': 'Вопрос',

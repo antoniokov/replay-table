@@ -11,12 +11,11 @@ export default {
     terms: {
         default: {
             season: 'Season',
-            changes: 'Changes',
             round: 'Round',
-            startRound: '0',
             position: '#',
             item: 'Team',
             total: 'Points',
+            changes: 'Changes',
             change: 'Change'
         },
         parse: input => parseObject(input),
@@ -78,9 +77,15 @@ export default {
     //Data
 
     inputType: {
-        default: 'pointsTable',
+        default: 'listOfMatches',
         parse: input => input,
         validate: value => transformers.hasOwnProperty(value)
+    },
+
+    addStartRound: {
+        default: '0',
+        parse: input => input === "undefined" ? undefined : input,
+        validate: value => !value || isString(value)
     },
 
     itemsToShow: {
