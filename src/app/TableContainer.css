@@ -358,37 +358,37 @@ html{
 
 @keyframes replay-table-green-fading-100 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(94,179,26,0.7);}
+    50% {background-color: rgba(94,179,26,1);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-green-fading-90 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(94,179,26,0.65);}
+    50% {background-color: rgba(94,179,26,0.9);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-green-fading-80 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(94,179,26,0.6);}
+    50% {background-color: rgba(94,179,26,0.8);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-green-fading-70 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(94,179,26,0.55);}
+    50% {background-color: rgba(94,179,26,0.7);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-green-fading-60 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(94,179,26,0.5);}
+    50% {background-color: rgba(94,179,26,0.6);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-green-fading-50 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(94,179,26,0.45);}
+    50% {background-color: rgba(94,179,26,0.5);}
     100% {background-color: transparent;}
 }
 
@@ -400,51 +400,51 @@ html{
 
 @keyframes replay-table-green-fading-30 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(94,179,26,0.35);}
+    50% {background-color: rgba(94,179,26,0.3);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-green-fading-20 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(94,179,26,0.3);}
+    50% {background-color: rgba(94,179,26,0.2);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-green-fading-10 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(94,179,26,0.25);}
+    50% {background-color: rgba(94,179,26,0.1);}
     100% {background-color: transparent;}
 }
 
 
 @keyframes replay-table-green-100 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(94,179,26,0.7);}
+    100% {background-color: rgba(94,179,26,1);}
 }
 
 @keyframes replay-table-green-90 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(94,179,26,0.65);}
+    100% {background-color: rgba(94,179,26,0.9);}
 }
 
 @keyframes replay-table-green-80 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(94,179,26,0.6);}
+    100% {background-color: rgba(94,179,26,0.8);}
 }
 
 @keyframes replay-table-green-70 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(94,179,26,0.55);}
+    100% {background-color: rgba(94,179,26,0.7);}
 }
 
 @keyframes replay-table-green-60 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(94,179,26,0.5);}
+    100% {background-color: rgba(94,179,26,0.6);}
 }
 
 @keyframes replay-table-green-50 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(94,179,26,0.45);}
+    100% {background-color: rgba(94,179,26,0.5);}
 }
 
 @keyframes replay-table-green-40 {
@@ -454,12 +454,12 @@ html{
 
 @keyframes replay-table-green-30 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(94,179,26,0.35);}
+    100% {background-color: rgba(94,179,26,0.3);}
 }
 
 @keyframes replay-table-green-20 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(94,179,26,0.3);}
+    100% {background-color: rgba(94,179,26,0.2);}
 }
 
 @keyframes replay-table-green-10 {
@@ -471,37 +471,37 @@ html{
 
 @keyframes replay-table-red-fading-100 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(179,82,82,0.7);}
+    50% {background-color: rgba(179,82,82,1);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-red-fading-90 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(179,82,82,0.65);}
+    50% {background-color: rgba(179,82,82,0.9);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-red-fading-80 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(179,82,82,0.6);}
+    50% {background-color: rgba(179,82,82,0.8);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-red-fading-70 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(179,82,82,0.55);}
+    50% {background-color: rgba(179,82,82,0.7);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-red-fading-60 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(179,82,82,0.5);}
+    50% {background-color: rgba(179,82,82,0.6);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-red-fading-50 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(179,82,82,0.45);}
+    50% {background-color: rgba(179,82,82,0.5);}
     100% {background-color: transparent;}
 }
 
@@ -513,13 +513,13 @@ html{
 
 @keyframes replay-table-red-fading-30 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(179,82,82,0.35);}
+    50% {background-color: rgba(179,82,82,0.3);}
     100% {background-color: transparent;}
 }
 
 @keyframes replay-table-red-fading-20 {
     0% {background-color: transparent;}
-    50% {background-color: rgba(179,82,82,0.3);}
+    50% {background-color: rgba(179,82,82,0.2);}
     100% {background-color: transparent;}
 }
 
@@ -532,32 +532,32 @@ html{
 
 @keyframes replay-table-red-100 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(179,82,82,0.7);}
+    100% {background-color: rgba(179,82,82,1);}
 }
 
 @keyframes replay-table-red-90 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(179,82,82,0.65);}
+    100% {background-color: rgba(179,82,82,0.9);}
 }
 
 @keyframes replay-table-red-80 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(179,82,82,0.6);}
+    100% {background-color: rgba(179,82,82,0.8);}
 }
 
 @keyframes replay-table-red-70 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(179,82,82,0.55);}
+    100% {background-color: rgba(179,82,82,0.7);}
 }
 
 @keyframes replay-table-red-60 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(179,82,82,0.5);}
+    100% {background-color: rgba(179,82,82,0.6);}
 }
 
 @keyframes replay-table-red-50 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(179,82,82,0.45);}
+    100% {background-color: rgba(179,82,82,0.5);}
 }
 
 @keyframes replay-table-red-40 {
@@ -567,12 +567,12 @@ html{
 
 @keyframes replay-table-red-30 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(179,82,82,0.35);}
+    100% {background-color: rgba(179,82,82,0.3);}
 }
 
 @keyframes replay-table-red-20 {
     0% {background-color: transparent;}
-    100% {background-color: rgba(179,82,82,0.3);}
+    100% {background-color: rgba(179,82,82,0.2);}
 }
 
 @keyframes replay-table-red-10 {

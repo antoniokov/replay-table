@@ -13,11 +13,19 @@ function calculateColorIntensity (change, maxChange) {
 }
 
 export function getRowColor (change, maxAbsChange) {
+    if (change === null) {
+        return null;
+    }
+
     const color = change >= 0 ? 'green' : 'red';
     return `rgba(${colors[color]},${calculateColorIntensity(change, maxAbsChange)})`;
 }
 
 export function getRowAnimation (change, maxAbsChange, animationDuration, isFading = true) {
+    if (change === null) {
+        return null;
+    }
+
     const color = change >= 0 ? 'green' : 'red';
     const intensity = 100*calculateColorIntensity(change, maxAbsChange);
     return `replay-table-${color}${isFading ? '-fading' : ''}-${intensity} ${animationDuration}ms`;

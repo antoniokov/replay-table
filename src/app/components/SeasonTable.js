@@ -49,7 +49,7 @@ function SeasonTable (props) {
                         const rowStyle = {};
 
                         if (props.isMoving) {
-                            if (props.round.meta.areAllResultsMapped && props.areRoundsConsecutive) {
+                            if (props.round.meta.areAllResultsMapped && props.areRoundsConsecutive && result.change !== null) {
                                 rowStyle.animation = `replay-table-${result.result} ${props.animationDuration}ms`;
                             } else {
                                 const isFading = props.mode === 'season' || !props.areRoundsConsecutive;
