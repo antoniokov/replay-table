@@ -71,7 +71,7 @@ function SeasonTable (props) {
                                 className={`row ${getClassesString(classCandidates)}`} >
 
                                 <td className="position">{result.position}</td>
-                                <td className="item" onClick={() => props.selectItem(item)}>{item}</td>
+                                <td className="item link" onClick={() => props.selectItem(item)}>{item}</td>
                                 {Object.keys(props.calculatedColumns).map(key =>
                                     <td key={key} className="calculated">{result[key]}</td>
                                 )}

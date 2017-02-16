@@ -7,7 +7,6 @@ import toCamelCase from '../auxiliary/toCamelCase';
 export default class Config {
     constructor (userConfig) {
         this.userConfig = userConfig;
-        console.log(userConfig.tableName);
 
         this.setDefaults()
             .setPreset()
@@ -89,8 +88,6 @@ export default class Config {
         const oldTerms = Object.keys(this.obj)
             .filter(param => param.endsWith('Name') && !['tableName'].includes(param))
             .reduce((obj, term) => Object.assign(obj, { [term.slice(0, -4)]: this.obj[term] }), {});
-
-        console.log(oldTerms);
 
         this.obj.terms = Object.assign({},
             parameters.terms.default,

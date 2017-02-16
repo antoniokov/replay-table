@@ -3,7 +3,7 @@ Replay Table
 
 Transforms a csv file with season results into interactive standings:
 
-![demo](https://s3-us-west-2.amazonaws.com/replay-table/images/github/demo.gif)
+![demo](https://s3-us-west-2.amazonaws.com/replay-table/images/github/demo2.gif)
 
 ## Live Demos
 

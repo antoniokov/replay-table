@@ -28,10 +28,9 @@ function ItemHistory (props) {
                     return (
                         <tr key={roundMeta.name}
                             style={rowStyle}
-                            className={`replay-table-row ${getClassesString(classCandidates)}`}
-                            onClick={() => props.selectRound(i+1)} >
+                            className={`replay-table-row ${getClassesString(classCandidates)}`} >
 
-                            <td className="round">{roundMeta.name}</td>
+                            <td className="round link" onClick={() => props.selectRound(i+1)}>{roundMeta.name}</td>
                             <td className="change">{getPrintableNumber(result.change, true)}</td>
                             <td className="total">{result.total}</td>
                             <td className="position">{result.position}</td>

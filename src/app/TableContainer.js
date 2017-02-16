@@ -64,17 +64,18 @@ class TableContainer extends Component {
     handlePlayButton () {
         if (this.state.isPlaying) {
             this.setState({ isPlaying: false });
-        } else {
-            this.setState({ isPlaying: true, mode: 'season' }, () => {
-                if (this.state.currentRound === this.props.lastRound) {
-                    const timeout = this.props.showChangeDuringAnimation ? this.props.animationDuration*2 : this.props.animationDuration;
-                    Promise.resolve(this.goToRound(0))
-                        .then(() => setTimeout(this.play.bind(this), timeout))
-                } else {
-                    this.play.bind(this)()
-                }
-            });
+            return;
         }
+
+        this.setState({ isPlaying: true, mode: 'season' }, () => {
+            if (this.state.currentRound === this.props.lastRound) {
+                const timeout = this.props.showChangeDuringAnimation ? this.props.animationDuration*2 : this.props.animationDuration;
+                Promise.resolve(this.goToRound(0))
+                    .then(() => setTimeout(this.play.bind(this), 1.5*timeout))
+            } else {
+                this.play.bind(this)()
+            }
+        });
     }
 
     selectItem (item) {
@@ -139,6 +140,7 @@ class TableContainer extends Component {
                             <Matches
                                 firstColumn={[...round.results.values()].map(result => result.position)}
                                 results={[...round.results.entries()]}
+                                itemsToShow={this.props.itemsToShow}
                                 selectItem={this.selectItem.bind(this)}/>
                         );
                     default:
@@ -155,6 +157,7 @@ class TableContainer extends Component {
                                     .map(round => [currentItem, round.results.get(currentItem)])
                                     .filter(([item, result]) => result.match !== null)}
                                 locationFirst={this.props.locationFirst}
+                                itemsToShow={this.props.itemsToShow}
                                 selectItem={this.selectItem.bind(this)}
                                 selectRound={this.selectRound.bind(this)}/>
                         );
