@@ -39,17 +39,17 @@ function transformMatchesList(jsonList, params) {
         const rowResults = new Map();
         matches.filter(match => match[0] === round)
             .forEach(match => {
-                const homeTeamResult = {
+                const firstTeamResult = {
                     name: match[1],
                     match: {
-                        location: 'home',
+                        location: params.locationFirst,
                         score: Number.parseInt(match[2], 10),
                         opponent: match[3],
                         opponentScore: Number.parseInt(match[4], 10)
                     }
                 };
 
-                [homeTeamResult, flipMatchResults(homeTeamResult)].forEach(teamResult => {
+                [firstTeamResult, flipMatchResults(firstTeamResult)].forEach(teamResult => {
                     const stats = itemsCurrentStats.get(teamResult.name);
 
                     stats.rounds++;
