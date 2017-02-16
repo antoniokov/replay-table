@@ -44,8 +44,8 @@ Also feel free to embed ready-to-use Replay Tables from our [gallery](https://re
 
 ## Customization
 * [Input](#input)
-  * [Points Table](#points-table)
   * [List of Matches](#list-of-matches)
+  * [Points Table](#points-table)
 * [Table Structure](#table-structure)
   * [Position](#position)
   * [Item](#item)
@@ -65,6 +65,8 @@ Also feel free to embed ready-to-use Replay Tables from our [gallery](https://re
   * [Other](#other)
 
 ## Input
+
+Replay Table only supports csv files for now. Please, use comma as separator and UTF-8 as encoding.
 
 ### List of Matches
 
@@ -88,13 +90,11 @@ The Premier League example ([csv](https://replaytable.com/assets/csv/football/20
 Watch the [live demo](https://replaytable.com/#english-premier-league).
 
 Parameters:
-* [`addStartRound`](#addStartRound)
-* [`useRoundsNumbers`](#useRoundsNumbers)
-* [`locationFirst`](#locationFirst)
+* [`addStartRound`](#addstartround)
+* [`useRoundsNumbers`](#useroundsnumbers)
+* [`locationFirst`](#locationfirst)
 
 [Modes](#modes): `season`, `round` (matches), `item`.
-
-Please, use comma as separator and UTF-8 as encoding.
 
 ### Points Table
 
@@ -116,12 +116,10 @@ The Formula One example ([csv](https://replaytable.com/assets/csv/formula-one/20
 Watch the [live demo](https://replaytable.com/#formula-one-drivers).
 
 Parameters:
-* [`addStartRound`](#addStartRound)
+* [`addStartRound`](#addstartround)
 * [`extraColumnsNumber`](#extracolumnsnumber)
 
 [Modes](#modes): `season`, `changes`, `item`.
- 
-Please, use comma as separator and UTF-8 as encoding.
 
 ## Table Structure
 
@@ -156,7 +154,7 @@ Predefined calculated columns with stats.
 |-------------------|-------------------|-------------------|
 | Yes |  `81, 71, 70,...`<br/>`.890, .817, .671,...` | [`terms`](#terms)<br/>[`totalValue`](#totalvalue)<br/>[`resultMapping`](#resultmapping) |
 
-Table is sorted using this column. When totals are equal position is determined by [`positionWhenTied`](#positionWhenTied) parameter.
+Table is sorted using this column. When totals are equal position is determined by [`positionWhenTied`](#positionwhentied) parameter.
 
 ### Change
 | Required | Examples | Customization |
@@ -192,7 +190,7 @@ Watch the [NBA demo](https://replaytable.com/examples/basketball/2015-2016/#nba-
 |-----------|-------|
 | [`inputType`](#inputtype) | `pointsTable` |
 | [`terms`](#terms) | `{ 'round': 'Race', 'item': 'Driver' }` |
-| [`addStartRound`](#addStartRound) | `Start →` |
+| [`addStartRound`](#addstartround) | `Start →` |
 | [`resultMapping`](#resultmapping) | `{ 25: win}` |
 
 Watch the [2016 season demo](https://replaytable.com/examples/formula-one/2016/#formula-one-drivers).
@@ -205,7 +203,7 @@ This is for the [intellectual game](https://en.wikipedia.org/wiki/What%3F_Where%
 |-----------|-------|
 | [`inputType`](#inputtype) | `pointsTable` |
 | [`terms`](#terms) | `{ 'season': 'Турнир', 'round': 'Вопрос', 'changes': 'Вопрос', 'position': 'Место', 'item': 'Команда', 'total': 'Взято', 'change': 'Вопрос' }` |
-| [`positionWhenTied`](#positionWhenTied) | `range` |
+| [`positionWhenTied`](#positionwhentied) | `range` |
 | [`resultMapping`](#resultmapping) | `{ 1: 'win', 0: ' ' }` |
 
 Watch the [2016 World Championship demo](https://replaytable.com/examples/chgk/2015-2016/#world-championship).
@@ -228,7 +226,7 @@ It is possible to use this options together with a [preset](#presets): in this c
   * [calculatedColumns](#calculatedcolumns)
   * [useRoundsNumbers](#useroundsnumbers)
   * [roundsTotalNumber](#roundstotalnumber)
-  * [positionWhenTied](#positionWhenTied)
+  * [positionWhenTied](#positionwhentied)
   * [tableName](#tablename)
 * [Behaviour](#behaviour)
   * [startFromRound](#startfromround)
@@ -326,9 +324,10 @@ Calculates additional stats about items' perfomance. Available metrics are:
 |---------------|---------------|---------------|----------|
 | `data-use-rounds-numbers` |  `Boolean` | `false` | `true` |
 
-If set to `true` ignores rounds' names and uses numbers.
+If set to `true` ignores rounds' names and counts the number of rounds passed for each item.
 
-It is useful when you have [list Of matches](#list-of-matches) where rows are dates but you don't care that teams didn't play their Nth game simultaneously.
+This is useful when you have [list Of matches](#list-of-matches) 
+where rows are dates but you don't care that teams didn't play their Nth game simultaneously.
 
 ### `roundsTotalNumber`
 | Div attribute | Accepted type | Default value | Examples |
@@ -359,7 +358,7 @@ Determines position when totals are equal.
 
 Typically a home team goes first in Europe and second in the USA. 
 This parameter is used in parsing [`list of matches`](#list-of-matches), showing match results
-and calculating home-away related `calculatedColumns`(#calculatedColumns).
+and calculating home-away related [`calculatedColumns`](#calculatedColumns).
 
 
 ### `tableName`
