@@ -32,7 +32,7 @@ html{
 }
 
 .replay-table-wrap{
-    margin-bottom: 8rem;
+    margin-bottom: 2rem;
     float: left;
     min-width: 30rem;
 }
@@ -286,18 +286,19 @@ html{
     border-bottom: 1px dotted rgba(0,0,0,0.05);
 }
 
-.replayTable .r-table.matches,
 .replayTable .r-table.matches{
     margin-top: 28px;
+    /*table-layout: fixed;*/
 }
-.replayTable  .r-table.item-history td.round:hover,
-.replayTable .r-table.season td.item:hover,
-.replayTable .r-table.matches td.team:hover{
+.replayTable  .r-table td.link:hover{
     text-decoration: underline;
     cursor: pointer;
 }
 .replayTable .r-table.matches .team{
     text-align: right;
+}
+.replayTable .r-table .team{
+    width: 40%;
 }
 .replayTable .r-table.matches .team:last-child{
     text-align: left;
