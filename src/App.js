@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import { parse } from 'babyparse';
-import Config from './config/Config';
+import Config from './config/сonfig';
 import { transform } from './transformers/transform';
 import TableContainer from './app/TableContainer';
 
