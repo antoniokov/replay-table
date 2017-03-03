@@ -124,7 +124,7 @@ class TableContainer extends Component {
 
                 showProgressBar={this.props.showProgressBar}
                 progressBarValue={this.state.currentRound}
-                progressBarMaxValue={this.props.roundsTotalNumber || this.props.resultsTable.length - 1}
+                progressBarMaxValue={this.props.roundsTotalNumber}
 
                 tableName={this.props.tableName} />
         );

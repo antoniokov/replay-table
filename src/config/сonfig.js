@@ -113,6 +113,11 @@ export default class Config {
             .filter(round => [...round.results.values()].some(result => result.change !== null))
             .reduce((maxIndex, round) => Math.max(round.meta.index, maxIndex), 0);
 
+        
+        if (!this.obj.roundsTotalNumber) {
+            this.obj.roundsTotalNumber = data.roundsNames.length - 1;
+        }
+
         this.obj.startFromRound = this.obj.startFromRound || this.obj.lastRound;
 
         return this;

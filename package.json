@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "gh-pages": "^0.12.0",
-    "react-scripts": "0.7.0"
+    "react-scripts": "0.9.3"
   },
   "dependencies": {
     "babyparse": "^0.4.6",
