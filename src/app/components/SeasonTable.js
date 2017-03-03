@@ -1,7 +1,7 @@
 import React from 'react';
 import FlipMove from 'react-flip-move';
-import getPrintableNumber from '../../auxiliary/getPrintableNumber';
-import { getRowColor, getRowAnimation, getClassesString } from './auxiliary/styling';
+import getPrintableNumber from '../../helpers/getPrintableNumber';
+import { getRowColor, getRowAnimation, getClassesString } from './helpers/styling';
 
 
 function getTotalText (mode, shouldAnimateChange, change, roundChange, total) {
@@ -26,11 +26,11 @@ function SeasonTable (props) {
             <tr>
                 <th className="position">{props.terms.position}</th>
                 <th className="item">{props.terms.item}</th>
-                {Object.keys(props.calculatedColumns).map(key => {
-                    return <th key={props.calculatedColumns[key]} className="calculated">{props.calculatedColumns[key]}</th>;
-                })}
                 {props.extraColumnsNames.map(name => {
                     return <th className="extra" key={name}>{name}</th>;
+                })}
+                {Object.keys(props.calculatedColumns).map(key => {
+                    return <th key={props.calculatedColumns[key]} className="calculated">{props.calculatedColumns[key]}</th>;
                 })}
                 <th className="total">{props.terms.total}</th>
             </tr>
@@ -72,11 +72,11 @@ function SeasonTable (props) {
 
                                 <td className="position">{result.position}</td>
                                 <td className="item link" onClick={() => props.selectItem(item)}>{item}</td>
-                                {Object.keys(props.calculatedColumns).map(key =>
-                                    <td key={key} className="calculated">{result[key]}</td>
-                                )}
                                 {props.extraColumnsNames.map(name =>
                                     <td key={name} className="extra">{result.extras[name]}</td>
+                                )}
+                                {Object.keys(props.calculatedColumns).map(key =>
+                                    <td key={key} className="calculated">{result[key]}</td>
                                 )}
                                 <td className="total">{getTotalText(props.mode, shouldAnimateChange,
                                     props.changes.get(item), result.change, result.total)}</td>

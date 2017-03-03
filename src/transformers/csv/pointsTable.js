@@ -1,6 +1,6 @@
-import transpose from '../../auxiliary/transpose';
-import pluralizeResultName from '../auxiliary/pluralizeResultName';
-import calculateTotal from '../auxiliary/calculateTotal';
+import transpose from '../../helpers/transpose';
+import pluralizeResultName from '../helpers/pluralizeResultName';
+import calculateTotal from '../helpers/calculateTotal';
 
 
 const initialStats = {
@@ -11,15 +11,11 @@ const initialStats = {
     rounds: 0,
     wins: 0,
     losses: 0,
-    draws: 0
+    draws: 0,
+
+    rating: 0
 };
 
-
-function addExtras (results, extraColumnsNames, extraColumns) {
-    results.forEach(round => round.forEach((result, item) => {
-            result.extras = extraColumns.reduce((obj, col, i) => Object.assign(obj, { [extraColumnsNames[i]]: col.get(item) }), {});
-        }));
-}
 
 function transformChangesTable(jsonTable, params) {
     const offset = (params['extraColumnsNumber'] || 0) + 1;
@@ -52,7 +48,7 @@ function transformChangesTable(jsonTable, params) {
             }
 
             stats.result = params['resultMapping'][stats.change];
-            if (stats.result) {
+            if (stats.result && stats.result !== ' ') {
                 stats[pluralizeResultName(stats.result)]++;
             }
 
@@ -69,9 +65,25 @@ function transformChangesTable(jsonTable, params) {
         roundsNames.unshift(params.addStartRound);
     }
 
-    if (params['extraColumnsNumber']) {
-        addExtras(resultsTable, extraColumnsNames, extraColumns);
+    if (params.extraColumnsNumber) {
+        resultsTable.forEach(round => round.forEach((result, item) => {
+            result.extras = extraColumns.reduce((obj, col, i) => Object.assign(obj, { [extraColumnsNames[i]]: col.get(item) }), {});
+        }));
     }
+
+    if (Object.keys(params.calculatedColumns).includes('rating')) {
+        const ratingStats = itemsNames.reduce((obj, name) => Object.assign(obj, { [name]: 0 }), {});
+        resultsTable.forEach(round => {
+            const roundRating = itemsNames.length - [...round.values()].reduce((sum, stats) => sum + (stats.change || 0), 0) + 1;
+            round.forEach((result, item) => {
+                if (result.result === 'win') {
+                    ratingStats[item]+= roundRating;
+                }
+                result.rating = ratingStats[item];
+            });
+        });
+    }
+
 
     return {
         status: 'success',

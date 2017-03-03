@@ -1,6 +1,6 @@
 import React from 'react';
-import getPrintableNumber from '../../auxiliary/getPrintableNumber.js';
-import { getRowColor, getClassesString } from './auxiliary/styling';
+import getPrintableNumber from '../../helpers/getPrintableNumber.js';
+import { getRowColor, getClassesString } from './helpers/styling';
 
 
 function ItemHistory (props) {

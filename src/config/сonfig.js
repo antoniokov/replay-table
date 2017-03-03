@@ -1,7 +1,7 @@
 import parameters from './parameters';
 import presets from './presets';
 import inputs from './inputs';
-import toCamelCase from '../auxiliary/toCamelCase';
+import toCamelCase from '../helpers/toCamelCase';
 
 
 export default class Config {
@@ -113,7 +113,7 @@ export default class Config {
             .filter(round => [...round.results.values()].some(result => result.change !== null))
             .reduce((maxIndex, round) => Math.max(round.meta.index, maxIndex), 0);
 
-        
+
         if (!this.obj.roundsTotalNumber) {
             this.obj.roundsTotalNumber = data.roundsNames.length - 1;
         }

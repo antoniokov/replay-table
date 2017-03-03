@@ -1,6 +1,7 @@
-import stableSort from '../auxiliary/stableSort';
-import calculatePositions from './auxiliary/calculatePositions';
-import addRoundMetadata from './auxiliary/addRoundMetadata';
+import stableSort from '../helpers/stableSort';
+import comparePositions from './helpers/comparePositions';
+import calculatePositions from './helpers/calculatePositions';
+import addRoundMetadata from './helpers/addRoundMetadata';
 
 import transformChangesTable from './csv/pointsTable';
 import transformListOfMatches from './csv/listOfMatches';
@@ -10,9 +11,9 @@ export const transformers = {
     'listOfMatches': transformListOfMatches
 };
 
-export function transform (input, data, config) {
-    if(transformers.hasOwnProperty(input)) {
-        const resultObject = transformers[input](data, config);
+export function transform (inputType, data, config) {
+    if(transformers.hasOwnProperty(inputType)) {
+        const resultObject = transformers[inputType](data, config);
 
         if(config.itemsToShow) {
             resultObject.resultsTable = resultObject.resultsTable
@@ -20,15 +21,15 @@ export function transform (input, data, config) {
         }
 
         resultObject.resultsTable = resultObject.resultsTable
-            .map(round => new Map(stableSort([...round.entries()], (a,b) => b[1].total - a[1].total)))
-            .map(round => calculatePositions(round, config.positionWhenTied))
+            .map(round => new Map(stableSort([...round.entries()], comparePositions(config.tieBreaking))))
+            .map(round => calculatePositions(round, config.positionWhenTied, config.tieBreaking))
             .map((round, i) => addRoundMetadata(round, resultObject.roundsNames[i], i));
 
         return resultObject;
     } else {
         return {
             status: 'error',
-            errorMessage: `No input for input ${input}`
+            errorMessage: `No input for input ${inputType}`
         }
     }
 }

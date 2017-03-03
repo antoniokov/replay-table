@@ -1,9 +1,9 @@
-import flipObject from '../../auxiliary/flipObject';
-import flipMatchResults from '../auxiliary/flipMatchResults';
-import getResultName from '../auxiliary/getResultName';
-import pluralizeResultName from '../auxiliary/pluralizeResultName';
-import getPrintableNumber from '../../auxiliary/getPrintableNumber';
-import calculateTotal from '../auxiliary/calculateTotal';
+import flipObject from '../../helpers/flipObject';
+import flipMatchResults from '../helpers/flipMatchResults';
+import getResultName from '../helpers/getResultName';
+import pluralizeResultName from '../helpers/pluralizeResultName';
+import getPrintableNumber from '../../helpers/getPrintableNumber';
+import calculateTotal from '../helpers/calculateTotal';
 
 
 const initialStats = {

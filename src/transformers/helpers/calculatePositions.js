@@ -1,4 +1,7 @@
-export default function calculatePositions (round, positionWhenTied = 'previous round') {
+import comparePositions from './comparePositions';
+
+
+export default function calculatePositions (round, positionWhenTied, tieBreaking) {
     const newRound = new Map(round);
     [...newRound.entries()].forEach(([item, result], i) => {
         if(positionWhenTied === 'previous round') {
@@ -6,12 +9,15 @@ export default function calculatePositions (round, positionWhenTied = 'previous 
             return;
         }
 
-        const itemsHigher = [...round.values()].filter(res => res.total > result.total).length;
+        const itemsHigher = [...round.entries()]
+            .filter(entry => comparePositions(tieBreaking)(entry, [item, result]) < 0).length;
 
         if (positionWhenTied === 'highest') {
             result.position = itemsHigher + 1;
         } else if (positionWhenTied === 'range') {
-            const itemsEqual = [...round.values()].filter(res => res.total === result.total).length - 1;
+            const itemsEqual = [...round.entries()]
+                .filter(entry => comparePositions(tieBreaking)(entry, [item, result]) === 0).length - 1;
+
             if (itemsEqual) {
                 result.position = `${itemsHigher + 1}-${itemsHigher + itemsEqual + 1}`
             } else {

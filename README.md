@@ -226,6 +226,7 @@ It is possible to use this options together with a [preset](#presets): in this c
   * [calculatedColumns](#calculatedcolumns)
   * [useRoundsNumbers](#useroundsnumbers)
   * [roundsTotalNumber](#roundstotalnumber)
+  * [tieBreaking](#tiebreaking)
   * [positionWhenTied](#positionwhentied)
   * [tableName](#tablename)
 * [Behaviour](#behaviour)
@@ -318,6 +319,7 @@ Calculates additional stats about items' perfomance. Available metrics are:
 * `goalsFor`
 * `goalsAgainst`
 * `goalsDifference`
+* `rating` (for [ЧГК](#чгк) preset)
 
 ### `useRoundsNumbers`
 | Div attribute | Accepted type | Default value | Examples |
@@ -337,6 +339,14 @@ where rows are dates but you don't care that teams didn't play their Nth game si
 Helps to determine the correct value of the progress bar if season is not over yet.
 
 When set to `undefined` counts the number of rounds with at least one result.
+
+### `tieBreaking`
+| Div attribute | Accepted type | Default value | Examples |
+|---------------|---------------|---------------|----------|
+| `data-tie-breaking` |  `Comma-separated string` | `` | `wins`, `goalsDifference,goalsFor` |
+
+Breaks a tie when totals are equal.
+Accepts a list of [`calculatedColumns`](#calculcatedcolumns) with the most important one being first.
 
 ### `positionWhenTied`
 | Div attribute | Available options | Default value |
@@ -358,7 +368,7 @@ Determines position when totals are equal.
 
 Typically a home team goes first in Europe and second in the USA. 
 This parameter is used in parsing [`list of matches`](#list-of-matches), showing match results
-and calculating home-away related [`calculatedColumns`](#calculatedColumns).
+and calculating home-away related [`calculatedColumns`](#calculatedcolumns).
 
 
 ### `tableName`

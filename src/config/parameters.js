@@ -1,8 +1,8 @@
 import { transformers } from '../transformers/transform';
-import isString from '../auxiliary/isString';
-import parseObject from '../auxiliary/parseObject';
-import validateObject from '../auxiliary/validateObject';
-import validateTerm from '../auxiliary/validateTerm';
+import isString from '../helpers/isString';
+import parseObject from '../helpers/parseObject';
+import validateObject from '../helpers/validateObject';
+import validateTerm from '../helpers/validateTerm';
 
 
 //https://github.com/TargetProcess/replayTable#parameters
@@ -120,7 +120,7 @@ export default {
         default: {},
         parse: input => parseObject(input),
         validate: obj => validateObject(obj, key => ['rounds', 'wins', 'losses', 'draws',
-                'goalsFor', 'goalsAgainst', 'goalsDifference'].includes(key), value => isString(value))
+                'goalsFor', 'goalsAgainst', 'goalsDifference', 'rating'].includes(key), value => isString(value))
     },
 
     useRoundsNumbers: {
@@ -132,10 +132,16 @@ export default {
     roundsTotalNumber: {
         default: undefined,
         parse: input => Number.parseInt(input, 10),
-        validate: value => value === undefined || !Number.isNaN(value),
+        validate: value => value === undefined || !Number.isNaN(value)
     },
 
-    //tieBreaking!
+    tieBreaking: {
+        default: [],
+        parse: input => input.split(','),
+        validate: value => Array.isArray(value) &&
+            value.every(item => ['rounds', 'wins', 'losses', 'draws',
+                'goalsFor', 'goalsAgainst', 'goalsDifference', 'rating'].includes(item))
+    },
 
     positionWhenTied: {
         default: 'previous round',
