@@ -1,7 +1,7 @@
 import stableSort from '../helpers/stableSort';
 import comparePositions from './helpers/comparePositions';
 import calculatePositions from './helpers/calculatePositions';
-import addRoundMetadata from './helpers/addRoundMetadata';
+import addRoundMeta from './helpers/addRoundMeta';
 
 import transformChangesTable from './csv/pointsTable';
 import transformListOfMatches from './csv/listOfMatches';
@@ -23,7 +23,7 @@ export function transform (inputType, data, config) {
         resultObject.resultsTable = resultObject.resultsTable
             .map(round => new Map(stableSort([...round.entries()], comparePositions(config.tieBreaking))))
             .map(round => calculatePositions(round, config.positionWhenTied, config.tieBreaking))
-            .map((round, i) => addRoundMetadata(round, resultObject.roundsNames[i], i));
+            .map((round, i) => addRoundMeta(round, resultObject.roundsNames[i], i));
 
         return resultObject;
     } else {

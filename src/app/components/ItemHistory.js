@@ -4,12 +4,16 @@ import { getRowColor, getClassesString } from './helpers/styling';
 
 
 function ItemHistory (props) {
+    const areAllResultsMapped = props.results.every(([roundMeta, result]) => roundMeta.areAllResultsMapped);
+
     return (
         <table className="r-table item-history">
             <thead>
                 <tr>
                     <th className="round">{props.terms.round}</th>
-                    <th className="change">{props.terms.change}</th>
+                    {areAllResultsMapped ? null :
+                        <th className="change">{props.terms.change}</th>
+                    }
                     <th className="total">{props.terms.total}</th>
                     <th className="position">{props.terms.position}</th>
                 </tr>
@@ -19,10 +23,17 @@ function ItemHistory (props) {
                     const classCandidates = [];
                     const rowStyle = {};
 
-                    if (roundMeta.areAllResultsMapped) {
+                    if (roundMeta.areAllResultsMapped && !props.roundColorCoding) {
                         classCandidates.push({ condition: true, class: result.result });
                     } else {
-                        rowStyle.backgroundColor = getRowColor(result.change, roundMeta.maxAbsChange);
+                        switch (props.roundColorCoding) {
+                            case 'rating':
+                                console.log(roundMeta);
+                                rowStyle.backgroundColor = getRowColor(result.result === 'win' ? roundMeta.changesSum : -roundMeta.changesSum, roundMeta.itemsParticipated);
+                                break;
+                            default:
+                                rowStyle.backgroundColor = getRowColor(result.change, roundMeta.maxAbsChange);
+                        }
                     }
 
                     return (
@@ -31,7 +42,9 @@ function ItemHistory (props) {
                             className={`replay-table-row ${getClassesString(classCandidates)}`} >
 
                             <td className="round link" onClick={() => props.selectRound(i+1)}>{roundMeta.name}</td>
-                            <td className="change">{getPrintableNumber(result.change, true)}</td>
+                            {areAllResultsMapped ? null :
+                                <td className="change">{getPrintableNumber(result.change, true)}</td>
+                            }
                             <td className="total">{result.total}</td>
                             <td className="position">{result.position}</td>
                         </tr>

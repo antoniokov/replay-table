@@ -346,7 +346,10 @@ When set to `undefined` counts the number of rounds with at least one result.
 | `data-tie-breaking` |  `Comma-separated string` | `` | `wins`, `goalsDifference,goalsFor` |
 
 Breaks a tie when totals are equal.
+
 Accepts a list of [`calculatedColumns`](#calculcatedcolumns) with the most important one being first.
+They don't need to be visible so you can use this parameter independently from [`calculatedColumns`](#calculcatedcolumns).
+
 
 ### `positionWhenTied`
 | Div attribute | Available options | Default value |

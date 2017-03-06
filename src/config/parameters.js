@@ -202,5 +202,11 @@ export default {
         default: [],
         parse: input => input.split(','),
         validate: value => Array.isArray(value) && value.every(item => isString(item))
+    },
+
+    roundColorCoding: {
+        default: undefined,
+        parse: input => input,
+        validate: value => !value || ['rating'].includes(value)
     }
 };

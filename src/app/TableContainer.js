@@ -102,7 +102,7 @@ class TableContainer extends Component {
             selectedOption = this.state.selectedItem || round.meta.leader;
             selectOption = (option) => this.setState({selectedItem: option});
         } else {
-            options = roundsNames;
+            options = roundsNames.slice(0, this.props.lastRound + 1);
             selectedOption = round.meta.name;
             selectOption = (option) => this.goToRound.bind(this)(roundsNames.indexOf(option))
         }
@@ -152,7 +152,8 @@ class TableContainer extends Component {
                     case 'matches':
                         return (
                             <Matches
-                                firstColumn={this.props.resultsTable.map(round => round.meta.name).slice(1)}
+                                firstColumn={this.props.resultsTable.slice(1)
+                                    .map(round => round.meta.name)}
                                 results={this.props.resultsTable
                                     .map(round => [currentItem, round.results.get(currentItem)])
                                     .filter(([item, result]) => result.match !== null)}
@@ -165,8 +166,11 @@ class TableContainer extends Component {
                         return (
                             <ItemHistory
                                 terms={this.props.terms}
-                                results={this.props.resultsTable.map(round => [round.meta, round.results.get(currentItem)]).slice(1)}
-                                selectRound={this.selectRound.bind(this)}/>
+                                results={this.props.resultsTable
+                                    .slice(this.props.addStartRound ? 1 : 0, this.props.lastRound + 1)
+                                    .map(round => [round.meta, round.results.get(currentItem)])}
+                                selectRound={this.selectRound.bind(this)}
+                                roundColorCoding={this.props.roundColorCoding}/>
                         );
                 }
             default:
@@ -186,7 +190,7 @@ class TableContainer extends Component {
                         isMoving={this.state.isMoving}
 
                         selectItem={this.selectItem.bind(this)}
-                        isFocused={item => this.state.focusedItems.size === 0 || this.state.focusedItems.has(item)}
+                        checkFocus={item => this.state.focusedItems.size === 0 || this.state.focusedItems.has(item)}
 
                         animationDuration={this.props.animationDuration}
                         showChangeDuringAnimation={this.props.showChangeDuringAnimation}/>

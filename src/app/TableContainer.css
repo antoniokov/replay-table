@@ -340,24 +340,39 @@ html{
     background-color: rgba(255,158,158,0.2);
 }
 
-@keyframes replay-table-win {
+@keyframes replay-table-win-fading {
     0% {background-color: transparent;}
     50% {background-color: rgba(170,255,102,0.2);}
     100% {background-color: transparent;}
 }
 
-@keyframes replay-table-draw {
+@keyframes replay-table-draw-fading {
     0% {background-color: transparent;}
     50% {background-color: rgba(0,0,0,0.05);}
     100% {background-color: transparent;}
 }
 
-@keyframes replay-table-loss {
+@keyframes replay-table-loss-fading {
     0% {background-color: transparent;}
     50% {background-color: rgba(255,158,158,0.2);}
     100% {background-color: transparent;}
 }
 
+
+@keyframes replay-table-win {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(170,255,102,0.2);}
+}
+
+@keyframes replay-table-draw {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(0,0,0,0.05);}
+}
+
+@keyframes replay-table-loss {
+    0% {background-color: transparent;}
+    100% {background-color: rgba(255,158,158,0.2);}
+}
 
 
 @keyframes replay-table-green-fading-100 {

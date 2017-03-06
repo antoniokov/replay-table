@@ -4,13 +4,13 @@ import getPrintableNumber from '../../helpers/getPrintableNumber';
 import { getRowColor, getRowAnimation, getClassesString } from './helpers/styling';
 
 
-function getTotalText (mode, shouldAnimateChange, change, roundChange, total) {
+function getTotalText (mode, shouldAnimateChange, change, roundChange, total, areAllResultsMapped) {
     if (shouldAnimateChange) {
         return getPrintableNumber(change, true);
     } else {
         switch (mode) {
             case 'changes':
-                return getPrintableNumber(roundChange, true);
+                return areAllResultsMapped ? getPrintableNumber(total) : getPrintableNumber(roundChange, true);
             case 'season':
                 return getPrintableNumber(total);
         }
@@ -18,7 +18,9 @@ function getTotalText (mode, shouldAnimateChange, change, roundChange, total) {
 }
 
 function SeasonTable (props) {
-    const shouldAnimateChange = props.isMoving && (props.showChangeDuringAnimation || !props.areRoundsConsecutive);
+    const shouldAnimateChange = props.isMoving &&
+        (props.showChangeDuringAnimation || !props.areRoundsConsecutive) &&
+        props.round.meta.index > 0;
 
     return (
         <table className="r-table season">
@@ -43,16 +45,16 @@ function SeasonTable (props) {
                 {[...props.round.results.entries()]
                     .map(([item, result]) => {
                         const classCandidates = [
-                            { condition: props.isFocused(item), class: 'focus'}
+                            { condition: props.checkFocus(item), class: 'focus'}
                         ];
 
                         const rowStyle = {};
+                        const isFading = props.mode === 'season' || !props.areRoundsConsecutive;
 
-                        if (props.isMoving) {
+                        if (props.isMoving && props.round.meta.index > 0) {
                             if (props.round.meta.areAllResultsMapped && props.areRoundsConsecutive && result.change !== null) {
-                                rowStyle.animation = `replay-table-${result.result} ${props.animationDuration}ms`;
+                                rowStyle.animation = `replay-table-${result.result}${isFading ? '-fading' : ''} ${props.animationDuration}ms`;
                             } else {
-                                const isFading = props.mode === 'season' || !props.areRoundsConsecutive;
                                 const change = props.areRoundsConsecutive ? result.change : props.changes.get(item);
                                 rowStyle.animation = getRowAnimation(change, props.maxAbsChange,
                                     props.animationDuration, isFading);
@@ -79,7 +81,8 @@ function SeasonTable (props) {
                                     <td key={key} className="calculated">{result[key]}</td>
                                 )}
                                 <td className="total">{getTotalText(props.mode, shouldAnimateChange,
-                                    props.changes.get(item), result.change, result.total)}</td>
+                                    props.changes.get(item), result.change, result.total,
+                                    props.round.meta.areAllResultsMapped)}</td>
                             </tr>
                         );
                     })}
