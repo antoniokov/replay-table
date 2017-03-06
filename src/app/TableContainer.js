@@ -167,7 +167,7 @@ class TableContainer extends Component {
                             <ItemHistory
                                 terms={this.props.terms}
                                 results={this.props.resultsTable
-                                    .slice(this.props.addStartRound ? 1 : 0, this.props.lastRound + 1)
+                                    .slice(1, this.props.lastRound + 1)
                                     .map(round => [round.meta, round.results.get(currentItem)])}
                                 selectRound={this.selectRound.bind(this)}
                                 roundColorCoding={this.props.roundColorCoding}/>
