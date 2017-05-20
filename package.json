@@ -2,25 +2,35 @@
   "team": "replay-table",
   "version": "1.0.0",
   "description": "Visualize sport seasons with interactive standings",
-  "keywords": ["visualization", "sport", "season", "standings", "replay", "table", "d3"],
+  "keywords": [
+    "visualization",
+    "sport",
+    "season",
+    "standings",
+    "replay",
+    "table",
+    "d3"
+  ],
   "homepage": "https://replayTable.com",
   "bugs": "https://github.com/TargetProcess/replay-table/issues",
   "license": "MIT",
   "author": {
-  	"name": "Anton Iokov",
-  	"url": "https://github.com/antoniokov"
+    "name": "Anton Iokov",
+    "url": "https://github.com/antoniokov"
   },
   "contributors": [
-  	{
-	  	"name": "Anton Iokov",
-	  	"url": "https://github.com/antoniokov"
-  	},
-  	{
-	  	"name": "Daria Krupenkina",
-	  	"url": "https://github.com/dariak"
-  	}
+    {
+      "name": "Anton Iokov",
+      "url": "https://github.com/antoniokov"
+    },
+    {
+      "name": "Daria Krupenkina",
+      "url": "https://github.com/dariak"
+    }
   ],
-  "main": "dist/replay-table.min.js",
+  "main": "dist/replay-table.js",
+  "unpkg": "dist/replay-table.min.js",
+  "module": "src/replay-table.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/TargetProcess/replay-table"
@@ -37,6 +47,7 @@
     "extract-text-webpack-plugin": "^2.1.0",
     "html-webpack-plugin": "^2.28.0",
     "style-loader": "^0.16.0",
+    "unminified-webpack-plugin": "^1.2.0",
     "webpack": "^2.3.1",
     "webpack-dev-server": "^2.4.2"
   }
