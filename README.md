@@ -192,6 +192,7 @@ Watch the [NBA demo](https://replaytable.com/examples/basketball/2015-2016/#nba-
 | [`terms`](#terms) | `{ 'round': 'Race', 'item': 'Driver' }` |
 | [`addStartRound`](#addstartround) | `Start →` |
 | [`resultMapping`](#resultmapping) | `{ 25: win}` |
+| [`tieBreaking`](#tiebreaking) | `wins` |
 
 Watch the [2016 season demo](https://replaytable.com/examples/formula-one/2016/#formula-one-drivers).
 

@@ -1,0 +1,566 @@
+html{
+    font-family: 'Tahoma', sans-serif;
+}
+
+
+h1 {
+	color: green;
+}
+
+
+.replayTable{
+	position: relative;
+
+	float: left;
+	clear: both;
+
+	margin-bottom: 50px;
+}
+
+
+
+
+
+/* CONTROLS ----------------------------------------------------------------------
+----------------------------------------------------------------------------------------- */
+
+.replayTable > .controls-container{
+	margin-bottom: 30px;
+}
+.replayTable > .controls-container > .controls{}
+.replayTable > .controls-container > .controls.hidden{
+	display: none;
+}
+.replayTable > .controls-container > .controls > div{
+	display: inline-block;
+	vertical-align: bottom;
+	margin-right: 5px;
+	position: relative;
+	cursor: pointer;
+}
+.replayTable > .controls-container > .controls > div.disabled{
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+.replayTable > .controls-container > .controls > .play {
+	width: 14px;
+	height: 14px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border-left: 12px solid #000;
+	border-top: 7px solid transparent;
+	border-bottom: 7px solid transparent;
+	border-right: 0 solid transparent;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.replayTable > .controls-container > .controls > .pause {
+	width: 14px;
+	height: 14px;
+}
+.replayTable > .controls-container > .controls > .pause:before{
+	content: '';
+	display: block;
+	position: absolute;
+	width: 5px;
+	height: 100%;
+	background: #000;
+	left: 0;
+	top: 0;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+.replayTable > .controls-container > .controls > .pause:after{
+	content: '';
+	display: block;
+	position: absolute;
+	width: 5px;
+	height: 100%;
+	background: #000;
+	right: 0;
+	top: 0;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.replayTable > .controls-container > .controls > .replay {
+	width: 10px;
+	height: 10px;
+	border: 2px solid #000;
+
+	-webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
+}
+.replayTable > .controls-container > .controls > .replay:before{
+	content: '';
+	display: block;
+	position: absolute;
+	width: 8px;
+	height: 8px;
+	background: #fff;
+	right: -6px;
+	top: 4px;
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+.replayTable > .controls-container > .controls > .replay:after{
+	content: '';
+	display: block;
+	position: absolute;
+	border: 4px solid transparent;
+	border-top-color: #000;
+	right: -7px;
+	top: 1px;
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+
+.replayTable > .controls-container > .controls > .previous ,
+.replayTable > .controls-container > .controls > .next{
+	width: 14px;
+	height: 14px;
+}
+
+.replayTable > .controls-container > .controls > .previous:before  ,
+.replayTable > .controls-container > .controls > .next:before {
+	content: '';
+	position: absolute;
+	display: block;
+	top: 2px;
+	width: 8px;
+	height: 8px;
+	border-right: 2px solid #000;
+	border-top: 2px solid #000;
+}
+.replayTable > .controls-container > .controls > .previous:before {
+	left: 5px;
+
+	-webkit-transform: rotate(-135deg);
+	-moz-transform: rotate(-135deg);
+	-ms-transform: rotate(-135deg);
+	-o-transform: rotate(-135deg);
+	transform: rotate(-135deg);
+}
+.replayTable > .controls-container > .controls > .next:before {
+	right: 5px;
+	-webkit-transform: rotate(45deg);
+	-moz-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
+}
+
+
+/* SLIDER ----------------------------------------------------------------------
+----------------------------------------------------------------------------------------- */
+
+.replayTable .slider{
+	display: inline-block;
+	margin-left: 20px;
+	width: 230px;
+	position: relative;
+	height: 1px;
+	background: rgba(0,0,0,0.1);
+}
+.replayTable .slider .slider-toggle{
+	position: absolute;
+	display: block;
+	width: auto;
+	white-space: nowrap;
+	padding: 0 2px;
+
+	min-width: 12px;
+	height: 16px;
+	background: #fff;
+	border: 1px solid #999;
+	top: -24px;
+	cursor: pointer;
+	border-radius: 3px;
+	text-align: center;
+	line-height: 17px;
+	font-size: 10px;
+	color: #000;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.replayTable .slider .slider-toggle:before{
+	content: '';
+	position: absolute;
+	bottom: -5px;
+	left: 50%;
+	margin-left: -4px;
+	border-width: 6px 4px 0;
+	border-style: solid;
+	border-color: #fff transparent;
+	display: block;
+	width: 0;
+	z-index: 2;
+}
+.replayTable .slider .slider-toggle:after{
+	content: '';
+	position: absolute;
+	bottom: -7px;
+	left: 50%;
+	margin-left: -4px;
+	border-width: 6px 4px 0;
+	border-style: solid;
+	border-color: #999 transparent;
+	display: block;
+	width: 0;
+
+}
+.replayTable .slider .slider-available{
+	position: absolute;
+	display: block;
+	height: 100%;
+	left: 0;
+	top: 0;
+	background: rgba(0,0,0,0.1);
+}
+.replayTable .slider .slider-progress{
+	position: absolute;
+	display: block;
+	height: 100%;
+	left: 0;
+	top: 0;
+	background: rgba(0,0,0,0.3);
+}
+
+
+
+
+/* drilldown-contorls ----------------------------------------------------------------------
+----------------------------------------------------------------------------------------- */
+
+.drilldown-contorls{}
+.drilldown-contorls .back{
+	display: inline-block;
+	vertical-align: middle;
+	position: relative;
+	width: 14px;
+	height: 14px;
+	margin-right: 10px;
+	font-size: 0;
+	cursor: pointer;
+}
+.drilldown-contorls .back:before{
+	content: '';
+	position: absolute;
+	display: block;
+	top: 2px;
+	left: 5px;
+	width: 8px;
+	height: 8px;
+	border-right: 2px solid #000;
+	border-top: 2px solid #000;
+	-webkit-transform: rotate(-135deg);
+	-moz-transform: rotate(-135deg);
+	-ms-transform: rotate(-135deg);
+	-o-transform: rotate(-135deg);
+	transform: rotate(-135deg);
+}
+.drilldown-contorls .item{
+	display: inline-block;
+	vertical-align: bottom;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: 800;
+}
+
+
+
+
+
+/* CONTAINER ----------------------------------------------------------------------
+----------------------------------------------------------------------------------------- */
+
+.replayTable  .table-container{
+	position: relative;
+}
+.replayTable  .table-container table {
+	position: relative;
+	left: 0;
+	top: 0;
+	border-spacing: 0;
+}
+.replayTable  .table-container table + table{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.replayTable  .table-container table.drilldown{
+	position: relative;
+}
+.replayTable .hidden {
+	visibility: hidden;
+
+}
+.replayTable  .table-container.classic.drilldowned .hidden{
+	display: none;
+}
+.replayTable th{
+	text-align: left;
+	text-transform: uppercase;
+	font-size: 12px;
+	padding-bottom: 5px;
+	border-bottom: 1px dotted rgba(0,0,0,0.1);
+}
+.replayTable td{
+	white-space: nowrap;
+	padding: 0 5px;
+	font-size: 14px;
+	line-height: 14px;
+	min-height: 23px;
+	height: 23px;
+
+}
+.replayTable td.outcome{
+	width: 5px;
+	padding: 0;
+	min-height: 23px;
+}
+.replayTable .clickable{
+	cursor: pointer;
+}
+.replayTable .clickable:hover{
+	text-decoration: underline;
+}
+.replayTable .calculation{
+	text-align: center;
+}
+
+
+
+
+
+
+.replayTable .controls-container.sparklines{
+	margin-bottom: 10px;
+}
+.replayTable .table-container.sparklines{}
+.replayTable .table-container.sparklines:after{
+	content: '';
+	display: block;
+	clear: both;
+}
+.replayTable .table-container.sparklines > table{
+	float: left;
+	position: relative;
+}
+/*.replayTable .table-container.sparklines > table.sparks{*/
+	/*top: -7px;*/
+/*}*/
+.replayTable .table-container.sparklines > table td{
+	border-bottom: 2px solid #fff;
+}
+.replayTable .table-container.sparklines .slider-cell{
+	height: 0;
+}
+.replayTable td.spark {
+	width: 5px !important;
+	max-width: 5px;
+	height: 17px;
+	padding: 3px 0;
+	position: relative;
+	white-space: nowrap;
+	font-size: 14px;
+	min-height: 23px;
+}
+
+.replayTable td.spark .spark-position{
+	position: absolute;
+	display: block;
+	width: 100%;
+	height: 1px !important;
+	line-height: 1px;
+	font-size: 1px;
+	background: #000;
+	left: 0;
+}
+.replayTable td.spark.muted .spark-position{
+	opacity: 0.4;
+}
+
+.replayTable td.change {
+	color: rgba(0,0,0,0.8);
+	font-size: 14px;
+}
+.replayTable .main.right td.change{
+	text-align: center;
+}
+.replayTable .main.right td.opponent.change,
+.replayTable .main.right td.label.change{
+	text-align: left;
+}
+
+.replayTable td.spark.muted {
+	background-color: transparent!important;
+}
+
+.replayTable td.spark.overlapped {
+	-webkit-filter: grayscale(100%);
+	-moz-filter: grayscale(100%);
+	-ms-filter: grayscale(100%);
+	-o-filter: grayscale(100%);
+	filter: grayscale(100%);
+	filter: gray; /* IE 6-9 */
+}
+
+
+.replayTable span.spark-score{
+	position: absolute;
+	left: 7px;
+	top: 0;
+	line-height: 23px;
+}
+.replayTable td.spark.muted{}
+.replayTable span.spark-score.muted {
+	visibility: hidden;
+}
+
+.replayTable .sparklines tr.muted {
+	visibility: hidden;
+}
+
+.replayTable .sparklines tr.muted > td.opponent {
+	font-size: 0;
+}
+
+.replayTable  .main.right{
+	z-index: 2;
+	background: rgba(255,255,255,0.3);
+}
+
+.controls-container.sparklines .drilldown-control{
+	display: inline-block;
+	vertical-align: bottom;
+	margin-left: 10px;
+	line-height: 13px;
+	font-size: 14px;
+	text-transform: uppercase;
+	font-weight: 800;
+}
+
+
+
+
+.replayTable .sparklines-slider .slider-cell{
+	position: relative;
+}
+.replayTable .sparklines-slider.top .slider-toggle{
+	position: absolute;
+	display: block;
+	width: auto;
+	white-space: nowrap;
+	padding: 0 2px;
+
+	min-width: 12px;
+	height: 16px;
+	background: #fff;
+	border: 1px solid #999;
+	top: -20px;
+	margin-left: -6px;
+	cursor: pointer;
+	border-radius: 3px;
+	text-align: center;
+	line-height: 17px;
+	font-size: 10px;
+	color: #000;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.replayTable .sparklines-slider.top .slider-toggle:before{
+	content: '';
+	position: absolute;
+	bottom: -5px;
+	left: 50%;
+	margin-left: -4px;
+	border-width: 6px 4px 0;
+	border-style: solid;
+	border-color: #fff transparent;
+	display: block;
+	width: 0;
+	z-index: 2;
+}
+.replayTable .sparklines-slider.top .slider-toggle:after{
+	content: '';
+	position: absolute;
+	bottom: -7px;
+	left: 50%;
+	margin-left: -4px;
+	border-width: 6px 4px 0;
+	border-style: solid;
+	border-color: #999 transparent;
+	display: block;
+	width: 0;
+
+}
+
+
+.replayTable .sparklines-slider.bottom .slider-toggle{
+	position: absolute;
+	display: block;
+	width: auto;
+	white-space: nowrap;
+	padding: 0 2px;
+
+	min-width: 12px;
+	height: 16px;
+	background: #fff;
+	border: 1px solid #999;
+	bottom: -20px;
+	margin-left: -6px;
+	cursor: pointer;
+	border-radius: 3px;
+	text-align: center;
+	line-height: 17px;
+	font-size: 10px;
+	color: #000;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.replayTable .sparklines-slider.bottom .slider-toggle:before{
+	content: '';
+	position: absolute;
+	top: -6px;
+	left: 50%;
+	margin-left: -4px;
+	border-width: 0  4px 6px;
+	border-style: solid;
+	border-color: #fff transparent;
+	display: block;
+	width: 0;
+	z-index: 2;
+}
+.replayTable .sparklines-slider.bottom .slider-toggle:after{
+	content: '';
+	position: absolute;
+	top: -7px;
+	left: 50%;
+	margin-left: -4px;
+	border-width:  0  4px 6px;
+	border-style: solid;
+	border-color: #999 transparent;
+	display: block;
+	width: 0;
+}
