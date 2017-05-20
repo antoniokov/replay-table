@@ -1,6 +1,6 @@
 {
-  "team": "replay-table",
-  "version": "1.0.0",
+  "name": "replay-table",
+  "version": "1.0.2",
   "description": "Visualize sport seasons with interactive standings",
   "keywords": [
     "visualization",

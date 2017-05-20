@@ -12,5 +12,6 @@ export default function (userPreset) {
         return null;
     }
 
-    return presets[userPreset];
+    return Object.keys(presets[userPreset])
+        .reduce((obj, key) => Object.assign(obj, { [key]: Object.assign({}, presets[userPreset][key]) }) , {});
 };

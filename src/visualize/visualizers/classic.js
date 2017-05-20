@@ -30,8 +30,7 @@ export default class extends Skeleton {
         const tbody = table.append('tbody');
         const rows = tbody.selectAll('tr')
             .data(data, k => k.item || k.roundMeta.index)
-            .enter().append('tr')
-            .attr('id', k => `replay-table-${k.item}`);
+            .enter().append('tr');
 
         const cells = rows.selectAll('td')
             .data(result => columns.map(column => new Cell(column, result, this.params)))
