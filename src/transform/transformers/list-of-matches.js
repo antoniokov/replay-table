@@ -4,23 +4,20 @@ import getMatchOutcome from '../helpers/match/getOutcome';
 
 
 export default function (rawData, params) {
-    const [headers, ...matches] = rawData.filter(row => row && row.length >= 5);
-    const rowsNames = [...new Set(matches.map(match => match[0]))];
-    const itemsNames = [...new Set([...matches.map(match => match[1]), ...matches.map(match => match[3])])];
-
+    const list = new List(rawData, params.format);
     const outcomeToChange = flipObject(params.changeToOutcome);
 
-    return rowsNames.map(roundName => {
+    return list.roundsNames.map(roundName => {
         const roundResults = [];
-        matches.filter(match => match[0] === roundName)
+        list.matches.filter(match => list.getRoundName(match) === roundName)
             .forEach(match => {
                 const firstTeamResult = {
-                    team: match[1],
+                    team: list.getFirstTeam(match),
                     match: {
                         location: params.locationFirst,
-                        score: Number.parseInt(match[2], 10),
-                        opponent: match[3],
-                        opponentScore: Number.parseInt(match[4], 10)
+                        score: list.getScore(match),
+                        opponent: list.getSecondTeam(match),
+                        opponentScore: list.getOpponentScore(match)
                     }
                 };
 
@@ -29,7 +26,7 @@ export default function (rawData, params) {
 
                     roundResults.push({
                         item: teamResult.team,
-                        change: outcomeToChange[outcome],
+                        change: outcome ? outcomeToChange[outcome] : null,
                         outcome: outcome,
                         match: teamResult.match,
                         extras: {}
@@ -38,7 +35,7 @@ export default function (rawData, params) {
             });
 
 
-        itemsNames.filter(name => !roundResults.map(result => result.item).includes(name))
+        list.itemsNames.filter(name => !roundResults.map(result => result.item).includes(name))
             .forEach(name => {
                 roundResults.push({
                     item: name,
@@ -53,4 +50,70 @@ export default function (rawData, params) {
             results: roundResults
         };
     });
+}
+
+class List {
+    constructor(data, format) {
+        this.data = data;
+        this.format = format;
+
+        switch (format) {
+            case 'csv':
+                const [headers, ...matches] = data.filter(row => row && row.length >= 5);
+                this.matches = matches;
+                break;
+            case 'football-data.org':
+                this.matches = data.fixtures;
+                break;
+        }
+
+        this.roundsNames = [...new Set(this.matches.map(match => this.getRoundName(match)))];
+        this.itemsNames = [...new Set([...this.matches.map(match => this.getFirstTeam(match)),
+                                       ...this.matches.map(match => this.getSecondTeam(match))])];
+    }
+
+    getRoundName (match) {
+        switch (this.format) {
+            case 'csv':
+                return match[0];
+            case 'football-data.org':
+                return match.matchday.toString();
+        }
+    }
+
+    getFirstTeam (match) {
+        switch (this.format) {
+            case 'csv':
+                return match[1];
+            case 'football-data.org':
+                return match.homeTeamName.replace('AFC','FC').replace('FC', '').trim();
+        }
+    }
+
+    getSecondTeam (match) {
+        switch (this.format) {
+            case 'csv':
+                return match[3];
+            case 'football-data.org':
+                return match.awayTeamName.replace('AFC','FC').replace('FC', '').trim();
+        }
+    }
+
+    getScore (match) {
+        switch (this.format) {
+            case 'csv':
+                return Number.parseInt(match[2], 10);
+            case 'football-data.org':
+                return match.status === 'FINISHED' ? match.result.goalsHomeTeam : null;
+        }
+    }
+
+    getOpponentScore (match) {
+        switch (this.format) {
+            case 'csv':
+                return Number.parseInt(match[4], 10)
+            case 'football-data.org':
+                return match.status === 'FINISHED' ? match.result.goalsAwayTeam : null;
+        }
+    }
 }

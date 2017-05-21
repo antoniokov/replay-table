@@ -9,27 +9,28 @@
 <body>
 	<h1>Replay Table</h1>
 
-	<div class="replayTable" id="english-premier-league-sparklines"
-		 data-source="./assets/csv/football/2015-2016/english-premier-league.csv"
+	<div class="replayTable" id="english-premier-league-17-sparklines"
+		 data-source="./assets/data/football/2016-2017/english-premier-league.json"
+		 data-format="football-data.org"
 		 data-visualizer="sparklines">
 	</div>
 
-
-	<div class="replayTable" id="russian-premier-league-sparklines"
-		 data-source="./assets/csv/requests/2016/lebedian-rpfl16-17.csv"
-		 data-visualizer="sparklines"
-		 data-rounds-total-number="30">
+	<div class="replayTable" id="english-premier-league-sparklines"
+		 data-source="./assets/data/football/2015-2016/english-premier-league.csv"
+		 data-collapse-to-rounds="true"
+		 data-visualizer="sparklines">
 	</div>
 
-
 	<div class="replayTable" id="english-premier-league"
-		 data-source="./assets/csv/football/2015-2016/english-premier-league.csv"
+		 data-source="./assets/data/football/2015-2016/english-premier-league.csv"
+		 data-collapse-to-rounds="true"
 		 data-preset="matches">
 	</div>
 
 
 	<div class="replayTable" id="russian-premier-league"
-		 data-source="./assets/csv/requests/2016/lebedian-rpfl16-17.csv"
+		 data-source="./assets/data/requests/2016/lebedian-rpfl16-17.csv"
+		 data-collapse-to-rounds="true"
 		 data-preset="matches"
 		 data-columns="position,item,rounds,wins,draws,losses,goalsFor,goalsAgainst,goalsDifference,points"
 		 data-labels="#,Команда,И,В,Н,П,ГЗ,ГП,ГР,Очки"
@@ -37,25 +38,26 @@
 	</div>
 
 	<div class="replayTable" id="formula-one-2016-drivers"
-		 data-source="./assets/csv/formula-one/2016/drivers.csv"
+		 data-source="./assets/data/formula-one/2016/drivers.csv"
 		 data-preset="f1"
 		 data-extra-columns-number="1"
 		 data-columns="position,item,Team,points,points.change"
 		 data-labels="#,Driver,Team,Points, ">
 	</div>
 
-	<div class="replayTable" id="student-european-championship"
-		 data-source="./assets/csv/chgk/2015-2016/student-european-championship.csv"
-		 data-preset="chgk"
-		 data-extra-columns-number="1">
-	</div>
-
 	<div class="replayTable" id="nba-western-2016"
-		 data-source="./assets/csv/basketball/2015-2016/nba-western.csv"
+		 data-source="./assets/data/basketball/2015-2016/nba-western.csv"
 		 data-preset="winLoss"
 		 data-insert-start-round="Start"
 		 data-filter-items="Golden State Warriors,San Antonio Spurs,Oklahoma City Thunder,Los Angeles Clippers,Portland Trail Blazers,Dallas Mavericks,Memphis Grizzlies,Houston Rockets,Utah Jazz,Sacramento Kings,Denver Nuggets,New Orleans Pelicans,Minnesota Timberwolves,Phoenix Suns,Los Angeles Lakers"
 		 data-collapse-to-rounds="false">
+	</div>
+
+
+	<div class="replayTable" id="student-european-championship"
+		 data-source="./assets/data/chgk/2015-2016/student-european-championship.csv"
+		 data-preset="chgk"
+		 data-extra-columns-number="1">
 	</div>
 
 	<script type="text/javascript">replayTable.magic()</script>

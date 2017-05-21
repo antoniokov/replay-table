@@ -24,6 +24,56 @@ export default class extends Skeleton {
         ['right', 'slider', 'sparks'].forEach(el => this[el].roundIndex = this.currentRound);
     }
 
+    renderTable (data, classes = ['main']) {
+        this.left = {};
+        this.sparks = {};
+        this.right = {};
+        this.slider = {};
+
+        this.left.columns = columns.left;
+        this.right.columns = columns.right;
+
+        [this.left.table, this.left.rows, this.left.cells] = this.makeTable(data, [...classes, 'left'], this.left.columns);
+        [this.sparks.table, this.sparks.rows, this.sparks.cells] = this.makeSparks(data);
+        [this.right.table, this.right.rows, this.right.cells] = this.makeTable(data, [...classes, 'right'], this.right.columns);
+
+        this.sparks.width = this.sparks.rows.node().offsetWidth - this.sparks.cells.node().offsetWidth;
+
+        this.scale = d3.scaleLinear()
+            .domain([1, this.data.meta.lastRound])
+            .range([0, this.sparks.width])
+            .clamp(true);
+
+        this.moveRightTable(this.currentRound);
+
+        this.slider.top = this.makeSlider('top');
+        this.slider.bottom = this.makeSlider('bottom');
+
+        this.right.table.call(d3.drag()
+            .on("start", () => {
+                this.right.drag = {
+                    x: d3.event.x,
+                    roundIndex: this.right.roundIndex
+                };
+            })
+            .on("drag", () => {
+                const difference = Math.abs(this.right.drag.x - d3.event.x);
+                const sign = Math.sign(this.right.drag.x - d3.event.x);
+                const index = this.right.drag.roundIndex - sign*Math.round(this.scale.invert(difference)) + 1;
+                const roundIndex = Math.min(Math.max(index, 1), this.data.meta.lastRound);
+
+                this.moveRightTable(roundIndex);
+                this.preview(roundIndex);
+            })
+            .on("end", () => this.endPreview(true))
+        );
+
+        return ['table', 'rows', 'cells'].map(el => {
+            const nodes = ['left', 'sparks', 'right'].map(part => this[part][el].nodes());
+            return d3.selectAll(d3.merge(nodes));
+        });
+    }
+
     makeTable (data, classes, columns) {
         const table = this.tableContainer
             .append('table')
@@ -74,9 +124,8 @@ export default class extends Skeleton {
             .data(sparksData, k => k.item)
             .enter().append('tr');
 
-
         const cells = rows.selectAll('td')
-            .data(row => this.data.results.slice(1).map((round, i) => ({
+            .data(row => this.data.results.slice(1, this.data.meta.lastRound + 1).map((round, i) => ({
                 result: row.results[i+1],
                 roundMeta: row.results[i+1].roundMeta
             })))
@@ -136,56 +185,6 @@ export default class extends Skeleton {
                 })
                 .on("end", () => this.endPreview(true))
             );
-    }
-
-    renderTable (data, classes = ['main']) {
-        this.left = {};
-        this.sparks = {};
-        this.right = {};
-        this.slider = {};
-
-        this.left.columns = columns.left;
-        this.right.columns = columns.right;
-
-        [this.left.table, this.left.rows, this.left.cells] = this.makeTable(data, [...classes, 'left'], this.left.columns);
-        [this.sparks.table, this.sparks.rows, this.sparks.cells] = this.makeSparks(data);
-        [this.right.table, this.right.rows, this.right.cells] = this.makeTable(data, [...classes, 'right'], this.right.columns);
-
-        this.sparks.width = this.sparks.rows.node().offsetWidth - this.sparks.cells.node().offsetWidth;
-
-        this.scale = d3.scaleLinear()
-            .domain([1, this.data.meta.lastRound])
-            .range([0, this.sparks.width])
-            .clamp(true);
-
-        this.moveRightTable(this.currentRound);
-
-        this.slider.top = this.makeSlider('top');
-        this.slider.bottom = this.makeSlider('bottom');
-
-        this.right.table.call(d3.drag()
-            .on("start", () => {
-                this.right.drag = {
-                    x: d3.event.x,
-                    roundIndex: this.right.roundIndex
-                };
-            })
-            .on("drag", () => {
-                const difference = Math.abs(this.right.drag.x - d3.event.x);
-                const sign = Math.sign(this.right.drag.x - d3.event.x);
-                const index = this.right.drag.roundIndex - sign*Math.round(this.scale.invert(difference)) + 1;
-                const roundIndex = Math.min(Math.max(index, 1), this.data.meta.lastRound);
-
-                this.moveRightTable(roundIndex);
-                this.preview(roundIndex);
-            })
-            .on("end", () => this.endPreview(true))
-        );
-
-        return ['table', 'rows', 'cells'].map(el => {
-            const nodes = ['left', 'sparks', 'right'].map(part => this[part][el].nodes());
-            return d3.selectAll(d3.merge(nodes));
-        });
     }
 
     to (roundIndex) {

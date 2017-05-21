@@ -2,7 +2,7 @@ export default {
     extract: {},
     transform: {
         transformer: 'listOfMatches',
-        collapseToRounds: true
+        collapseToRounds: false
     },
     calculate: {},
     visualize: {
