@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 58);
+/******/ 	return __webpack_require__(__webpack_require__.s = 59);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -307,6 +307,15 @@ Object.defineProperty(exports, 'csv', {
   }
 });
 
+var _json = __webpack_require__(52);
+
+Object.defineProperty(exports, 'json', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_json).default;
+  }
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
@@ -320,7 +329,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _play = __webpack_require__(72);
+var _play = __webpack_require__(73);
 
 Object.defineProperty(exports, 'play', {
   enumerable: true,
@@ -329,7 +338,7 @@ Object.defineProperty(exports, 'play', {
   }
 });
 
-var _previous = __webpack_require__(73);
+var _previous = __webpack_require__(74);
 
 Object.defineProperty(exports, 'previous', {
   enumerable: true,
@@ -338,7 +347,7 @@ Object.defineProperty(exports, 'previous', {
   }
 });
 
-var _next = __webpack_require__(71);
+var _next = __webpack_require__(72);
 
 Object.defineProperty(exports, 'next', {
   enumerable: true,
@@ -347,7 +356,7 @@ Object.defineProperty(exports, 'next', {
   }
 });
 
-var _slider = __webpack_require__(74);
+var _slider = __webpack_require__(75);
 
 Object.defineProperty(exports, 'slider', {
   enumerable: true,
@@ -502,7 +511,7 @@ var _extractors = __webpack_require__(6);
 
 var extractors = _interopRequireWildcard(_extractors);
 
-var _guessExtractor = __webpack_require__(52);
+var _guessExtractor = __webpack_require__(53);
 
 var _guessExtractor2 = _interopRequireDefault(_guessExtractor);
 
@@ -563,7 +572,7 @@ var _transformers = __webpack_require__(26);
 
 var transformers = _interopRequireWildcard(_transformers);
 
-var _postTransformers = __webpack_require__(65);
+var _postTransformers = __webpack_require__(66);
 
 var postTransformers = _interopRequireWildcard(_postTransformers);
 
@@ -1039,7 +1048,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _pointsTable = __webpack_require__(60);
+var _pointsTable = __webpack_require__(61);
 
 Object.defineProperty(exports, 'pointsTable', {
   enumerable: true,
@@ -1048,7 +1057,7 @@ Object.defineProperty(exports, 'pointsTable', {
   }
 });
 
-var _listOfMatches = __webpack_require__(59);
+var _listOfMatches = __webpack_require__(60);
 
 Object.defineProperty(exports, 'listOfMatches', {
   enumerable: true,
@@ -1070,7 +1079,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _pointsTable = __webpack_require__(68);
+var _pointsTable = __webpack_require__(69);
 
 Object.defineProperty(exports, 'pointsTable', {
   enumerable: true,
@@ -1079,7 +1088,7 @@ Object.defineProperty(exports, 'pointsTable', {
   }
 });
 
-var _listOfMatches = __webpack_require__(67);
+var _listOfMatches = __webpack_require__(68);
 
 Object.defineProperty(exports, 'listOfMatches', {
   enumerable: true,
@@ -1111,7 +1120,7 @@ var _numberToChange = __webpack_require__(22);
 
 var _numberToChange2 = _interopRequireDefault(_numberToChange);
 
-var _formatPosition = __webpack_require__(76);
+var _formatPosition = __webpack_require__(77);
 
 var _formatPosition2 = _interopRequireDefault(_formatPosition);
 
@@ -1389,7 +1398,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _classic = __webpack_require__(69);
+var _classic = __webpack_require__(70);
 
 Object.defineProperty(exports, 'classic', {
   enumerable: true,
@@ -1398,7 +1407,7 @@ Object.defineProperty(exports, 'classic', {
   }
 });
 
-var _sparklines = __webpack_require__(70);
+var _sparklines = __webpack_require__(71);
 
 Object.defineProperty(exports, 'sparklines', {
   enumerable: true,
@@ -1428,11 +1437,11 @@ var _controls = __webpack_require__(7);
 
 var Controls = _interopRequireWildcard(_controls);
 
-var _adjustDurations = __webpack_require__(75);
+var _adjustDurations = __webpack_require__(76);
 
 var _adjustDurations2 = _interopRequireDefault(_adjustDurations);
 
-var _getRowsYs = __webpack_require__(77);
+var _getRowsYs = __webpack_require__(78);
 
 var _getRowsYs2 = _interopRequireDefault(_getRowsYs);
 
@@ -1682,7 +1691,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _classic = __webpack_require__(80);
+var _classic = __webpack_require__(81);
 
 Object.defineProperty(exports, 'classic', {
   enumerable: true,
@@ -1691,7 +1700,7 @@ Object.defineProperty(exports, 'classic', {
   }
 });
 
-var _sparklines = __webpack_require__(81);
+var _sparklines = __webpack_require__(82);
 
 Object.defineProperty(exports, 'sparklines', {
   enumerable: true,
@@ -2245,7 +2254,9 @@ exports.default = function (userPreset) {
         return null;
     }
 
-    return presets[userPreset];
+    return Object.keys(presets[userPreset]).reduce(function (obj, key) {
+        return Object.assign(obj, _defineProperty({}, key, Object.assign({}, presets[userPreset][key])));
+    }, {});
 };
 
 var _presets = __webpack_require__(48);
@@ -2259,6 +2270,8 @@ var _warn2 = _interopRequireDefault(_warn);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 ;
 
@@ -2380,7 +2393,7 @@ exports.default = {
     extract: {},
     transform: {
         transformer: 'listOfMatches',
-        collapseToRounds: true
+        collapseToRounds: false
     },
     calculate: {},
     visualize: {
@@ -2456,6 +2469,32 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+exports.default = function (path) {
+    return new Promise(function (resolve, reject) {
+        d3.json(path, function (data) {
+            if (!data) {
+                reject("Sorry, we can't reach your json file");
+                return;
+            }
+
+            resolve(data);
+        });
+    });
+};
+
+;
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 exports.default = function (source) {
     var extension = (0, _getFileExtension2.default)(source);
     return extractors.hasOwnProperty(extension) ? extension : null;
@@ -2465,7 +2504,7 @@ var _extractors = __webpack_require__(6);
 
 var extractors = _interopRequireWildcard(_extractors);
 
-var _getFileExtension = __webpack_require__(55);
+var _getFileExtension = __webpack_require__(56);
 
 var _getFileExtension2 = _interopRequireDefault(_getFileExtension);
 
@@ -2476,7 +2515,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 ;
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2498,7 +2537,7 @@ exports.default = function (obj) {
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2517,7 +2556,7 @@ exports.default = function (str) {
 ;
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2534,7 +2573,7 @@ exports.default = function (filename) {
 ;
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2551,7 +2590,7 @@ exports.default = function (n, a, b) {
 ;
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2570,7 +2609,7 @@ exports.default = function (matrix) {
 };
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2640,7 +2679,7 @@ __webpack_require__(33);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2650,6 +2689,16 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
+    format: {
+        default: 'csv',
+        parse: function parse(input) {
+            return input;
+        },
+        validate: function validate(value) {
+            return ['csv', 'football-data.org'].includes(value);
+        }
+    },
+
     locationFirst: {
         default: 'home',
         parse: function parse(input) {
@@ -2661,7 +2710,7 @@ exports.default = {
     },
 
     collapseToRounds: {
-        default: true,
+        default: false,
         parse: function parse(input) {
             return input === 'true';
         },
@@ -2672,7 +2721,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2694,7 +2743,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2730,7 +2779,7 @@ function flipLocation(location) {
 }
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2741,17 +2790,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function (result) {
+    if (result.match.score === null || result.match.opponentScore === null) {
+        return null;
+    }
+
     if (result.match.score > result.match.opponentScore) {
         return 'win';
     } else if (result.match.score < result.match.opponentScore) {
         return 'loss';
     } else if (result.match.score === result.match.opponentScore) {
         return 'draw';
+    } else {
+        return null;
     }
 };
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2800,7 +2855,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 ;
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2824,7 +2879,7 @@ exports.default = function (transformedData, items) {
 ;
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2834,7 +2889,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _collapseToRounds = __webpack_require__(63);
+var _collapseToRounds = __webpack_require__(64);
 
 Object.defineProperty(exports, 'collapseToRounds', {
   enumerable: true,
@@ -2843,7 +2898,7 @@ Object.defineProperty(exports, 'collapseToRounds', {
   }
 });
 
-var _filterItems = __webpack_require__(64);
+var _filterItems = __webpack_require__(65);
 
 Object.defineProperty(exports, 'filterItems', {
   enumerable: true,
@@ -2852,7 +2907,7 @@ Object.defineProperty(exports, 'filterItems', {
   }
 });
 
-var _insertStartRound = __webpack_require__(66);
+var _insertStartRound = __webpack_require__(67);
 
 Object.defineProperty(exports, 'insertStartRound', {
   enumerable: true,
@@ -2864,7 +2919,7 @@ Object.defineProperty(exports, 'insertStartRound', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2904,7 +2959,7 @@ exports.default = function (transformedData, roundName) {
 ;
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2914,37 +2969,24 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 exports.default = function (rawData, params) {
-    var _rawData$filter = rawData.filter(function (row) {
-        return row && row.length >= 5;
-    }),
-        _rawData$filter2 = _toArray(_rawData$filter),
-        headers = _rawData$filter2[0],
-        matches = _rawData$filter2.slice(1);
-
-    var rowsNames = [].concat(_toConsumableArray(new Set(matches.map(function (match) {
-        return match[0];
-    }))));
-    var itemsNames = [].concat(_toConsumableArray(new Set([].concat(_toConsumableArray(matches.map(function (match) {
-        return match[1];
-    })), _toConsumableArray(matches.map(function (match) {
-        return match[3];
-    }))))));
-
+    var list = new List(rawData, params.format);
     var outcomeToChange = (0, _flipObject2.default)(params.changeToOutcome);
 
-    return rowsNames.map(function (roundName) {
+    return list.roundsNames.map(function (roundName) {
         var roundResults = [];
-        matches.filter(function (match) {
-            return match[0] === roundName;
+        list.matches.filter(function (match) {
+            return list.getRoundName(match) === roundName;
         }).forEach(function (match) {
             var firstTeamResult = {
-                team: match[1],
+                team: list.getFirstTeam(match),
                 match: {
                     location: params.locationFirst,
-                    score: Number.parseInt(match[2], 10),
-                    opponent: match[3],
-                    opponentScore: Number.parseInt(match[4], 10)
+                    score: list.getScore(match),
+                    opponent: list.getSecondTeam(match),
+                    opponentScore: list.getOpponentScore(match)
                 }
             };
 
@@ -2953,7 +2995,7 @@ exports.default = function (rawData, params) {
 
                 roundResults.push({
                     item: teamResult.team,
-                    change: outcomeToChange[outcome],
+                    change: outcome ? outcomeToChange[outcome] : null,
                     outcome: outcome,
                     match: teamResult.match,
                     extras: {}
@@ -2961,7 +3003,7 @@ exports.default = function (rawData, params) {
             });
         });
 
-        itemsNames.filter(function (name) {
+        list.itemsNames.filter(function (name) {
             return !roundResults.map(function (result) {
                 return result.item;
             }).includes(name);
@@ -2981,15 +3023,15 @@ exports.default = function (rawData, params) {
     });
 };
 
-var _flipObject = __webpack_require__(53);
+var _flipObject = __webpack_require__(54);
 
 var _flipObject2 = _interopRequireDefault(_flipObject);
 
-var _flip = __webpack_require__(61);
+var _flip = __webpack_require__(62);
 
 var _flip2 = _interopRequireDefault(_flip);
 
-var _getOutcome = __webpack_require__(62);
+var _getOutcome = __webpack_require__(63);
 
 var _getOutcome2 = _interopRequireDefault(_getOutcome);
 
@@ -2999,8 +3041,100 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var List = function () {
+    function List(data, format) {
+        var _this = this;
+
+        _classCallCheck(this, List);
+
+        this.data = data;
+        this.format = format;
+
+        switch (format) {
+            case 'csv':
+                var _data$filter = data.filter(function (row) {
+                    return row && row.length >= 5;
+                }),
+                    _data$filter2 = _toArray(_data$filter),
+                    headers = _data$filter2[0],
+                    matches = _data$filter2.slice(1);
+
+                this.matches = matches;
+                break;
+            case 'football-data.org':
+                this.matches = data.fixtures;
+                break;
+        }
+
+        this.roundsNames = [].concat(_toConsumableArray(new Set(this.matches.map(function (match) {
+            return _this.getRoundName(match);
+        }))));
+        this.itemsNames = [].concat(_toConsumableArray(new Set([].concat(_toConsumableArray(this.matches.map(function (match) {
+            return _this.getFirstTeam(match);
+        })), _toConsumableArray(this.matches.map(function (match) {
+            return _this.getSecondTeam(match);
+        }))))));
+    }
+
+    _createClass(List, [{
+        key: 'getRoundName',
+        value: function getRoundName(match) {
+            switch (this.format) {
+                case 'csv':
+                    return match[0];
+                case 'football-data.org':
+                    return match.matchday.toString();
+            }
+        }
+    }, {
+        key: 'getFirstTeam',
+        value: function getFirstTeam(match) {
+            switch (this.format) {
+                case 'csv':
+                    return match[1];
+                case 'football-data.org':
+                    return match.homeTeamName.replace('AFC', 'FC').replace('FC', '').trim();
+            }
+        }
+    }, {
+        key: 'getSecondTeam',
+        value: function getSecondTeam(match) {
+            switch (this.format) {
+                case 'csv':
+                    return match[3];
+                case 'football-data.org':
+                    return match.awayTeamName.replace('AFC', 'FC').replace('FC', '').trim();
+            }
+        }
+    }, {
+        key: 'getScore',
+        value: function getScore(match) {
+            switch (this.format) {
+                case 'csv':
+                    return Number.parseInt(match[2], 10);
+                case 'football-data.org':
+                    return match.status === 'FINISHED' ? match.result.goalsHomeTeam : null;
+            }
+        }
+    }, {
+        key: 'getOpponentScore',
+        value: function getOpponentScore(match) {
+            switch (this.format) {
+                case 'csv':
+                    return Number.parseInt(match[4], 10);
+                case 'football-data.org':
+                    return match.status === 'FINISHED' ? match.result.goalsAwayTeam : null;
+            }
+        }
+    }]);
+
+    return List;
+}();
+
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3052,7 +3186,7 @@ exports.default = function (rawData, params) {
     });
 };
 
-var _transpose = __webpack_require__(57);
+var _transpose = __webpack_require__(58);
 
 var _transpose2 = _interopRequireDefault(_transpose);
 
@@ -3061,7 +3195,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3128,7 +3262,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3257,7 +3391,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3294,7 +3428,7 @@ exports.default = _class;
 ;
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3365,7 +3499,7 @@ exports.default = _class;
 ;
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3402,7 +3536,7 @@ exports.default = _class;
 ;
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3487,7 +3621,7 @@ exports.default = _class;
 ;
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3508,7 +3642,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 ;
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3540,7 +3674,7 @@ exports.default = function (position, positionWhenTied) {
 ;
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3566,7 +3700,7 @@ exports.default = function (rows) {
 ;
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3591,7 +3725,7 @@ exports.default = function (cell, roundIndex) {
 ;
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3612,7 +3746,7 @@ exports.default = function (cell, roundIndex, params) {
 ;
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3634,7 +3768,7 @@ var _cell = __webpack_require__(27);
 
 var _cell2 = _interopRequireDefault(_cell);
 
-var _fromCamelCase = __webpack_require__(54);
+var _fromCamelCase = __webpack_require__(55);
 
 var _fromCamelCase2 = _interopRequireDefault(_fromCamelCase);
 
@@ -3687,9 +3821,7 @@ var _class = function (_Skeleton) {
             var tbody = table.append('tbody');
             var rows = tbody.selectAll('tr').data(data, function (k) {
                 return k.item || k.roundMeta.index;
-            }).enter().append('tr').attr('id', function (k) {
-                return 'replay-table-' + k.item;
-            });
+            }).enter().append('tr');
 
             var cells = rows.selectAll('td').data(function (result) {
                 return columns.map(function (column) {
@@ -3851,7 +3983,7 @@ exports.default = _class;
 ;
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3877,7 +4009,7 @@ var _numberToChange = __webpack_require__(22);
 
 var _numberToChange2 = _interopRequireDefault(_numberToChange);
 
-var _isBetween = __webpack_require__(56);
+var _isBetween = __webpack_require__(57);
 
 var _isBetween2 = _interopRequireDefault(_isBetween);
 
@@ -3885,11 +4017,11 @@ var _getItemResults = __webpack_require__(20);
 
 var _getItemResults2 = _interopRequireDefault(_getItemResults);
 
-var _getSparkColor = __webpack_require__(79);
+var _getSparkColor = __webpack_require__(80);
 
 var _getSparkColor2 = _interopRequireDefault(_getSparkColor);
 
-var _getSparkClasses = __webpack_require__(78);
+var _getSparkClasses = __webpack_require__(79);
 
 var _getSparkClasses2 = _interopRequireDefault(_getSparkClasses);
 
@@ -3926,129 +4058,9 @@ var _class = function (_Skeleton) {
     }
 
     _createClass(_class, [{
-        key: 'makeTable',
-        value: function makeTable(data, classes, columns) {
-            var _this2 = this;
-
-            var table = this.tableContainer.append('table').attr('class', classes.join(' '));
-
-            var tbody = table.append('tbody');
-            var rows = tbody.selectAll('tr').data(data, function (k) {
-                return k.item;
-            }).enter().append('tr');
-
-            var cells = rows.selectAll('td').data(function (result) {
-                return columns.map(function (column) {
-                    return new Cell(column, result, _this2.params);
-                });
-            }).enter().append('td').attr('class', function (cell) {
-                return cell.classes.join(' ');
-            }).style('color', function (cell) {
-                return cell.color;
-            }).text(function (cell) {
-                return cell.text;
-            });
-
-            cells.filter('.clickable').on('click', function (cell) {
-                switch (cell.column) {
-                    case 'item':
-                        if (_this2.drilldown.item !== cell.result.item) {
-                            return _this2.drillDown(cell.result.item);
-                        } else {
-                            return _this2.endDrillDown();
-                        }
-                    default:
-                        return null;
-                }
-            });
-
-            return [table, rows, cells];
-        }
-    }, {
-        key: 'makeSparks',
-        value: function makeSparks(data) {
-            var _this3 = this;
-
-            var table = this.tableContainer.append('table').attr('class', 'sparks');
-
-            var tbody = table.append('tbody');
-
-            var sparksData = data.map(function (result) {
-                return {
-                    item: result.item,
-                    results: (0, _getItemResults2.default)(_this3.data.results, result.item)
-                };
-            });
-
-            var rows = tbody.selectAll('tr').data(sparksData, function (k) {
-                return k.item;
-            }).enter().append('tr');
-
-            var cells = rows.selectAll('td').data(function (row) {
-                return _this3.data.results.slice(1).map(function (round, i) {
-                    return {
-                        result: row.results[i + 1],
-                        roundMeta: row.results[i + 1].roundMeta
-                    };
-                });
-            }).enter().append('td').attr('class', function (cell) {
-                return (0, _getSparkClasses2.default)(cell, _this3.currentRound);
-            }).style('background-color', function (cell) {
-                return (0, _getSparkColor2.default)(cell, _this3.currentRound, _this3.params);
-            }).on('mouseover', function (cell) {
-                return _this3.preview(cell.roundMeta.index);
-            }).on('mouseout', function (cell) {
-                return _this3.endPreview(false);
-            }).on('click', function (cell) {
-                return _this3.endPreview(true);
-            });
-
-            var scale = d3.scaleLinear().domain([1, sparksData.length]).range([0, 100]);
-
-            cells.append('span').attr('class', 'spark-position').style('top', function (cell) {
-                return scale(cell.result.position.strict) + '%';
-            });
-
-            cells.append('span').attr('class', 'spark-score muted').style('color', function (cell) {
-                return _this3.params.colors[cell.result.outcome] || 'black';
-            }).text(function (cell) {
-                return cell.result.match ? cell.result.match.score + ':' + cell.result.match.opponentScore : '';
-            });
-
-            cells.filter(function (cell) {
-                return cell.roundMeta.index > _this3.currentRound;
-            }).classed('overlapped', true);
-
-            this.dispatch.on('roundPreview.sparks', function (roundMeta) {
-                return _this3.moveSparks(roundMeta.index, 0);
-            });
-
-            return [table, rows, cells];
-        }
-    }, {
-        key: 'makeSlider',
-        value: function makeSlider() {
-            var _this4 = this;
-
-            var position = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'top';
-
-            var slider = position === 'top' ? this.sparks.table.select('tbody').insert('tr', 'tr') : this.sparks.table.select('tbody').append('tr');
-
-            slider.attr('class', 'sparklines-slider ' + position).append('td').attr('class', 'slider-cell').attr('colspan', this.roundsTotalNumber);
-
-            var left = this.scale(this.currentRound) + 'px';
-            return slider.select('.slider-cell').append('span').attr('class', 'slider-toggle').style('left', left).text(this.data.results[this.currentRound].meta.name).call(d3.drag().on("drag", function () {
-                var roundIndex = Math.round(_this4.scale.invert(d3.event.x));
-                _this4.moveRightTable(roundIndex);
-                _this4.preview(roundIndex);
-            }).on("end", function () {
-                return _this4.endPreview(true);
-            }));
-        }
-    }, {
         key: 'renderTable',
         value: function renderTable(data) {
-            var _this5 = this;
+            var _this2 = this;
 
             var classes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ['main'];
 
@@ -4095,28 +4107,148 @@ var _class = function (_Skeleton) {
             this.slider.bottom = this.makeSlider('bottom');
 
             this.right.table.call(d3.drag().on("start", function () {
-                _this5.right.drag = {
+                _this2.right.drag = {
                     x: d3.event.x,
-                    roundIndex: _this5.right.roundIndex
+                    roundIndex: _this2.right.roundIndex
                 };
             }).on("drag", function () {
-                var difference = Math.abs(_this5.right.drag.x - d3.event.x);
-                var sign = Math.sign(_this5.right.drag.x - d3.event.x);
-                var index = _this5.right.drag.roundIndex - sign * Math.round(_this5.scale.invert(difference)) + 1;
-                var roundIndex = Math.min(Math.max(index, 1), _this5.data.meta.lastRound);
+                var difference = Math.abs(_this2.right.drag.x - d3.event.x);
+                var sign = Math.sign(_this2.right.drag.x - d3.event.x);
+                var index = _this2.right.drag.roundIndex - sign * Math.round(_this2.scale.invert(difference)) + 1;
+                var roundIndex = Math.min(Math.max(index, 1), _this2.data.meta.lastRound);
 
+                _this2.moveRightTable(roundIndex);
+                _this2.preview(roundIndex);
+            }).on("end", function () {
+                return _this2.endPreview(true);
+            }));
+
+            return ['table', 'rows', 'cells'].map(function (el) {
+                var nodes = ['left', 'sparks', 'right'].map(function (part) {
+                    return _this2[part][el].nodes();
+                });
+                return d3.selectAll(d3.merge(nodes));
+            });
+        }
+    }, {
+        key: 'makeTable',
+        value: function makeTable(data, classes, columns) {
+            var _this3 = this;
+
+            var table = this.tableContainer.append('table').attr('class', classes.join(' '));
+
+            var tbody = table.append('tbody');
+            var rows = tbody.selectAll('tr').data(data, function (k) {
+                return k.item;
+            }).enter().append('tr');
+
+            var cells = rows.selectAll('td').data(function (result) {
+                return columns.map(function (column) {
+                    return new Cell(column, result, _this3.params);
+                });
+            }).enter().append('td').attr('class', function (cell) {
+                return cell.classes.join(' ');
+            }).style('color', function (cell) {
+                return cell.color;
+            }).text(function (cell) {
+                return cell.text;
+            });
+
+            cells.filter('.clickable').on('click', function (cell) {
+                switch (cell.column) {
+                    case 'item':
+                        if (_this3.drilldown.item !== cell.result.item) {
+                            return _this3.drillDown(cell.result.item);
+                        } else {
+                            return _this3.endDrillDown();
+                        }
+                    default:
+                        return null;
+                }
+            });
+
+            return [table, rows, cells];
+        }
+    }, {
+        key: 'makeSparks',
+        value: function makeSparks(data) {
+            var _this4 = this;
+
+            var table = this.tableContainer.append('table').attr('class', 'sparks');
+
+            var tbody = table.append('tbody');
+
+            var sparksData = data.map(function (result) {
+                return {
+                    item: result.item,
+                    results: (0, _getItemResults2.default)(_this4.data.results, result.item)
+                };
+            });
+
+            var rows = tbody.selectAll('tr').data(sparksData, function (k) {
+                return k.item;
+            }).enter().append('tr');
+
+            var cells = rows.selectAll('td').data(function (row) {
+                return _this4.data.results.slice(1, _this4.data.meta.lastRound + 1).map(function (round, i) {
+                    return {
+                        result: row.results[i + 1],
+                        roundMeta: row.results[i + 1].roundMeta
+                    };
+                });
+            }).enter().append('td').attr('class', function (cell) {
+                return (0, _getSparkClasses2.default)(cell, _this4.currentRound);
+            }).style('background-color', function (cell) {
+                return (0, _getSparkColor2.default)(cell, _this4.currentRound, _this4.params);
+            }).on('mouseover', function (cell) {
+                return _this4.preview(cell.roundMeta.index);
+            }).on('mouseout', function (cell) {
+                return _this4.endPreview(false);
+            }).on('click', function (cell) {
+                return _this4.endPreview(true);
+            });
+
+            var scale = d3.scaleLinear().domain([1, sparksData.length]).range([0, 100]);
+
+            cells.append('span').attr('class', 'spark-position').style('top', function (cell) {
+                return scale(cell.result.position.strict) + '%';
+            });
+
+            cells.append('span').attr('class', 'spark-score muted').style('color', function (cell) {
+                return _this4.params.colors[cell.result.outcome] || 'black';
+            }).text(function (cell) {
+                return cell.result.match ? cell.result.match.score + ':' + cell.result.match.opponentScore : '';
+            });
+
+            cells.filter(function (cell) {
+                return cell.roundMeta.index > _this4.currentRound;
+            }).classed('overlapped', true);
+
+            this.dispatch.on('roundPreview.sparks', function (roundMeta) {
+                return _this4.moveSparks(roundMeta.index, 0);
+            });
+
+            return [table, rows, cells];
+        }
+    }, {
+        key: 'makeSlider',
+        value: function makeSlider() {
+            var _this5 = this;
+
+            var position = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'top';
+
+            var slider = position === 'top' ? this.sparks.table.select('tbody').insert('tr', 'tr') : this.sparks.table.select('tbody').append('tr');
+
+            slider.attr('class', 'sparklines-slider ' + position).append('td').attr('class', 'slider-cell').attr('colspan', this.roundsTotalNumber);
+
+            var left = this.scale(this.currentRound) + 'px';
+            return slider.select('.slider-cell').append('span').attr('class', 'slider-toggle').style('left', left).text(this.data.results[this.currentRound].meta.name).call(d3.drag().on("drag", function () {
+                var roundIndex = Math.round(_this5.scale.invert(d3.event.x));
                 _this5.moveRightTable(roundIndex);
                 _this5.preview(roundIndex);
             }).on("end", function () {
                 return _this5.endPreview(true);
             }));
-
-            return ['table', 'rows', 'cells'].map(function (el) {
-                var nodes = ['left', 'sparks', 'right'].map(function (part) {
-                    return _this5[part][el].nodes();
-                });
-                return d3.selectAll(d3.merge(nodes));
-            });
         }
     }, {
         key: 'to',
