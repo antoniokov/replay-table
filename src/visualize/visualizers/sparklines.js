@@ -140,12 +140,12 @@ export default class extends Skeleton {
             .domain([1, sparksData.length])
             .range([0, 100]);
 
-        cells
+        cells.filter(cell => cell.result.change !== null)
             .append('span')
             .attr('class', 'spark-position')
             .style('top', cell => `${scale(cell.result.position.strict)}%`);
 
-        cells
+        cells.filter(cell => cell.result.change !== null)
             .append('span')
             .attr('class', 'spark-score muted')
             .style('color', cell => this.params.colors[cell.result.outcome] || 'black')
@@ -364,7 +364,7 @@ export default class extends Skeleton {
 
 class Cell extends skeletonCell {
     score (result, params) {
-        this.text = result.match ? `${result.match.score}:${result.match.opponentScore}` : '';
+        this.text = result.match && result.match.score !== null ? `${result.match.score}:${result.match.opponentScore}` : '';
         this.classes = ['score', 'change'];
         this.color = params.colors[result.outcome];
         return this;
@@ -417,7 +417,7 @@ class Cell extends skeletonCell {
 
     makeChange (column, result, params) {
         const calc = column.replace('.change', '');
-        this.text = numberToChange(result[calc].change, '0');
+        this.text = result.change !== null ? numberToChange(result[calc].change, '0') : '';
         this.classes = ['change'];
         this.color = params.colors[result.outcome];
         return this;

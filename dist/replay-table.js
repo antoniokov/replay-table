@@ -4210,11 +4210,15 @@ var _class = function (_Skeleton) {
 
             var scale = d3.scaleLinear().domain([1, sparksData.length]).range([0, 100]);
 
-            cells.append('span').attr('class', 'spark-position').style('top', function (cell) {
+            cells.filter(function (cell) {
+                return cell.result.change !== null;
+            }).append('span').attr('class', 'spark-position').style('top', function (cell) {
                 return scale(cell.result.position.strict) + '%';
             });
 
-            cells.append('span').attr('class', 'spark-score muted').style('color', function (cell) {
+            cells.filter(function (cell) {
+                return cell.result.change !== null;
+            }).append('span').attr('class', 'spark-score muted').style('color', function (cell) {
                 return _this4.params.colors[cell.result.outcome] || 'black';
             }).text(function (cell) {
                 return cell.result.match ? cell.result.match.score + ':' + cell.result.match.opponentScore : '';
@@ -4499,7 +4503,7 @@ var Cell = function (_skeletonCell) {
     _createClass(Cell, [{
         key: 'score',
         value: function score(result, params) {
-            this.text = result.match ? result.match.score + ':' + result.match.opponentScore : '';
+            this.text = result.match && result.match.score !== null ? result.match.score + ':' + result.match.opponentScore : '';
             this.classes = ['score', 'change'];
             this.color = params.colors[result.outcome];
             return this;
@@ -4560,7 +4564,7 @@ var Cell = function (_skeletonCell) {
         key: 'makeChange',
         value: function makeChange(column, result, params) {
             var calc = column.replace('.change', '');
-            this.text = (0, _numberToChange2.default)(result[calc].change, '0');
+            this.text = result.change !== null ? (0, _numberToChange2.default)(result[calc].change, '0') : '';
             this.classes = ['change'];
             this.color = params.colors[result.outcome];
             return this;
