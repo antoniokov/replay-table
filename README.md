@@ -3,13 +3,13 @@ Replay Table
 
 A library fo visualizing sport season results with interactive standings:
 
-![PICTURE]()
+![sparklines-demo](https://replaytable.com/assets/images/sparklines_demo.gif)
 
 ## Live Demos
 
-* [English Premier League](https://replaytable.com/tables/football/2016-2017/english-premier-league)
-* [NBA](https://replaytable.com/tables/formula-one/2016/formula-one-drivers)
-* [Formula One](https://replaytable.com/tables/basketball/2015-2016/nba-western)
+* [English Premier League](https://replaytable.com#replay-english-premier-league-2016-2017)
+* [Formula One](https://replaytable.com#replay-formula-one-drivers-2016)
+* [NBA](https://replaytable.com#replay-nba-western-2015-2016)
 
 ## Quickstart
 
@@ -344,7 +344,10 @@ Returns a class instance with useful methods:
 
 ### Classic
 
-![PICTURE]()
+![classic-f1-demo](https://replaytable.com/assets/images/classic_f1_demo.gif)
+
+[Formula One](https://replaytable.com#replay-formula-one-drivers-2016)
+
 
 A simple table with controls on top. Works for any sport and is highly customizable.
 
@@ -357,7 +360,9 @@ A simple table with controls on top. Works for any sport and is highly customiza
 
 ### Sparklines
 
-![PICTURE]()
+![sparklines-demo](https://replaytable.com/assets/images/sparklines_demo.gif)
+
+[English Premier League](https://replaytable.com#replay-english-premier-league-2016-2017)
 
 A powerful interactive visualization for the sports with matches and points. Might be slow on old devices and in Firefox.
 
