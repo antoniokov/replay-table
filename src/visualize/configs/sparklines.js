@@ -11,18 +11,6 @@ export default {
         validate: value => validateArray(value, value => controls.hasOwnProperty(value))
     },
 
-    durations: {
-        default: {
-            move: 1000,
-            freeze: 500,
-            pre: 750
-        },
-        parse: parseObject,
-        validate: obj => validateObject(obj,
-            key => ['move', 'freeze', 'pre'].includes(key),
-            value => !Number.isNaN(value) && value >= 0)
-    },
-
     colors: {
         default: {
             'win': '#21c114',
@@ -37,9 +25,9 @@ export default {
 
     sparkColors: {
         default: {
-            'win': '#D7E7C1', //#A8C968
-            'draw': '#F0F0F0', //#C2C2C2
-            'loss': '#EFCEBA' //#D78B68
+            'win': '#D7E7C1',
+            'draw': '#F0F0F0',
+            'loss': '#EFCEBA'
         },
         parse: parseObject,
         validate: obj => validateObject(obj,
@@ -57,6 +45,18 @@ export default {
         validate: obj => validateObject(obj,
             key => ['win', 'draw', 'loss'].includes(key),
             value => isString(value))
+    },
+
+    durations: {
+        default: {
+            move: 1000,
+            freeze: 500,
+            pre: 750
+        },
+        parse: parseObject,
+        validate: obj => validateObject(obj,
+            key => ['move', 'freeze', 'pre'].includes(key),
+            value => !Number.isNaN(value) && value >= 0)
     },
 
     pointsLabel: {

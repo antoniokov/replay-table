@@ -21,7 +21,7 @@ export default class {
         this.drillDown = this.drillDown.bind(this);
         this.endDrillDown = this.endDrillDown.bind(this);
 
-        this.durations = adjustDurations(params.durations, params.speed);
+        this.durations = adjustDurations(params.durations, params.animationSpeed);
 
         this.roundsTotalNumber = this.params.roundsTotalNumber || this.data.meta.lastRound;
         this.currentRound = params.startFromRound === null ? this.data.meta.lastRound : params.startFromRound;

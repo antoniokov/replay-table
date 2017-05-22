@@ -1320,6 +1320,18 @@ exports.default = {
         }
     },
 
+    controls: {
+        default: ['play', 'previous', 'next', 'slider'],
+        parse: function parse(input) {
+            return input.split(',');
+        },
+        validate: function validate(value) {
+            return (0, _validateArray2.default)(value, function (value) {
+                return controls.hasOwnProperty(value);
+            });
+        }
+    },
+
     startFromRound: {
         default: null,
         parse: function parse(input) {
@@ -1350,39 +1362,11 @@ exports.default = {
         }
     },
 
-    controls: {
-        default: ['play', 'previous', 'next', 'slider'],
-        parse: function parse(input) {
-            return input.split(',');
-        },
-        validate: function validate(value) {
-            return (0, _validateArray2.default)(value, function (value) {
-                return controls.hasOwnProperty(value);
-            });
-        }
-    },
-
-    speed: {
+    animationSpeed: {
         default: 1.0,
         parse: Number.parseFloat,
         validate: function validate(value) {
             return !Number.isNaN(value) && value > 0.0 && value <= 10.0;
-        }
-    },
-
-    durations: {
-        default: {
-            move: 750,
-            freeze: 750,
-            outcomes: 200
-        },
-        parse: _parseObject2.default,
-        validate: function validate(obj) {
-            return (0, _validateObject2.default)(obj, function (key) {
-                return ['move', 'freeze', 'outcomes'].includes(key);
-            }, function (value) {
-                return !Number.isNaN(value) && value >= 0;
-            });
         }
     }
 };
@@ -1480,7 +1464,7 @@ var _class = function () {
         this.drillDown = this.drillDown.bind(this);
         this.endDrillDown = this.endDrillDown.bind(this);
 
-        this.durations = (0, _adjustDurations2.default)(params.durations, params.speed);
+        this.durations = (0, _adjustDurations2.default)(params.durations, params.animationSpeed);
 
         this.roundsTotalNumber = this.params.roundsTotalNumber || this.data.meta.lastRound;
         this.currentRound = params.startFromRound === null ? this.data.meta.lastRound : params.startFromRound;
@@ -3258,6 +3242,22 @@ exports.default = {
                 return (0, _isString2.default)(value);
             });
         }
+    },
+
+    durations: {
+        default: {
+            move: 750,
+            freeze: 750,
+            outcomes: 200
+        },
+        parse: _parseObject2.default,
+        validate: function validate(obj) {
+            return (0, _validateObject2.default)(obj, function (key) {
+                return ['move', 'freeze', 'outcomes'].includes(key);
+            }, function (value) {
+                return !Number.isNaN(value) && value >= 0;
+            });
+        }
     }
 };
 
@@ -3309,22 +3309,6 @@ exports.default = {
         }
     },
 
-    durations: {
-        default: {
-            move: 1000,
-            freeze: 500,
-            pre: 750
-        },
-        parse: _parseObject2.default,
-        validate: function validate(obj) {
-            return (0, _validateObject2.default)(obj, function (key) {
-                return ['move', 'freeze', 'pre'].includes(key);
-            }, function (value) {
-                return !Number.isNaN(value) && value >= 0;
-            });
-        }
-    },
-
     colors: {
         default: {
             'win': '#21c114',
@@ -3343,9 +3327,9 @@ exports.default = {
 
     sparkColors: {
         default: {
-            'win': '#D7E7C1', //#A8C968
-            'draw': '#F0F0F0', //#C2C2C2
-            'loss': '#EFCEBA' //#D78B68
+            'win': '#D7E7C1',
+            'draw': '#F0F0F0',
+            'loss': '#EFCEBA'
         },
         parse: _parseObject2.default,
         validate: function validate(obj) {
@@ -3369,6 +3353,22 @@ exports.default = {
                 return ['win', 'draw', 'loss'].includes(key);
             }, function (value) {
                 return (0, _isString2.default)(value);
+            });
+        }
+    },
+
+    durations: {
+        default: {
+            move: 1000,
+            freeze: 500,
+            pre: 750
+        },
+        parse: _parseObject2.default,
+        validate: function validate(obj) {
+            return (0, _validateObject2.default)(obj, function (key) {
+                return ['move', 'freeze', 'pre'].includes(key);
+            }, function (value) {
+                return !Number.isNaN(value) && value >= 0;
             });
         }
     },

@@ -26,5 +26,17 @@ export default {
         validate: obj => validateObject(obj,
             key => ['win', 'draw', 'loss'].includes(key),
             value => isString(value))
+    },
+
+    durations: {
+        default: {
+            move: 750,
+            freeze: 750,
+            outcomes: 200
+        },
+        parse: parseObject,
+        validate: obj => validateObject(obj,
+            key => ['move', 'freeze', 'outcomes'].includes(key),
+            value => !Number.isNaN(value) && value >= 0)
     }
 };

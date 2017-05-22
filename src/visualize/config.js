@@ -19,6 +19,12 @@ export default {
         validate: value => visualizers.hasOwnProperty(value)
     },
 
+    controls: {
+        default: ['play', 'previous', 'next', 'slider'],
+        parse: input => input.split(','),
+        validate: value => validateArray(value, value => controls.hasOwnProperty(value))
+    },
+
     startFromRound: {
         default: null,
         parse: input => Number.parseInt(input, 10),
@@ -37,27 +43,9 @@ export default {
         validate: value => ['strict', 'highest', 'range', 'average'].includes(value)
     },
 
-    controls: {
-        default: ['play', 'previous', 'next', 'slider'],
-        parse: input => input.split(','),
-        validate: value => validateArray(value, value => controls.hasOwnProperty(value))
-    },
-
-    speed: {
+    animationSpeed: {
         default: 1.0,
         parse: Number.parseFloat,
         validate: value => !Number.isNaN(value) && value > 0.0 && value <= 10.0
-    },
-
-    durations: {
-        default: {
-            move: 750,
-            freeze: 750,
-            outcomes: 200
-        },
-        parse: parseObject,
-        validate: obj => validateObject(obj,
-            key => ['move', 'freeze', 'outcomes'].includes(key),
-            value => !Number.isNaN(value) && value >= 0)
     }
 };
