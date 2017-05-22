@@ -1,100 +1,229 @@
 Replay Table
 =========
 
-Transforms a csv file with season results into interactive standings:
+A library fo visualizing sport season results with interactive standings:
 
 ![demo](https://s3-us-west-2.amazonaws.com/replay-table/images/github/demo2.gif)
 
 ## Live Demos
 
-* [Premier League](https://replaytable.com/#english-premier-league)
-* [NBA](https://replaytable.com/#nba-western)
-* [Formula One](https://replaytable.com/#formula-one-drivers)
+* [English Premier League](https://replaytable.com/tables/football/2016-2017/english-premier-league)
+* [NBA](https://replaytable.com/tables/formula-one/2016/formula-one-drivers)
+* [Formula One](https://replaytable.com/tables/basketball/2015-2016/nba-western)
 
 ## Quickstart
 
-1. Prepare a [csv file](#input) with season results or download one from our [gallery](https://replaytable.com/#examples).
+1. Prepare an [input file](#input) with season results or download one from our [examples](https://replaytable.com/#examples).
 
-2. Put a `div` with `replayTable` class on your page and supply a link to the csv file using `data-csv` attribute:
+2. Put a `div` with `replayTable` class on your page and supply a link to the input file using `data-source` attribute:
 
     ```
     <div class="replayTable"
-         data-csv="/path/to/file.csv">
+         data-source="/path/to/file.csv">
     </div>
     ```
-3. Include Replay tables script and stylesheet:
+3. Include D3.js and Replay Table scripts (70+16 KB gzipped) and the stylesheet. Apply some magic to the body:
 
     ```
     <head>
         ...
-        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/replay-table/latest/replay-table.css">
+        <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/replay-table/dist/replay-table.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/replay-table/dist/replay-table.css">
     </head>
     <body>
         ...
-        <script type="text/javascript" src="//cdn.jsdelivr.net/replay-table/latest/replay-table.min.js"></script>
+        <script type="text/javascript">replayTable.magic()</script>
     </body>
     ```
     
 4. Enjoy!
 
-That was easy :)
+The library is highly customizable via `data-` attributes. Check out [customization](#customization) for the details.
 
 Also feel free to embed ready-to-use Replay Tables from our [gallery](https://replayTable.com/#examples).
 
 
+## Library
+
+`npm install -S replay-table`
+
+The only dependency is [D3.js](d3js.org). D3 is not included with the library so don't forget to plug it up. 
+
+The library consists of 5 modules: configure → extract → transform → calculate → visualize.
+Take a look at how we use them in the `magic` function:
+
+```
+return Array.from(document.getElementsByClassName('replayTable'))
+        .map(table => {
+            const config = replayTable.configure(table.id, table.dataset); //build a config from data- attributes
+
+            return Promise.resolve(replayTable.extract(config.extract)) //fetch the input
+                .then(raw => {
+                    const transformed = replayTable.transform(raw, config.transform); //transform into predefined format
+                    const calculated = replayTable.calculate(transformed, config.calculate); //calculate wins, goals, etc.
+                    return replayTable.visualize(calculated, config.visualize); //render interactive standings
+                })
+                .catch(error => crash(error));
+        });
+```
+
+Sometimes you won't need all the modules: for example, feel free to omit `configure` if you already have a config.
+    
+A Replay Table is returned from the `visualize` module. It has methods like `play()` and `to(roundIndex)` so you can control its behaviour from code. 
+
+
 ## Customization
-* [Input](#input)
+* [Configure](#configure)
+    * [Presets](#presets)
+* [Extract](#extract)
+* [Transfrom](#transform)
   * [List of Matches](#list-of-matches)
   * [Points Table](#points-table)
-* [Table Structure](#table-structure)
-  * [Position](#position)
-  * [Item](#item)
-  * [Extra Columns](#extra-columns)
-  * [Calculated Columns](#calculated-columns)
-  * [Total](#total)
-  * [Change](#change)
-* [Presets](#presets)
-  * [Wins-Losses](#wins-losses)
-  * [F1](#f1)
-  * [ЧГК](#чгк)
-* [Parameters](#parameters)
-  * [Terms](#terms)
-  * [Data](#data)
-  * [Behaviour](#behaviour)
-  * [Appearance](#appereance)
-  * [Other](#other)
+* [Calculate](#calculate)
+* [Visualize](#visualize)
+  * [Classic](#classic)
+  * [Sparklines](#sparklines)
 
-## Input
+## Configure
 
-Replay Table only supports csv files for now. Please, use comma as separator and UTF-8 as encoding.
+Makes configs for other modules based on the div `data-` attributes. The output looks like this:
+
+```
+extract: {
+    extractor: csv
+},
+transform: {
+    transformer: 'pointsTable',
+    changeToOutcome: {
+        25: 'win'
+    },
+    insertStartRound: 'Start →'
+},
+calculate: {
+    orderBy: ['points', 'wins']
+},
+visualize: {
+    columns: ['position', 'item', 'points', 'points.change'],
+    labels: ['#', 'Driver', 'Points']
+}
+```
+
+### Presets
+
+To save you some time and cognitive effort we've constructed presets 
+that you can use via `data-preset` attribute: 
+[matches](https://github.com/TargetProcess/replay-table/blob/master/src/configure/presets/matches.js), 
+[f1](https://github.com/TargetProcess/replay-table/blob/master/src/configure/presets/f1.js), 
+[winLoss](https://github.com/TargetProcess/replay-table/blob/master/src/configure/presets/win-loss.js), 
+[chgk](https://github.com/TargetProcess/replay-table/blob/master/src/configure/presets/chgk.js).
+ 
+So this table:
+
+```
+<div class="replayTable"
+    data-source="/path/to/file.csv">
+    data-transformer="listOfMatches"
+    data-change-to-outcome="{ 1: 'win', 0: 'loss' }"
+    data-order-by="winningPercentage,wins"
+    data-visualizer="classic"
+    data-columns="position,item,rounds,wins,losses,winningPercentage,outcome,match"
+    data-labels="#,Team,G,W,L,Win %"
+</div>
+```
+
+is identical to this:
+
+```
+<div class="replayTable"
+    data-source="/path/to/file.csv">
+    data-preset="winLoss"
+</div>
+```
+
+## Extract
+
+Fetches the input file, returns a promise.
+
+  
+| Parameter | Attribute | Required | Accepts | Default value | Examples |
+|-----------|-----------|----------|---------------|---------------|----------|
+| source | `data-source` | yes | `string` | `null` | `/assets/data/football/2016-2017/english-premier-league.json` |
+| extractor | `data-extractor` | no | [extractor](https://github.com/TargetProcess/replay-table/tree/master/src/extract/extractors) | `csv` | `csv`, `json` |
+
+If extractor is not defined we try to guess it from the file extension.
+
+## Transform
+
+Transforms raw data into the predefined format:
+
+```
+[
+    {
+        name: 'round name',
+        results: {
+            [
+                {
+                    change: 25,
+                    extras: {
+                        item: {
+                            team: 'Mercedes'
+                        }
+                    },
+                    item: 'Lewis Hamilton',
+                    outcome: 'win'
+                },
+                {
+                    ...
+                },
+                ...
+            ]
+        }
+    },
+    {
+        ...
+    },
+    ...
+]
+```
+
+| Parameter | Attribute | Accepts | Parses | Default value | Examples |
+|-----------|-----------|---------|--------|---------------|----------|
+| transformer | `data-transformer` | [transformer](https://github.com/TargetProcess/replay-table/tree/master/src/transform/transformers) | | `listOfMatches` | `listOfMatches`, `pointsTable` |
+| changeToOutcome | `data-change-to-outcome` | `object` | JSON object | `{ 3: 'win', 1: 'draw', 0: 'loss'}` | `{ 1: 'win', 0: 'loss'}` |
+| filterItems | `data-filter-items` | `array of strings` | comma-separated string | `[]` | `['Golden State Warriors', 'San Antonio Spurs', ...]` |
+| insertStartRound | `data-insert-start-round` | `string` | | `0` | `Start` |
+
 
 ### List of Matches
 
 The structure looks like this:
 
-| Round name | Home Item | Home Item Score | Away Item | Away Item Score |
-|------------|-----------|-----------------|-----------|-----------------|
+| Round name | First Item | First Item Score | Second Item | Second Item Score |
+|------------|------------|------------------|-------------|-------------------|
 | Round | Item | Score | Item | Score |
 
 List should be sorted by round.
 
-The Premier League example ([csv](https://replaytable.com/assets/csv/football/2015-2016/english-premier-league.csv)):
+Here is an example:
 
-| Date | Home | Points | Away | Points |
+| Match Week | Home | Points | Away | Points |
 |------|------|--------|------|--------|
-| August 8 | Bournemouth | 0 | Aston Villa | 1 |
-| August 8 | Chelsea | 2 | Swansea | 2 |
-| August 8 | Everton | 2 | Watford | 2 |
+| 1 | Bournemouth | 0 | Aston Villa | 1 |
+| 1 | Chelsea | 2 | Swansea | 2 |
+| 1 | Everton | 2 | Watford | 2 |
 | ... | ... | ... | ... | ... |
 
-Watch the [live demo](https://replaytable.com/#english-premier-league).
+Also works with [football-data.org fixtures](http://api.football-data.org/v1/competitions/426/fixtures).
 
-Parameters:
-* [`addStartRound`](#addstartround)
-* [`useRoundsNumbers`](#useroundsnumbers)
-* [`locationFirst`](#locationfirst)
 
-[Modes](#modes): `season`, `round` (matches), `item`.
+| Parameter | Attribute | Accepts | Default value | Examples |
+|-----------|-----------|---------|---------------|----------|
+| format | `data-format` | `csv` or `football-data.org` | `csv` | `csv`, `football-data.org` |
+| locationFirst | `data-location-first` | `home` or `away` | `home` | `home`, `away` |
+| collapseToRounds | `data-collapse-to-rounds` | `boolean` | `false` | `true`, `false` |
+
+Use `collapseToRounds` when you've got dates instead of match weeks: it groups each team's 1st, 2nd, 3rd, ... games.
 
 ### Points Table
 
@@ -104,7 +233,7 @@ The structure looks like this:
 |-----------|-------------------------|-------------------------|-----|----------------|----------------|-----|-----------------|
 | item | [1st piece of extra info] | [2nd piece of extra info] | [...] | 1st round points | 2nd round points | ... | last round points |
 
-The Formula One example ([csv](https://replaytable.com/assets/csv/formula-one/2016/drivers.csv)):
+The Formula One example ([csv](https://replaytable.com/assets/data/formula-one/2016/formula-one-drivers.csv)):
 
 | Driver | Team | Australia | Bahrain | ... | Abu Dhabi |
 |------|---|---|---|-----|----|
@@ -113,322 +242,107 @@ The Formula One example ([csv](https://replaytable.com/assets/csv/formula-one/20
 | Daniel Ricciardo | Red Bull | 12 | 12 | ... | 10 |
 | ... | ... | .... | ... | ... | ... |
 
-Watch the [live demo](https://replaytable.com/#formula-one-drivers).
-
-Parameters:
-* [`addStartRound`](#addstartround)
-* [`extraColumnsNumber`](#extracolumnsnumber)
-
-[Modes](#modes): `season`, `changes`, `item`.
-
-## Table Structure
-
-### Position
-| Required | Examples | Customization |
-|-------------------|-------------------|-------------------|
-| Yes |  `1, 2, 3, 4...`<br/>`1, 2, 2, 4,...` | [`terms`](#terms)<br/>[`positionWhenTied`](#positionwhentied)|
-
-### Item
-| Required | Examples | Customization |
-|-------------------|-------------------|-------------------|
-| Yes |  `Chelsea, Liverpool, Arsenal,...`<br/>`Nico Rosberg, Lewis Hamilton, Daniel Ricciardo...` | [`terms`](#terms)<br/>[`itemsToShow`](#itemstoshow)<br/>[`focusedItems`](#focuseditems)|
-
-Note: items should be unique for table to work properly.
-
-### Extra Columns
-| Required | Examples | Customization | Compatible input types |
-|-------------------|-------------------|-------------------|-------------------|
-| No |  `London, Liverpool, London,...`<br/>`Mercedes, Mercedes, Red Bull,...` | [`extraColumnsNumber`](#extracolumnsnumber) | [`pointsTable`](#pointstable) |
-
-Columns with static info about items.
-
-### Calculated Columns
-| Required | Examples | Customization |
-|-------------------|-------------------|-------------------|
-| No |  `rounds`, `wins`, `losses`, `goalsFor` | [`calculatedColumns`](#calculatedcolumns)<br/>[`resultMapping`](#resultmapping) |
-
-Predefined calculated columns with stats.
-
-### Total
-| Required | Examples | Customization |
-|-------------------|-------------------|-------------------|
-| Yes |  `81, 71, 70,...`<br/>`.890, .817, .671,...` | [`terms`](#terms)<br/>[`totalValue`](#totalvalue)<br/>[`resultMapping`](#resultmapping) |
-
-Table is sorted using this column. When totals are equal position is determined by [`positionWhenTied`](#positionwhentied) parameter.
-
-### Change
-| Required | Examples | Customization |
-|-------------------|-------------------|-------------------|
-| Yes |  `+3, +1, 0,...`<br/>`+25, +18, +15,...` | [`showChangeDuringAnimation`](#showchangeduringanimation) |
-
-Total change since previous round, is shown in the same column as total.
-
-
-## Presets
-Default settings are suited to work with most of the team sports like football and hockey.
-We've also built presets for other kinds of sports for a smooth customization.
-
-Just add `data-preset="{PRESET_NAME}"` to replayTable `div` and the appropriate terms and settings will apply.
-
-### `Wins-Losses`
-
-This preset is built for major professional sport leagues in US and Canada.
-
-| Parameter | Value |
-|-----------|-------|
-| [`inputType`](#inputtype) | `listOfMatches` |
-| [`terms`](#terms) | `{ 'total': 'Win %' }` |
-| [`totalValue`](#totalvalue) | `win %` |
-| [`resultMapping`](#resultmapping) | `{ 1: 'win', 0: 'loss' }` |
-| [`calculatedColumns`](#calculatedcolumns) | `{ 'rounds': 'Games', 'wins': 'Wins', 'losses': 'Losses' }` |
-
-Watch the [NBA demo](https://replaytable.com/examples/basketball/2015-2016/#nba-eastern).
-
-### `F1`
-
-| Parameter | Value |
-|-----------|-------|
-| [`inputType`](#inputtype) | `pointsTable` |
-| [`terms`](#terms) | `{ 'round': 'Race', 'item': 'Driver' }` |
-| [`addStartRound`](#addstartround) | `Start →` |
-| [`resultMapping`](#resultmapping) | `{ 25: win}` |
-| [`tieBreaking`](#tiebreaking) | `wins` |
-
-Watch the [2016 season demo](https://replaytable.com/examples/formula-one/2016/#formula-one-drivers).
-
-### `ЧГК`
-
-This is for the [intellectual game](https://en.wikipedia.org/wiki/What%3F_Where%3F_When%3F#Competitive_game) popular in the Russian-speaking world.
-
-| Parameter | Value |
-|-----------|-------|
-| [`inputType`](#inputtype) | `pointsTable` |
-| [`terms`](#terms) | `{ 'season': 'Турнир', 'round': 'Вопрос', 'changes': 'Вопрос', 'position': 'Место', 'item': 'Команда', 'total': 'Взято', 'change': 'Вопрос' }` |
-| [`positionWhenTied`](#positionwhentied) | `range` |
-| [`resultMapping`](#resultmapping) | `{ 1: 'win', 0: ' ' }` |
-
-Watch the [2016 World Championship demo](https://replaytable.com/examples/chgk/2015-2016/#world-championship).
-
-
-Feel free to [suggest](#contact) more presets.
-
-## Parameters
-Replay Table can be easily customized via `div` `data-` attributes. You can specify your terms, adjust the animation duration, hide unnecessary elements and do other lovely things.
-
-It is possible to use this options together with a [preset](#presets): in this case they will override preset's settings.
-
-* [Terms](#terms)
-* [Data](#data)
-  * [inputType](#inputtype)
-  * [itemsToShow](#itemstoshow)
-  * [totalValue](#totalvalue)
-  * [resultMapping](#resultmapping)
-  * [extraColumnsNumber](#extracolumnsnumber)
-  * [calculatedColumns](#calculatedcolumns)
-  * [useRoundsNumbers](#useroundsnumbers)
-  * [roundsTotalNumber](#roundstotalnumber)
-  * [tieBreaking](#tiebreaking)
-  * [positionWhenTied](#positionwhentied)
-  * [tableName](#tablename)
-* [Behaviour](#behaviour)
-  * [startFromRound](#startfromround)
-  * [animationDuration](#animationduration)
-  * [showChangeDuringAnimation](#showchangeduringanimation)
-* [Appearance](#appereance)
-  * [showProgressBar](#showprogressbar)
-  * [showModeSwitch](#showseasonroundswitch)
-  * [focusedItems](#focuseditems)
-
-
-## Terms
-
-Terms are great for localization and adapting table to a specific sport.
-
-| Div attribute | Accepted type | Example |
-|---------------|---------------|---------------|----------|
-| `data-terms` |  `Object` with terms as keys and names as values | `{ 'round': 'Race', 'item': 'Driver' }`  |
-
-The list of terms:
-
-| Term | Default name | Examples |
-|------|---------------|----------|
-| `season` | `Season` | `Tournament`, `Saison`, `Сезон` |
-| `round` | `Round` | `Game`, `Leg`, `Раунд` |
-| `position` | `#` | `Position`, `Rank`, `Место` |
-| `item` | `Team` | `Player` , `Driver`, `Команда` |
-| `total` | `Points` | `Win %` , `Total`, `Очки` |
-| `changes` | `Changes` | `Delta`, `Изменения` |
-| `change` | `Change` | `Delta` , `Изменение` |
-
-##Data
-
-Data parameters help Replay table transform csv files correctly and insert extra data if needed.
-
-### `inputType`
-| Div attribute | Available options | Default value |
-|---------------|-------------------|---------------|
-| `data-input-type` |  [`listOfMatches`](#list-of-matches)<br/>[`pointsTable`](#points-table) | `listOfMatches` |
-
-### `addStartRound`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-add-start-round` |  `String` or `undefined` | `0` | `Start`, `---` |
-
-If defined inserts a start round with all items having totals equal to zero.
-
-### `itemsToShow`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-items-to-show` |  `Comma-separated string` or `undefined` | `undefined` | `Golden State Warriors,San Antonio Spurs,...` |
-
-Sometimes you don't want to include all items that appear in results in Replay table. For example, it makes sense to split the NBA regular season results into two separate tables for each conference.
-
-### `totalValue`
-| Div attribute | Available options | Default value |
-|---------------|---------------|---------------|----------|
-| `data-total-value` |  `cumulative`, `win %` | `cumulative` |
-
-| Option | Formula |
-|--------|---------|-------|
-| `cumulative` | `total = previousRoundTotal + currentRoundPoints` | |
-| `win %` | `total = wins/rounds` |
-
-### `resultMapping`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-result-mapping` |  `Object` with points as keys and result as values | `{ 3: 'win', 1: 'draw', 0: 'loss' }` | `{ 1: 'win', 0: 'loss' }` |
-
-Maps a change in points to a `win`, `draw` or `loss`. Makes sense for the [`pointsTable`](#[points-table) input type.
-
-### `extraColumnsNumber`
-| Div attribute | Available options | Default value | Examples | Compatible input types |
-|---------------|---------------|---------------|----------|------------------------|
-| `data-extra-columns-number` |  `Number` | `0` | `1`, `2` | [`pointsTable`](#points-table)
-
-Number of [extra columns](#extra-columns) with info about items located between items and results.
-
-### `calculatedColumns`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-calculated-columns` |  `Object` with metrics as keys and labels as values | `{}` | `{ 'rounds': 'G', 'wins': 'W', 'losses': 'L' }` |
-
-Calculates additional stats about items' perfomance. Available metrics are: 
-* `rounds`
-* `wins`
-* `draws`
-* `losses`
-* `goalsFor`
-* `goalsAgainst`
-* `goalsDifference`
-* `rating` (for [ЧГК](#чгк) preset)
-
-### `useRoundsNumbers`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-use-rounds-numbers` |  `Boolean` | `false` | `true` |
-
-If set to `true` ignores rounds' names and counts the number of rounds passed for each item.
-
-This is useful when you have [list Of matches](#list-of-matches) 
-where rows are dates but you don't care that teams didn't play their Nth game simultaneously.
-
-### `roundsTotalNumber`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-rounds-total-number` |  `Number` | `undefined` | `38`, `40` |
-
-Helps to determine the correct value of the progress bar if season is not over yet.
-
-When set to `undefined` counts the number of rounds with at least one result.
-
-### `tieBreaking`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-tie-breaking` |  `Comma-separated string` | `` | `wins`, `goalsDifference,goalsFor` |
-
-Breaks a tie when totals are equal.
-
-Accepts a list of [`calculatedColumns`](#calculcatedcolumns) with the most important one being first.
-They don't need to be visible so you can use this parameter independently from [`calculatedColumns`](#calculcatedcolumns).
-
-
-### `positionWhenTied`
-| Div attribute | Available options | Default value |
-|---------------|-------------------|---------------|
-| `data-position-when-tied` |  `previous round`, `highest`, `range` | `previous round` |
-
-Determines position when totals are equal.
-
-| Option | Positions |
-|--------|-----------|
-| `previous round` | `1, 2, 3, 4,...` |
-| `highest` | `1, 2, 2, 4,...` |
-| `range` | `1, 2-3, 2-3, 4,...` |
-
-### `locationFirst`
-| Div attribute | Available options | Default value |
-|---------------|-------------------|---------------|
-| `data-location-first` |  `home`, `away` | `home` |
-
-Typically a home team goes first in Europe and second in the USA. 
-This parameter is used in parsing [`list of matches`](#list-of-matches), showing match results
-and calculating home-away related [`calculatedColumns`](#calculatedcolumns).
-
-
-### `tableName`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-table-name` |  `String` | `undefined` | `Premier League`, `NBA`, `F1` |
-
-Name is required when you have several Replay Tables on one page.
-
-
-## Behaviour
-
-### `modes`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-modes` |  `Comma-separated string` | All available for the [input](#input) | `season, round` |
-
-Modes to show in the switch. If you don't need all the drill downs, specify only the desired modes using this parameter.
-For available modes check out the [input](#input) section.
-
-### `startFromRound`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-start-from-round` |  `Number` | `undefined` | `0`, `42` |
-
-Number of round to start from. When set to undefined the last round containing at least one non-null result is used.
-
-### `animationDuration`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-animation-duration` |  `Number` | `1800` | `2600`, `1200` |
-
-Animation duration in ms.
-
-### `showChangeDuringAnimation`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-show-change-during-animation` |  `Boolean` | `false` | `true`, `false` |
-
-If checked shows change in total (+3, +1, ...) during the animation. This ss useful when color coding is hard as in F1 (+25, +18,...).
-
-
-## Appearance
-
-### `showProgressBar`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-show-progress-bar` |  `Boolean` | `true` | `true`, `false` |
-
-### `focusedItems`
-| Div attribute | Accepted type | Default value | Examples |
-|---------------|---------------|---------------|----------|
-| `data-focused-items` |  `Comma-separated string` |  | `Liverpool, Everton` |
-
-Highlights specific items.
+Watch the [live demo](https://replaytable.com/#replay-formula-one-drivers-2016).
+
+| Parameter | Attribute | Accepts | Default value | Examples |
+|-----------|-----------|---------|---------------|----------|
+| extraColumnsNumber | `data-extra-columns-number` | `int` | `0` | `1`, `2` |
+
+
+## Calculate
+
+Calculates wins, goals, points, etc. and adds metadata. The output looks like this:
+   
+```
+{
+    meta: {
+        lastRound: 38
+    },
+    results: {
+        [
+            {
+                meta: {
+                    index: 2,
+                    isLast: false,
+                    items: 20,
+                    name: "2"
+                },
+                results: {
+                    [
+                        {
+                            change: 3,
+                            draws: {
+                                change: 0,
+                                total: 0
+                            },
+                            extras: {},
+                            item: 'Leicester',
+                            losses: {
+                                change: 0,
+                                total: 0
+                            },
+                            match: {
+                                location: "away",
+                                opponent: "West Ham",
+                                opponentScore: 1,
+                                score: 2
+                            },
+                            outcome: "win",
+                            points: {
+                                change: 3,
+                                total: 6
+                            },
+                            position: {
+                                highest: 1,
+                                lowest: 4,
+                                strict: 1
+                            },
+                            wins: {
+                                change: 1,
+                                total: 2
+                            }
+                            ...//goalsFor, goalsAgainst, goalsDifference, rounds, winningPercentage
+                        },
+                        ....
+                    ]
+                }
+            },
+            ...
+        ]
+    }
+}
+```
+
+See the whole list of calculations in the [calculations.js](https://github.com/TargetProcess/replay-table/blob/master/src/calculate/calculations.js).
+
+
+| Parameter | Attribute | Accepts | Parses | Default value | Examples |
+|-----------|-----------|---------|--------|---------------|----------|
+| orderBy | `data-order-by` | `array` of calculations | comma-separated string | `[ 'points' ]` | `[ 'winningPercentage', 'wins' ]` |
+
+
+## Visualize
+
+### Classic
+
+### Sparklines
+
+## Contribution
+
+Please, post your suggestions and bugs via Github issues. PRs are also welcome!
+
+If you own an API or a database with sports results we'd be happy to collaborate.
+
+## Credits
+
+The library was built using the [orange time](http://www.openwork.org/targetprocess/) at [Targetprocess](https://www.targetprocess.com/) 
+by Anton Iokov ([@antoniokov](https://github.com/antoniokov)) and Daria Krupenkina ([@dariak](https://github.com/dariak)).
+
+[Sparklines](#sparklines) prototype was made by Vitali Yanusheuski. 
 
 
 ## Contact
-Feel free to suggest features and presets, offer tables for our public gallery and ask questions via [anton.iokov@targetprocess.com](mailto:anton.iokov@targetprocess.com) or [@antoniokov](https://twitter.com/antoniokov).
+
+We're open to your ideas and are ready to help with integrating Replay Table on your website.  
+
+Please, write us an email to [anton.iokov@targetprocess.com](mailto:anton.iokov@targetprocess.com) or ping on Twitter at [@antoniokov](https://twitter.com/antoniokov).
