@@ -7,7 +7,9 @@ export default {
             0: 'loss'
         }
     },
-    calculate: {},
+    calculate: {
+        orderBy: ['points']
+    },
     visualize: {
         columns: ['position', 'item', 'points', 'outcome'],
         labels: ['#', 'Команда', 'Взятых'],

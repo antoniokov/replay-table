@@ -86,7 +86,7 @@ class List {
             case 'csv':
                 return match[1];
             case 'football-data.org':
-                return match.homeTeamName.replace('AFC','FC').replace('FC', '').trim();
+                return match.homeTeamName;
         }
     }
 
@@ -95,7 +95,7 @@ class List {
             case 'csv':
                 return match[3];
             case 'football-data.org':
-                return match.awayTeamName.replace('AFC','FC').replace('FC', '').trim();
+                return match.awayTeamName;
         }
     }
 

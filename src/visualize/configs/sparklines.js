@@ -69,5 +69,17 @@ export default {
         default: 'All',
         parse: input => input,
         validate: isString
+    },
+
+    shortOutcomeLabels: {
+        default: {
+            'win': 'w.',
+            'draw': 'd.',
+            'loss': 'l.',
+        },
+        parse: parseObject,
+        validate: obj => validateObject(obj,
+            key => ['win', 'draw', 'loss'].includes(key),
+            value => isString(value))
     }
 };

@@ -2278,7 +2278,9 @@ exports.default = {
             0: 'loss'
         }
     },
-    calculate: {},
+    calculate: {
+        orderBy: ['points']
+    },
     visualize: {
         columns: ['position', 'item', 'points', 'outcome'],
         labels: ['#', 'Команда', 'Взятых'],
@@ -2379,7 +2381,9 @@ exports.default = {
         transformer: 'listOfMatches',
         collapseToRounds: false
     },
-    calculate: {},
+    calculate: {
+        orderBy: ['points', 'goalsDifference', 'goalsFor']
+    },
     visualize: {
         columns: ['position', 'item', 'points', 'outcome', 'match'],
         labels: ['#', 'Team', 'Points']
@@ -3079,7 +3083,7 @@ var List = function () {
                 case 'csv':
                     return match[1];
                 case 'football-data.org':
-                    return match.homeTeamName.replace('AFC', 'FC').replace('FC', '').trim();
+                    return match.homeTeamName;
             }
         }
     }, {
@@ -3089,7 +3093,7 @@ var List = function () {
                 case 'csv':
                     return match[3];
                 case 'football-data.org':
-                    return match.awayTeamName.replace('AFC', 'FC').replace('FC', '').trim();
+                    return match.awayTeamName;
             }
         }
     }, {
@@ -3387,6 +3391,22 @@ exports.default = {
             return input;
         },
         validate: _isString2.default
+    },
+
+    shortOutcomeLabels: {
+        default: {
+            'win': 'w.',
+            'draw': 'd.',
+            'loss': 'l.'
+        },
+        parse: _parseObject2.default,
+        validate: function validate(obj) {
+            return (0, _validateObject2.default)(obj, function (key) {
+                return ['win', 'draw', 'loss'].includes(key);
+            }, function (value) {
+                return (0, _isString2.default)(value);
+            });
+        }
     }
 };
 
@@ -4532,7 +4552,7 @@ var Cell = function (_skeletonCell) {
     }, {
         key: 'wins',
         value: function wins(result, params) {
-            this.text = result.wins.total + ' w.';
+            this.text = result.wins.total + ' ' + params.shortOutcomeLabels.win;
             this.classes = ['change'];
             this.color = params.colors.win;
             return this;
@@ -4540,7 +4560,7 @@ var Cell = function (_skeletonCell) {
     }, {
         key: 'draws',
         value: function draws(result, params) {
-            this.text = result.draws.total + ' d.';
+            this.text = result.draws.total + ' ' + params.shortOutcomeLabels.draw;
             this.classes = ['calculation'];
             this.color = params.colors.draw;
             return this;
@@ -4548,7 +4568,7 @@ var Cell = function (_skeletonCell) {
     }, {
         key: 'losses',
         value: function losses(result, params) {
-            this.text = result.losses.total + ' l.';
+            this.text = result.losses.total + ' ' + params.shortOutcomeLabels.loss;
             this.classes = ['calculation'];
             this.color = params.colors.loss;
             return this;
@@ -4556,7 +4576,7 @@ var Cell = function (_skeletonCell) {
     }, {
         key: 'labeledPoints',
         value: function labeledPoints(result, params) {
-            this.text = result.points.total + ' points';
+            this.text = result.points.total + ' ' + params.pointsLabel;
             this.classes = ['calculation'];
             return this;
         }

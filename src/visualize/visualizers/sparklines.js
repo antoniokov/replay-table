@@ -389,28 +389,28 @@ class Cell extends skeletonCell {
     }
 
     wins (result, params) {
-        this.text = `${result.wins.total} w.`;
+        this.text = `${result.wins.total} ${params.shortOutcomeLabels.win}`;
         this.classes = ['change'];
         this.color = params.colors.win;
         return this;
     }
 
     draws (result, params) {
-        this.text = `${result.draws.total} d.`;
+        this.text = `${result.draws.total} ${params.shortOutcomeLabels.draw}`;
         this.classes = ['calculation'];
         this.color = params.colors.draw;
         return this;
     }
 
     losses (result, params) {
-        this.text = `${result.losses.total} l.`;
+        this.text = `${result.losses.total} ${params.shortOutcomeLabels.loss}`;
         this.classes = ['calculation'];
         this.color = params.colors.loss;
         return this;
     }
 
     labeledPoints (result, params) {
-        this.text = `${result.points.total} points`;
+        this.text = `${result.points.total} ${params.pointsLabel}`;
         this.classes = ['calculation'];
         return this;
     }

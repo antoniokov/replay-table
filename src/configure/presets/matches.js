@@ -4,7 +4,9 @@ export default {
         transformer: 'listOfMatches',
         collapseToRounds: false
     },
-    calculate: {},
+    calculate: {
+        orderBy: ['points', 'goalsDifference', 'goalsFor']
+    },
     visualize: {
         columns: ['position', 'item', 'points', 'outcome', 'match'],
         labels: ['#', 'Team', 'Points']
