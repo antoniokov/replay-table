@@ -2,7 +2,7 @@ export default {
     format: {
         default: 'csv',
         parse: input => input,
-        validate: value => ['csv', 'football-data.org'].includes(value)
+        validate: value => ['csv', 'football-data.org', 'football-data.org/v2'].includes(value)
     },
 
     locationFirst: {
