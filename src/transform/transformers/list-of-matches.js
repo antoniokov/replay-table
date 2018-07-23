@@ -63,7 +63,10 @@ class List {
                 this.matches = matches;
                 break;
             case 'football-data.org':
-                this.matches = data.fixtures;
+            this.matches = data.fixtures;
+                break;
+            case 'football-data.org/v2':
+                this.matches = data.matches.filter(o => o.stage === 'REGULAR_SEASON');
                 break;
         }
 
@@ -77,6 +80,7 @@ class List {
             case 'csv':
                 return match[0];
             case 'football-data.org':
+            case 'football-data.org/v2':
                 return match.matchday.toString();
         }
     }
@@ -87,6 +91,8 @@ class List {
                 return match[1];
             case 'football-data.org':
                 return match.homeTeamName;
+            case 'football-data.org/v2':
+                return match.homeTeam.name;
         }
     }
 
@@ -96,6 +102,8 @@ class List {
                 return match[3];
             case 'football-data.org':
                 return match.awayTeamName;
+            case 'football-data.org/v2':
+                return match.awayTeam.name;
         }
     }
 
@@ -105,6 +113,8 @@ class List {
                 return Number.parseInt(match[2], 10);
             case 'football-data.org':
                 return match.status === 'FINISHED' ? match.result.goalsHomeTeam : null;
+            case 'football-data.org/v2':
+                return match.status === 'FINISHED' ? match.score.fullTime.homeTeam : null;
         }
     }
 
@@ -113,7 +123,9 @@ class List {
             case 'csv':
                 return Number.parseInt(match[4], 10)
             case 'football-data.org':
-                return match.status === 'FINISHED' ? match.result.goalsAwayTeam : null;
+            return match.status === 'FINISHED' ? match.result.goalsAwayTeam : null;
+            case 'football-data.org/v2':
+                return match.status === 'FINISHED' ? match.score.fullTime.awayTeam : null;
         }
     }
 }
