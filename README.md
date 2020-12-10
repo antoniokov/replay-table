@@ -3,17 +3,17 @@ Replay Table
 
 A library fo visualizing sport season results with interactive standings:
 
-![sparklines-demo](https://replaytable.com/assets/images/sparklines_demo.gif)
+![sparklines-demo](https://antoniokov.com/replay/assets/images/sparklines_demo.gif)
 
 ## Live Demos
 
-* [English Premier League](https://replaytable.com#replay-english-premier-league-2016-2017)
-* [Formula One](https://replaytable.com#replay-formula-one-drivers-2016)
-* [NBA](https://replaytable.com#replay-nba-western-2015-2016)
+* [English Premier League](https://antoniokov.com/replay#replay-english-premier-league-2016-2017)
+* [Formula One](https://antoniokov.com/replay#replay-formula-one-drivers-2016)
+* [NBA](https://antoniokov.com/replay#replay-nba-western-2015-2016)
 
 ## Quickstart
 
-1. Prepare an [input file](#input) with season results or download one from our [examples](https://replaytable.com/#examples).
+1. Prepare an [input file](#input) with season results or download one from our [examples](https://antoniokov.com/replay/#examples).
 
 2. Put a `div` with `replayTable` class on your page and supply a link to the input file using `data-source` attribute:
 
@@ -41,7 +41,7 @@ A library fo visualizing sport season results with interactive standings:
 
 The library is highly customizable via `data-` attributes. Check out [customization](#customization) for the details.
 
-Also feel free to embed ready-to-use Replay Tables from our [gallery](https://replayTable.com/#examples).
+Also feel free to embed ready-to-use Replay Tables from our [gallery](https://antoniokov.com/replay/#examples).
 
 
 ## Library
@@ -113,10 +113,10 @@ visualize: {
 
 To save you some time and cognitive effort we've constructed presets 
 that you can use via `data-preset` attribute: 
-[matches](https://github.com/TargetProcess/replay-table/blob/master/src/configure/presets/matches.js), 
-[f1](https://github.com/TargetProcess/replay-table/blob/master/src/configure/presets/f1.js), 
-[winLoss](https://github.com/TargetProcess/replay-table/blob/master/src/configure/presets/win-loss.js), 
-[chgk](https://github.com/TargetProcess/replay-table/blob/master/src/configure/presets/chgk.js).
+[matches](https://github.com/antoniokov/replay-table/blob/master/src/configure/presets/matches.js), 
+[f1](https://github.com/antoniokov/replay-table/blob/master/src/configure/presets/f1.js), 
+[winLoss](https://github.com/antoniokov/replay-table/blob/master/src/configure/presets/win-loss.js), 
+[chgk](https://github.com/antoniokov/replay-table/blob/master/src/configure/presets/chgk.js).
  
 So this table:
 
@@ -149,7 +149,7 @@ Fetches the input file, returns a promise.
 | Parameter | Attribute | Required | Accepts | Default | Examples |
 |-----------|-----------|----------|---------------|---------------|----------|
 | source | `data-source` | yes | `string` | `null` | `/assets/data/football/2016-2017/english-premier-league.json` |
-| extractor | `data-extractor` | no | [extractor](https://github.com/TargetProcess/replay-table/tree/master/src/extract/extractors) | `csv` | `csv`, `json` |
+| extractor | `data-extractor` | no | [extractor](https://github.com/antoniokov/replay-table/tree/master/src/extract/extractors) | `csv` | `csv`, `json` |
 
 If extractor is not defined we try to guess it from the file extension.
 
@@ -189,7 +189,7 @@ Transforms raw data into the predefined format:
 
 | Parameter | Attribute | Accepts | Parses | Default | Examples |
 |-----------|-----------|---------|--------|---------------|----------|
-| transformer | `data-transformer` | [transformer](https://github.com/TargetProcess/replay-table/tree/master/src/transform/transformers) | | `listOfMatches` | `listOfMatches`, `pointsTable` |
+| transformer | `data-transformer` | [transformer](https://github.com/antoniokov/replay-table/tree/master/src/transform/transformers) | | `listOfMatches` | `listOfMatches`, `pointsTable` |
 | changeToOutcome | `data-change-to-outcome` | `object` | JSON object | `{ 3: 'win', 1: 'draw', 0: 'loss'}` | `{ 1: 'win', 0: 'loss'}` |
 | filterItems | `data-filter-items` | `array of strings` | comma-separated string | `[]` | `['Golden State Warriors', 'San Antonio Spurs', ...]` |
 | insertStartRound | `data-insert-start-round` | `string` | | `0` | `Start` |
@@ -233,7 +233,7 @@ The structure looks like this:
 |-----------|-------------------------|-------------------------|-----|----------------|----------------|-----|-----------------|
 | item | [1st piece of extra info] | [2nd piece of extra info] | [...] | 1st round points | 2nd round points | ... | last round points |
 
-The Formula One example ([csv](https://replaytable.com/assets/data/formula-one/2016/formula-one-drivers.csv)):
+The Formula One example ([csv](https://antoniokov.com/replay/assets/data/formula-one/2016/formula-one-drivers.csv)):
 
 | Driver | Team | Australia | Bahrain | ... | Abu Dhabi |
 |------|---|---|---|-----|----|
@@ -242,7 +242,7 @@ The Formula One example ([csv](https://replaytable.com/assets/data/formula-one/2
 | Daniel Ricciardo | Red Bull | 12 | 12 | ... | 10 |
 | ... | ... | .... | ... | ... | ... |
 
-Watch the [live demo](https://replaytable.com/#replay-formula-one-drivers-2016).
+Watch the [live demo](https://antoniokov.com/replay/#replay-formula-one-drivers-2016).
 
 | Parameter | Attribute | Accepts | Default | Examples |
 |-----------|-----------|---------|---------------|----------|
@@ -313,7 +313,7 @@ Calculates wins, goals, points, etc. and adds metadata. The output looks like th
 }
 ```
 
-See the whole list of calculations in the [calculations.js](https://github.com/TargetProcess/replay-table/blob/master/src/calculate/calculations.js).
+See the whole list of calculations in the [calculations.js](https://github.com/antoniokov/replay-table/blob/master/src/calculate/calculations.js).
 
 
 | Parameter | Attribute | Accepts | Parses | Default | Examples |
@@ -334,8 +334,8 @@ Returns a class instance with useful methods:
 
 | Parameter | Attribute | Accepts | Parses | Default | Examples |
 |-----------|-----------|---------|--------|---------------|----------|
-| visualizer | `data-visualizer` | [visualizer](https://github.com/TargetProcess/replay-table/tree/master/src/visualize/visualizers) | | `classic` | `classic`, `sparklines` |
-| controls | `data-conrols` | `array` of [controls](https://github.com/TargetProcess/replay-table/tree/master/src/visualize/controls) | comma-separated string | `['play', 'previous', 'next', 'slider']` | `['play', 'slider']` |
+| visualizer | `data-visualizer` | [visualizer](https://github.com/antoniokov/replay-table/tree/master/src/visualize/visualizers) | | `classic` | `classic`, `sparklines` |
+| controls | `data-conrols` | `array` of [controls](https://github.com/antoniokov/replay-table/tree/master/src/visualize/controls) | comma-separated string | `['play', 'previous', 'next', 'slider']` | `['play', 'slider']` |
 | startFromRound | `data-start-from-round` | `int` | | `null` | `0`, `15` |
 | roundsTotalNumber | `data-rounds-total-number` | `int` | | `null` | `38`, `82` |
 | positionWhenTied | `data-position-when-tied` | `int` | | `strict`, `highest`, `range` or `average` | `strict`, `highest` |
@@ -344,9 +344,9 @@ Returns a class instance with useful methods:
 
 ### Classic
 
-![classic-f1-demo](https://replaytable.com/assets/images/classic_f1_demo.gif)
+![classic-f1-demo](https://antoniokov.com/replay/assets/images/classic_f1_demo.gif)
 
-[Formula One](https://replaytable.com#replay-formula-one-drivers-2016)
+[Formula One](https://antoniokov.com/replay#replay-formula-one-drivers-2016)
 
 
 A simple table with controls on top. Works for any sport and is highly customizable.
@@ -360,15 +360,15 @@ A simple table with controls on top. Works for any sport and is highly customiza
 
 ### Sparklines
 
-![sparklines-demo](https://replaytable.com/assets/images/sparklines_demo.gif)
+![sparklines-demo](https://antoniokov.com/replay/assets/images/sparklines_demo.gif)
 
-[English Premier League](https://replaytable.com#replay-english-premier-league-2016-2017)
+[English Premier League](https://antoniokov.com/replay#replay-english-premier-league-2016-2017)
 
 A powerful interactive visualization for the sports with matches and points. Might be slow on old devices and in Firefox.
 
 | Parameter | Attribute | Accepts | Parses | Default | Examples |
 |-----------|-----------|---------|--------|---------------|----------|
-| controls | `data-conrols` | `array` of [controls](https://github.com/TargetProcess/replay-table/tree/master/src/visualize/controls) | comma-separated string | `['play']` | `['play', 'previous', 'next']` |
+| controls | `data-conrols` | `array` of [controls](https://github.com/antoniokov/replay-table/tree/master/src/visualize/controls) | comma-separated string | `['play']` | `['play', 'previous', 'next']` |
 | colors | `data-colors` | `object` | JSON object | `{ 'win': '#21c114', 'draw': '#828282', 'loss': '#e63131' }` | `{ 'win': 'green', 'draw': 'gray', 'loss': 'red' }` |
 | sparkColors | `data-spark-colors` | `object` | JSON object | `{ 'win': '#D7E7C1', 'draw': '#F0F0F0', 'loss': '#EFCEBA' }` | `{ 'win': 'green', 'draw': 'gray', 'loss': 'red' }` |
 | currentSparkColors | `data-current-spark-colors` | `object` | JSON object | `{ 'win': '#AAD579', 'draw': '#CCCCCC', 'loss': '#E89B77' }` | `{ 'win': 'green', 'draw': 'gray', 'loss': 'red' }` |

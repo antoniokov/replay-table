@@ -11,8 +11,8 @@
     "table",
     "d3"
   ],
-  "homepage": "https://replayTable.com",
-  "bugs": "https://github.com/TargetProcess/replay-table/issues",
+  "homepage": "https://antoniokov.com/replay",
+  "bugs": "https://github.com/antoniokov/replay-table/issues",
   "license": "MIT",
   "author": {
     "name": "Anton Iokov",
@@ -33,7 +33,7 @@
   "module": "src/replay-table.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TargetProcess/replay-table"
+    "url": "https://github.com/antoniokov/replay-table"
   },
   "scripts": {
     "build": "webpack -p",
