@@ -16,9 +16,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -2683,7 +2683,7 @@ exports.default = {
             return input;
         },
         validate: function validate(value) {
-            return ['csv', 'football-data.org'].includes(value);
+            return ['csv', 'football-data.org', 'football-data.org/v2'].includes(value);
         }
     },
 
@@ -3054,6 +3054,11 @@ var List = function () {
             case 'football-data.org':
                 this.matches = data.fixtures;
                 break;
+            case 'football-data.org/v2':
+                this.matches = data.matches.filter(function (o) {
+                    return o.stage === 'REGULAR_SEASON';
+                });
+                break;
         }
 
         this.roundsNames = [].concat(_toConsumableArray(new Set(this.matches.map(function (match) {
@@ -3073,6 +3078,7 @@ var List = function () {
                 case 'csv':
                     return match[0];
                 case 'football-data.org':
+                case 'football-data.org/v2':
                     return match.matchday.toString();
             }
         }
@@ -3084,6 +3090,8 @@ var List = function () {
                     return match[1];
                 case 'football-data.org':
                     return match.homeTeamName;
+                case 'football-data.org/v2':
+                    return match.homeTeam.name;
             }
         }
     }, {
@@ -3094,6 +3102,8 @@ var List = function () {
                     return match[3];
                 case 'football-data.org':
                     return match.awayTeamName;
+                case 'football-data.org/v2':
+                    return match.awayTeam.name;
             }
         }
     }, {
@@ -3104,6 +3114,8 @@ var List = function () {
                     return Number.parseInt(match[2], 10);
                 case 'football-data.org':
                     return match.status === 'FINISHED' ? match.result.goalsHomeTeam : null;
+                case 'football-data.org/v2':
+                    return match.status === 'FINISHED' ? match.score.fullTime.homeTeam : null;
             }
         }
     }, {
@@ -3114,6 +3126,8 @@ var List = function () {
                     return Number.parseInt(match[4], 10);
                 case 'football-data.org':
                     return match.status === 'FINISHED' ? match.result.goalsAwayTeam : null;
+                case 'football-data.org/v2':
+                    return match.status === 'FINISHED' ? match.score.fullTime.awayTeam : null;
             }
         }
     }]);

@@ -214,12 +214,14 @@ Here is an example:
 | 1 | Everton | 2 | Watford | 2 |
 | ... | ... | ... | ... | ... |
 
-Also works with [football-data.org fixtures](http://api.football-data.org/v1/competitions/426/fixtures).
+Also works with [football-data.org fixtures](http://api.football-data.org/v1/competitions/426/fixtures)
+and [api.football-data.org/v2/competitions/{id}/matches (free API key is required)](https://www.football-data.org/documentation/quickstart#available-resources). 
+To get free API key go to http://api.football-data.org/client/register
 
 
 | Parameter | Attribute | Accepts | Default | Examples |
 |-----------|-----------|---------|---------------|----------|
-| format | `data-format` | `csv` or `football-data.org` | `csv` | `csv`, `football-data.org` |
+| format | `data-format` | `csv`, `football-data.org` or `football-data.org/v2` | `csv` | `csv`, `football-data.org`, `football-data.org/v2` |
 | locationFirst | `data-location-first` | `home` or `away` | `home` | `home`, `away` |
 | collapseToRounds | `data-collapse-to-rounds` | `boolean` | `false` | `true`, `false` |
 
